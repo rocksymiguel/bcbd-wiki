@@ -1,6 +1,12 @@
 @echo off
 setlocal EnableExtensions EnableDelayedExpansion
-cd /d "%~dp0"
+pushd "%~dp0" >nul 2>nul
+if errorlevel 1 (
+    echo ERROR: No se pudo abrir la carpeta del proyecto.
+    echo Comprueba que la unidad O: o el recurso TrueNAS esten disponibles.
+    pause
+    exit /b 1
+)
 
 :MENU
 cls
@@ -136,5 +142,6 @@ pause
 goto :MENU
 
 :END
+popd
 endlocal
 exit /b 0
