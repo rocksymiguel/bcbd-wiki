@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const sections = [
     { title: 'Institución', href: 'institucion/index.html', desc: 'Misión, visión y estructura institucional.' },
-    { title: 'Fundamentos Técnicos', href: 'fundamentos-tecnicos/index.html', desc: 'Bases técnicas para operaciones y mantenimiento.' },
+    { title: 'Áreas Operativas y Brigadas', href: 'brigadas/index.html', desc: 'Incendios estructurales y áreas de especialización operativa.' },
     { title: 'Operaciones', href: 'operaciones/index.html', desc: 'Procedimientos operativos y tácticas.' },
     { title: 'Sistema de Comando de Incidentes', href: 'sistema-de-comando-de-incidentes/index.html', desc: 'Estructura de mando y coordinación en incidentes.' },
     { title: 'Recursos Operativos', href: 'recursos-operativos/index.html', desc: 'Equipos, vehículos y recursos disponibles.' },
