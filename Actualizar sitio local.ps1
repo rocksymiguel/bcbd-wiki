@@ -48,13 +48,13 @@ try {
     Write-Host 'No habia cambios locales nuevos; se verificara la publicacion actual.' -ForegroundColor Yellow
   }
 
-  Write-Host 'Enviando main a GitHub...' -ForegroundColor Cyan
-  Invoke-GitCommand @('push', 'origin', 'main')
+  Write-Host 'Enviando main directamente a la VM local...' -ForegroundColor Cyan
+  Invoke-GitCommand @('push', 'vm', 'main')
 
-  Write-Host 'Actualizando la VM local...' -ForegroundColor Cyan
-  & ssh bcbd-wiki 'cd /srv/bcbd-wiki && git pull --ff-only origin main'
+  Write-Host 'Aplicando la version en la pagina local...' -ForegroundColor Cyan
+  & ssh bcbd-wiki 'cd /srv/bcbd-wiki && git pull --ff-only vm main'
   if ($LASTEXITCODE -ne 0) {
-    throw 'La VM no pudo actualizarse. GitHub conserva la version enviada; la VM no cambio.'
+    throw 'La VM recibio la version, pero no pudo aplicarla al sitio.'
   }
 
   $response = Invoke-WebRequest -UseBasicParsing -Uri 'http://192.168.18.150/' -TimeoutSec 15
@@ -62,8 +62,8 @@ try {
     throw "La VM respondio HTTP $($response.StatusCode) despues de actualizar."
   }
 
-  Write-Host 'Listo: GitHub main y la pagina local estan actualizados.' -ForegroundColor Green
-  Write-Host 'GitHub Pages no se modifico.' -ForegroundColor Green
+  Write-Host 'Listo: la version Git local y la pagina de la VM estan actualizadas.' -ForegroundColor Green
+  Write-Host 'GitHub y GitHub Pages no se modificaron.' -ForegroundColor Green
 }
 catch {
   Write-Host 'No se completo la publicacion.' -ForegroundColor Red
