@@ -7,7 +7,7 @@
   <title>Estación #4 — Copa OBA 2026</title>
   <script>
     (function () {
-      var repoPrefix = location.hostname.includes('github.io') ? '/bcbd-aspirantes' : '';
+      var repoPrefix = location.hostname.includes('github.io') ? '/bcbd-wiki' : '';
       var head = document.getElementsByTagName('head')[0];
       var link = document.createElement('link');
       link.rel = 'stylesheet';
@@ -16,7 +16,7 @@
         link.href = repoPrefix + '/css/styles.css';
       } else {
         var segs = location.pathname.split('/').filter(Boolean);
-        var repoName = 'bcbd-aspirantes';
+        var repoName = 'bcbd-wiki';
         var repoIndex = segs.lastIndexOf(repoName);
         var depth = 0;
         if (repoIndex !== -1) {
@@ -52,7 +52,7 @@
           <div class="step-badge">1</div>
           <div class="step-body">
             <h3>Trasladar al muñeco hasta la zona asignada</h3>
-            <img src="/bcbd-aspirantes/competencias-preparacion/illustraciones/rescate-victima.png" alt="Rescate de víctima" />
+            <img src="/bcbd-wiki/competencias-preparacion/illustraciones/rescate-victima.png" alt="Rescate de víctima" />
           </div>
         </article>
       </div>

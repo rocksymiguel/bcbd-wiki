@@ -1,7 +1,7 @@
 var isGitHub = window.location.hostname.includes("github.io");
 
 var basePath = isGitHub
-  ? "/bcbd-aspirantes/"
+  ? "/bcbd-wiki/"
   : "/";
 
 // If running on GitHub Pages and the site is served at the user root (e.g. https://user.github.io/...),
@@ -9,7 +9,7 @@ var basePath = isGitHub
 // links like `/css/styles.css` and `/js/*.js` point to the repo path when needed.
 function fixAbsoluteAssetPathsForGithub() {
   if (!isGitHub) return;
-  const repoPrefix = basePath.replace(/\/$/, ''); // e.g. '/bcbd-aspirantes'
+  const repoPrefix = basePath.replace(/\/$/, ''); // e.g. '/bcbd-wiki'
   // If current pathname already starts with repoPrefix, nothing to do
   if (window.location.pathname.startsWith(repoPrefix + '/') || window.location.pathname === repoPrefix) return;
 
@@ -82,13 +82,13 @@ function tryFetchPartial(partialPath, callback) {
   // pathname does not contain the repo prefix, try the repo-root absolute
   // path first to avoid many 404s from deeply nested relative attempts.
   const candidates = [];
-  const repoPrefix = basePath.replace(/\/$/, ''); // '/bcbd-aspirantes'
+  const repoPrefix = basePath.replace(/\/$/, ''); // '/bcbd-wiki'
 
   // Always try the repo-root absolute path first when on GitHub Pages.
-  // This ensures partials living at `/partials/...` or `/bcbd-aspirantes/partials/...`
+  // This ensures partials living at `/partials/...` or `/bcbd-wiki/partials/...`
   // are attempted before many relative fallbacks.
   if (isGitHub) {
-    candidates.push(repoPrefix + '/' + partialPath); // /bcbd-aspirantes/partials/header.html
+    candidates.push(repoPrefix + '/' + partialPath); // /bcbd-wiki/partials/header.html
     candidates.push('/' + partialPath); // /partials/header.html (user-root)
   }
 

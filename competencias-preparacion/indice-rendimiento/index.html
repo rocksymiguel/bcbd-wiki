@@ -7,7 +7,7 @@
     <title>Índice de rendimiento | Competencias Preparación</title>
     <script>
         (function(){
-            var repoPrefix = location.hostname.includes('github.io') ? '/bcbd-aspirantes' : '';
+            var repoPrefix = location.hostname.includes('github.io') ? '/bcbd-wiki' : '';
             var head = document.getElementsByTagName('head')[0];
             var link = document.createElement('link');
             link.rel = 'stylesheet';
@@ -16,7 +16,7 @@
                 link.href = repoPrefix + '/css/styles.css';
             } else {
                 var segs = location.pathname.split('/').filter(Boolean);
-                var repoName = 'bcbd-aspirantes';
+                var repoName = 'bcbd-wiki';
                 var repoIndex = segs.lastIndexOf(repoName);
                 var depth = 0;
                 if (repoIndex !== -1) {

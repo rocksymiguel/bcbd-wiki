@@ -6,7 +6,7 @@
   <title>Estación #2 — Fire Challenge 2026</title>
   <script>
     (function(){
-      var repoPrefix = location.hostname.includes('github.io') ? '/bcbd-aspirantes' : '';
+      var repoPrefix = location.hostname.includes('github.io') ? '/bcbd-wiki' : '';
       var head = document.getElementsByTagName('head')[0];
       var link = document.createElement('link');
       link.rel = 'stylesheet';
@@ -15,7 +15,7 @@
         link.href = repoPrefix + '/css/styles.css';
       } else {
         var segs = location.pathname.split('/').filter(Boolean);
-        var repoName = 'bcbd-aspirantes';
+        var repoName = 'bcbd-wiki';
         var repoIndex = segs.lastIndexOf(repoName);
         var depth = 0;
         if (repoIndex !== -1) {
@@ -50,7 +50,7 @@
           <div class="step-badge">1</div>
           <div class="step-body">
             <h3>Espacio confinado</h3>
-            <img src="/bcbd-aspirantes/competencias-preparacion/illustraciones/espacio-confinado.png" alt="Espacio confinado" />
+            <img src="/bcbd-wiki/competencias-preparacion/illustraciones/espacio-confinado.png" alt="Espacio confinado" />
           </div>
         </article>
         <article class="step">
@@ -58,7 +58,7 @@
           <div class="step-body">
             <h3>Peso muerto</h3>
             <p>Levantar y empujar una llanta hasta la marca.</p>
-            <img src="/bcbd-aspirantes/competencias-preparacion/illustraciones/peso-muerto.png" alt="Peso muerto" />
+            <img src="/bcbd-wiki/competencias-preparacion/illustraciones/peso-muerto.png" alt="Peso muerto" />
           </div>
         </article>
       </div>
