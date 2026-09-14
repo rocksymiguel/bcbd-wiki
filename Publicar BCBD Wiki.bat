@@ -75,7 +75,7 @@ git push vm main
 if errorlevel 1 goto :GIT_ERROR
 
 echo Aplicando la version en la pagina local...
-ssh bcbd-wiki "cd /srv/bcbd-wiki ^&^& git pull --ff-only vm main"
+ssh bcbd-wiki "cd /srv/bcbd-wiki; git pull --ff-only vm main"
 if errorlevel 1 (
     echo ERROR: La VM recibio la version, pero no pudo aplicarla al sitio.
     goto :PAUSE_MENU
