@@ -53,6 +53,9 @@ body {
   min-height: 100vh;
 }
 
+.home-page main#main-content { max-width:900px; }
+.home-page .site-header-inner { max-width:925px; }
+
 /* Ensure main grows to push footer down */
 main, .contenido { max-width: 1000px; margin: 28px auto; flex: 1; }
 
@@ -64,13 +67,13 @@ main, .contenido { max-width: 1000px; margin: 28px auto; flex: 1; }
   box-shadow: 0 6px 20px rgba(31,41,55,0.06);
   margin-bottom: 18px;
 }
-.home-hero .hero-inner { max-width: 1000px; margin: 0 auto; display:grid; grid-template-columns:minmax(0,1fr) minmax(300px,420px); gap:34px; align-items:center; }
-.home-intro { padding:16px 0; }
+.home-hero .hero-inner { max-width: 1000px; margin: 0 auto; display:grid; grid-template-columns:1fr; gap:14px; align-items:stretch; }
+.home-intro { padding:16px 4px 2px; display:grid; grid-template-columns:minmax(0,1.15fr) minmax(230px,.85fr); gap:28px; align-items:center; }
 .home-hero h1 { margin:0 0 12px; font-size:clamp(42px, 6vw, 72px); line-height:.98; letter-spacing:-.04em; color:var(--theme-heading); }
 .home-hero .lead { margin:0; color:var(--theme-muted); font-size:18px; max-width:600px; }
 .brand-bcbd { color:#dc2626; }
 .brand-wiki { color:#2563eb; }
-.home-featured { border:1px solid var(--theme-border); border-radius:12px; padding:20px; background:var(--theme-surface); box-shadow:0 8px 24px var(--theme-shadow); }
+.home-featured { border:1px solid var(--theme-border); border-radius:12px; padding:18px; background:var(--theme-surface); box-shadow:0 8px 24px var(--theme-shadow); }
 .home-featured h2 { margin:0; color:var(--theme-heading); font-size:22px; display:flex; align-items:center; gap:10px; }
 .featured-star { color:#f59e0b; font-size:30px; line-height:1; }
 .featured-intro { margin:5px 0 12px 40px; color:var(--theme-muted); font-size:14px; }
@@ -108,7 +111,7 @@ main, .contenido { max-width: 1000px; margin: 28px auto; flex: 1; }
 }
 
 @media (max-width: 800px) {
-  .home-hero .hero-inner { grid-template-columns:1fr; }
+  .home-hero .hero-inner, .home-intro { grid-template-columns:1fr; }
   .cards-grid { grid-template-columns:1fr; gap:18px; }
   .home-column, .home-column:first-child, .home-column:last-child { border-right:0; border-bottom:1px solid var(--theme-border); padding:14px 0 20px; }
   .home-column:last-child { border-bottom:0; }
