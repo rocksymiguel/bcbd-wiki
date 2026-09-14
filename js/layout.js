@@ -4,6 +4,56 @@ var basePath = isGitHub
   ? "/bcbd-wiki/"
   : "/";
 
+// Theme: follow the operating system by default. A manual choice made from
+// the header takes priority and is remembered in this browser.
+var themeStorageKey = 'bcbd-wiki-theme';
+var systemThemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+var themePreference = null;
+
+function readThemePreference() {
+  try {
+    var value = window.localStorage.getItem(themeStorageKey);
+    return value === 'light' || value === 'dark' ? value : null;
+  } catch (error) {
+    return null;
+  }
+}
+
+function activeTheme() {
+  return themePreference || (systemThemeQuery.matches ? 'dark' : 'light');
+}
+
+function updateThemeToggle() {
+  var toggle = document.querySelector('.theme-toggle');
+  if (!toggle) return;
+
+  var isDark = activeTheme() === 'dark';
+  toggle.setAttribute('aria-pressed', String(isDark));
+  toggle.setAttribute('aria-label', isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
+  toggle.setAttribute('title', isDark ? 'Usar modo claro' : 'Usar modo oscuro');
+  var icon = toggle.querySelector('.theme-toggle-icon');
+  if (icon) icon.textContent = isDark ? '☀' : '☾';
+}
+
+function applyTheme() {
+  document.documentElement.dataset.theme = activeTheme();
+  updateThemeToggle();
+}
+
+function initializeTheme() {
+  themePreference = readThemePreference();
+  applyTheme();
+
+  var onSystemThemeChange = function () {
+    if (!themePreference) applyTheme();
+  };
+
+  if (systemThemeQuery.addEventListener) systemThemeQuery.addEventListener('change', onSystemThemeChange);
+  else if (systemThemeQuery.addListener) systemThemeQuery.addListener(onSystemThemeChange);
+}
+
+initializeTheme();
+
 // If running on GitHub Pages and the site is served at the user root (e.g. https://user.github.io/...),
 // some pages may be accessed without the repo prefix. Fix absolute asset paths dynamically so
 // links like `/css/styles.css` and `/js/*.js` point to the repo path when needed.
@@ -123,6 +173,16 @@ tryFetchPartial('partials/header.html', (err, html, usedPath) => {
   if (err) return console.error('Error cargando header:', err);
   const headerEl = document.getElementById("header");
   if (headerEl) headerEl.innerHTML = html;
+
+  var themeToggle = document.querySelector('.theme-toggle');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', function () {
+      themePreference = activeTheme() === 'dark' ? 'light' : 'dark';
+      try { window.localStorage.setItem(themeStorageKey, themePreference); } catch (error) { /* Storage can be unavailable. */ }
+      applyTheme();
+    });
+  }
+  updateThemeToggle();
 
   // Ajustar enlaces dentro del header
   const links = document.querySelectorAll("#header a");
