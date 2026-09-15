@@ -58,6 +58,14 @@ body {
 .home-page .site-header { padding:0 18px; }
 .home-page .site-header-inner { width:100%; max-width:none; box-sizing:border-box; padding:16px 22px; }
 
+/* Shared fluid layout for every content page (desktop first, responsive below). */
+body:not(.home-page) { padding-left:0; padding-right:0; }
+body:not(.home-page) .site-header { padding:0 18px; }
+body:not(.home-page) .site-header-inner { width:100%; max-width:none; box-sizing:border-box; padding:16px 22px; }
+body:not(.home-page) main,
+body:not(.home-page) .contenido { width:100%; max-width:none; box-sizing:border-box; padding-left:clamp(28px, 4.3vw, 80px); padding-right:clamp(28px, 4.3vw, 80px); }
+body:not(.home-page) .footer-inner { width:100%; max-width:none; box-sizing:border-box; }
+
 /* Ensure main grows to push footer down */
 main, .contenido { max-width: 1000px; margin: 28px auto; flex: 1; }
 
@@ -121,6 +129,8 @@ main, .contenido { max-width: 1000px; margin: 28px auto; flex: 1; }
 
 @media (max-width: 800px) {
   .home-page main#main-content, .home-page .site-header-inner { width:auto; max-width:none; }
+  body:not(.home-page) main,
+  body:not(.home-page) .contenido { padding-left:20px; padding-right:20px; }
   .home-hero .hero-inner, .home-intro { grid-template-columns:1fr; }
   .overview { padding:0 20px; }
   .cards-grid { grid-template-columns:1fr; gap:18px; }
