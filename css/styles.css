@@ -87,16 +87,19 @@ main, .contenido { max-width: 1000px; margin: 28px auto; flex: 1; }
 
 /* Cards grid */
 .overview { padding:0 clamp(28px, 4.3vw, 80px); }
-.cards-grid { display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:0; }
+.cards-grid { display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:18px; }
 .home-column { display:block; min-width:0; box-sizing:border-box; padding:14px 24px 8px; color:var(--theme-text); text-decoration:none; border-right:1px solid var(--theme-border); }
+.home-column, .home-column:first-child, .home-column:last-child { padding:22px 24px 20px; margin:0; border:1px solid var(--theme-border); border-radius:12px; background:var(--theme-surface); box-shadow:0 6px 18px var(--theme-shadow); }
 .home-column:first-child { padding-left:0; }
 .home-column:last-child { border-right:0; padding-right:0; }
+.home-column:first-child { padding-left:24px; }
+.home-column:last-child { padding-right:24px; }
 .home-column-head { display:flex; gap:14px; align-items:flex-start; }
 .home-column-icon { flex:0 0 44px; width:44px; height:44px; display:flex; align-items:center; justify-content:center; border:3px solid #dc2626; border-radius:50%; color:#dc2626; font-size:25px; }
-.home-column h3 { margin:4px 0 5px; font-size:21px; color:var(--theme-heading); }
+.home-column h3 { margin:4px 0 5px; font-size:23px; color:var(--theme-heading); }
 .home-column p { margin:0; font-size:13px; color:var(--theme-muted); }
 .home-column-links { margin-top:16px; border-top:1px solid var(--theme-border); }
-.home-column-links a { display:flex; justify-content:space-between; gap:8px; padding:9px 0; border-bottom:1px solid var(--theme-border); color:var(--theme-text); text-decoration:none; font-size:13px; }
+.home-column-links a { display:flex; justify-content:space-between; gap:8px; padding:11px 0; border-bottom:1px solid var(--theme-border); color:var(--theme-text); text-decoration:none; font-size:14px; }
 .home-column-links a:hover { color:#dc2626; }
 .home-column-all { display:inline-block; margin-top:14px; color:#dc2626; font-weight:600; font-size:13px; text-decoration:none; }
 .home-column-all:hover { color:#2563eb; }
