@@ -1,0 +1,2 @@
+# Blender keeps previous saves locally; retain sources without publishing backups.
+*.blend[0-9]
