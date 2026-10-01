@@ -19,7 +19,7 @@
     if (!pending) {
       status.hidden = false;
       status.textContent = 'Cargando modelo 3D…';
-      pending = import('./hose-viewer.js?v=20260930a').then(module => module.createHoseViewer(dialog));
+      pending = import('./hose-viewer.js?v=20260930b').then(module => module.createHoseViewer(dialog));
     }
     try {
       viewer = await pending;

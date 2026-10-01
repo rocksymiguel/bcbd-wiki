@@ -9,12 +9,14 @@ un estándar de rosca certificado ni dimensiones de fabricación.
 - `acoples-preview.png`: render de revisión, macho a la izquierda.
 - `acoples-bomberos.blend1`: copia anterior de seguridad generada por Blender.
 - `linea-acoplada.blend`: pareja horizontal unida, con dos tramos de manguera.
-- `linea-acoplada.glb`: modelo del visor, 263 844 bytes; raíces independientes
+- `linea-acoplada.glb`: modelo del visor, 263 868 bytes; raíces independientes
   `Linea_Macho` y `Linea_Hembra`. Incluye las mangueras, no el estudio.
 - `linea-acoplada-preview.png`: render de revisión de la unión.
 - `linea-acoplada-preview.jpg`: miniatura ligera utilizada en el inicio.
 
 Materiales PBR de aluminio satinado y junta de goma, sin texturas externas.
+La pareja acoplada utiliza un acabado de aluminio más oscuro y mate (rugosidad
+0,78), conservando el carácter metálico. El original separado mantiene su acabado.
 14 mallas, 4 488 vértices y 8 936 triángulos en total. Los salientes, roscas
 y collar se mantienen separados para poder seleccionarlos y explicarlos.
 La escala está expresada en metros y es ilustrativa. En Blender las aberturas

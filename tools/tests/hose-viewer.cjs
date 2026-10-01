@@ -33,7 +33,7 @@ const server = http.createServer((req,res) => {
       page.on('request',request => requests.push(request.url()));
       page.on('response',response => {if(response.status()>=400)errors.push(`${response.status()} ${response.url()}`);});
       await page.goto(config.subpath ? url+'bcbd-wiki/' : url);
-      assert(!requests.some(item => item.includes('vendor/three') || item.endsWith('.glb')),'3D must remain lazy');
+      assert(!requests.some(item => item.includes('vendor/three') || item.includes('.glb')),'3D must remain lazy');
       await page.locator('#hose-open').click();
       await page.locator('#hose-viewport[data-ready="true"]').waitFor({timeout:30000});
       await page.waitForTimeout(800);
@@ -93,7 +93,7 @@ const server = http.createServer((req,res) => {
       const context = await browser.newContext();
       const page = await context.newPage();
       let fail=true;
-      await page.route('**/linea-acoplada.glb',route => fail ? route.abort() : route.continue());
+      await page.route('**/linea-acoplada.glb*',route => fail ? route.abort() : route.continue());
       await page.goto(url);
       await page.locator('#hose-open').click();
       await page.getByRole('status').filter({hasText:'No se pudo abrir'}).waitFor();
@@ -107,7 +107,7 @@ const server = http.createServer((req,res) => {
       await context.close();
       const slowContext = await browser.newContext();
       const slowPage = await slowContext.newPage();
-      await slowPage.route('**/linea-acoplada.glb',async route => {await new Promise(resolve=>setTimeout(resolve,700));await route.continue();});
+      await slowPage.route('**/linea-acoplada.glb*',async route => {await new Promise(resolve=>setTimeout(resolve,700));await route.continue();});
       await slowPage.goto(url);
       await slowPage.locator('#hose-open').click();
       await slowPage.locator('#hose-close').click();

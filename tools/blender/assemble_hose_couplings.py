@@ -23,6 +23,23 @@ for original in source.objects:
     copies[original] = copy
 for original, copy in copies.items():
     copy.parent = copies.get(original.parent)
+# Darker satin aluminium for the assembled model; original-pair materials stay intact.
+finishes = {}
+for original_name, color in [('Aluminio satinado',(0.24,0.27,0.29)),
+                             ('Aluminio - collar',(0.19,0.22,0.24))]:
+    finish = bpy.data.materials[original_name].copy()
+    finish.name = original_name+' - mate linea'
+    shader = next(n for n in finish.node_tree.nodes if n.type == 'BSDF_PRINCIPLED')
+    shader.inputs['Base Color'].default_value = (*color,1)
+    shader.inputs['Metallic'].default_value = 0.85
+    shader.inputs['Roughness'].default_value = 0.78
+    finish.diffuse_color = (*color,1)
+    finishes[original_name] = finish
+for obj in parts.objects:
+    if obj.type == 'MESH':
+        for slot in obj.material_slots:
+            if slot.material and slot.material.name in finishes:
+                slot.material = finishes[slot.material.name]
 male = copies[bpy.data.objects['Acople_Macho']]
 female = copies[bpy.data.objects['Acople_Hembra']]
 male.name, female.name = 'Linea_Macho', 'Linea_Hembra'

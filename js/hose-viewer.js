@@ -10,7 +10,7 @@ export async function createHoseViewer(dialog) {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.15;
+  renderer.toneMappingExposure = 1.0;
   const canvas = renderer.domElement;
   canvas.tabIndex = 0;
   canvas.setAttribute('role','img');
@@ -44,7 +44,7 @@ export async function createHoseViewer(dialog) {
     materials.forEach(material => material.dispose());
   });
   try {
-    const loading = new GLTFLoader().loadAsync(new URL('../assets/models/acoples/linea-acoplada.glb',import.meta.url).href);
+    const loading = new GLTFLoader().loadAsync(new URL('../assets/models/acoples/linea-acoplada.glb?v=20260930b',import.meta.url).href);
     loading.then(result => { if (abandoned) disposeModel(result.scene); }, () => {});
     gltf = await Promise.race([loading,new Promise((_,reject) => {
       timeout = setTimeout(() => reject(new Error('El modelo tardó demasiado en responder.')),30000);
@@ -94,7 +94,7 @@ export async function createHoseViewer(dialog) {
   const resetCamera = () => {
     if (!host.clientWidth || !host.clientHeight) return;
     resize();
-    const distance = Math.max(0.62,0.95 / Math.max(camera.aspect,0.55));
+    const distance = Math.max(0.48,0.70 / Math.max(camera.aspect,0.55));
     controls.target.set(0,0,0);
     camera.position.set(distance*0.18,distance*0.38,distance);
     controls.update();
@@ -157,7 +157,8 @@ export async function createHoseViewer(dialog) {
     controls.update();
   });
   const updateTheme = () => {
-    scene.background = new THREE.Color(document.documentElement.dataset.theme === 'dark' ? 0x182332 : 0xe5ebf2);
+    // Keep the studio dark even in light mode: ivory hose and aluminium need contrast.
+    scene.background = new THREE.Color(0x111923);
   };
   const themeObserver = new MutationObserver(updateTheme);
   themeObserver.observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
