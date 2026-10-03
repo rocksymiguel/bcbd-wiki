@@ -80,6 +80,7 @@ const server=http.createServer(async (req,res) => {
       assert(external.every(url=>url.startsWith('https://tiles.openfreemap.org/')),'only vector street provider may be requested externally by default');
       assert.match(await page.locator('#map-source-date').textContent(),/Ecuador/);
       assert.equal(await page.locator('#map-source-list li').count(),8);
+      assert.match(await page.locator('.leaflet-control-attribution').innerText(),/OpenFreeMap/);
       assert.equal(await page.locator('.map-eyebrow').count(),0,'no institutional ownership line above GIS title');
       assert.match(await page.locator('#env-station-values').innerText(),/1,9|1\.9/);
       assert.match(await page.locator('#env-station-values .env-old').first().innerText(),/Lectura antigua/);

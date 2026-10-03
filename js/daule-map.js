@@ -346,8 +346,8 @@
   function setupBackground() {
     // No bulk download or prefetch; fetch only the viewport the visitor opens.
     const backgrounds={
-      streets:L.maplibreGL({style:new URL('street-style.json',dataBase).href,interactive:false,attributionControl:false,
-        attribution:'<a href="https://openfreemap.org/">OpenFreeMap</a> · © <a href="https://www.openmaptiles.org/">OpenMapTiles</a> · <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}),
+      streets:L.maplibreGL({style:new URL('street-style.json',dataBase).href,interactive:false,
+        attributionControl:{customAttribution:'<a href="https://openfreemap.org/">OpenFreeMap</a> · © <a href="https://www.openmaptiles.org/">OpenMapTiles</a> · <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}}),
       satellite:L.tileLayer('https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:'Imagery © Esri, Vantor, Earthstar Geographics, GIS User Community'}),
       relief:L.tileLayer('https://services.arcgisonline.com/ArcGIS/rest/services/Elevation/World_Hillshade/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:'Relief: Esri, Vantor, Airbus DS, USGS, NGA, NASA, CGIAR, N Robinson, NCEAS, NLS, OS, NMA, Geodatastyrelsen, Rijkswaterstaat, GSA, Geoland, FEMA, Intermap, GIS User Community'})
     };

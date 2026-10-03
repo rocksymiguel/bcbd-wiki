@@ -85,7 +85,7 @@
     catch(error){if(request!==tideRequest)return;tideData=null;el('env-tides').replaceChildren();unavailable('env-tide-status',error.message+' No se genera una tabla aproximada.');}
   }
   function changeDay(day, auto) {
-    if(!/^\d{4}-\d{2}-\d{2}$/.test(day))return;
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(day)){el('env-day').value=selectedDay;return;}
     selectedDay=day;followsToday=auto;el('env-day').value=day;tides();
   }
   function refresh() {return Promise.allSettled([weather(),station(),tides()]);}

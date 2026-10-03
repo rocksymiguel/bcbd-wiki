@@ -37,18 +37,20 @@ def cached(key, ttl, fetch):
         entry = CACHE.get(key)
         if entry and time.monotonic() - entry[0] < ttl:
             return entry[1]
-        try:
-            value = fetch()
+    # A slow station must not block the tide/weather provider behind its request.
+    try:
+        value = fetch()
+        with LOCK:
             CACHE[key] = (time.monotonic(), value)
             if len(CACHE) > 64:
                 oldest = min(CACHE, key=lambda item: CACHE[item][0])
                 del CACHE[oldest]
-            return value
-        except Exception:
-            # Never quietly present old observations as current.
-            if entry:
-                return {**entry[1], 'stale': True, 'error': 'La fuente no respondió; se muestra la última consulta disponible.'}
-            raise HTTPException(503, 'La fuente externa no está disponible o no publicó datos para esta consulta.')
+        return value
+    except Exception:
+        # Never quietly present old observations as current.
+        if entry:
+            return {**entry[1], 'stale': True, 'error': 'La fuente no respondió; se muestra la última consulta disponible.'}
+        raise HTTPException(503, 'La fuente externa no está disponible o no publicó datos para esta consulta.')
 
 
 class TideParser(HTMLParser):
