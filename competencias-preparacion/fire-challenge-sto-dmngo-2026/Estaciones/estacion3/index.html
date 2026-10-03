@@ -29,10 +29,11 @@
           link.href = rel + 'css/styles.css';
         }
         head.appendChild(link);
-        var layout = document.createElement('script'); layout.defer = true; layout.src = repoPrefix ? repoPrefix + '/js/layout.js' : rel + 'js/layout.js'; head.appendChild(layout);
-        var fc = document.createElement('script'); fc.defer = true; fc.src = repoPrefix ? repoPrefix + '/js/fire-challenge.js' : rel + 'js/fire-challenge.js'; head.appendChild(fc);
       })();
   </script>
+<script defer src="../../../../js/layout.js"></script>
+<script defer src="../../../../js/competition-register.js"></script>
+<script defer src="../../../../js/fire-challenge.js"></script>
 </head>
 <body>
   <div id="header"></div>
@@ -44,39 +45,35 @@
       </div>
     </section>
     <section class="overview">
-      <h2>Pasos</h2>
+      <h2>Recorrido de la estación</h2><figure class="station-circuit"><img src="../../../imagenes/estacion3-fire-challenge-sto-dmngo-2026.svg" style="min-width:1080px" alt="Secuencia: Kaiser → Zigzag → Estirar el tramo de 1 1/2&quot; presurizado → Pitonear al blanco"><figcaption>Secuencia de entrenamiento según los pasos de esta página. No representa distancias ni el plano oficial.</figcaption></figure><h2>Pasos</h2>
       <div class="station-steps">
         <article class="step">
           <div class="step-badge">1</div>
           <div class="step-body">
             <h3>Kaiser</h3>
-            <img src="/bcbd-wiki/competencias-preparacion/illustraciones/kaiser.png" alt="Kaiser" />
           </div>
         </article>
         <article class="step">
           <div class="step-badge">2</div>
           <div class="step-body">
             <h3>Zigzag</h3>
-            <img src="/bcbd-wiki/competencias-preparacion/illustraciones/zigzag.png" alt="Zigzag" />
           </div>
         </article>
         <article class="step">
           <div class="step-badge">3</div>
           <div class="step-body">
             <h3>Estirar el tramo de 1 1/2" presurizado</h3>
-            <img src="/bcbd-wiki/competencias-preparacion/illustraciones/estirar-tramo.png" alt="Estirar tramo" />
           </div>
         </article>
         <article class="step">
           <div class="step-badge">4</div>
           <div class="step-body">
             <h3>Pitonear al blanco</h3>
-            <img src="/bcbd-wiki/competencias-preparacion/illustraciones/pitonear-blanco.png" alt="Pitonear al blanco" />
           </div>
         </article>
       </div>
 
-      <h2>Indicaciones</h2>
+      <figure class="station-photo"><img src="../../../imagenes/kaiser.jpg" loading="lazy" alt="Golpe de mandarria sobre simulador de entrada forzada"><figcaption>Referencia de otra competencia · U.S. Air Force · Brittany Bateman/Auld · dominio público. Foto recortada. <a href="https://commons.wikimedia.org/wiki/File:Fire_Prevention_Week_121012-F-RB551-219.jpg" target="_blank" rel="noopener">Fuente</a></figcaption></figure><figure class="station-photo"><img src="../../../imagenes/piton.jpg" loading="lazy" alt="Pitón dirigido al blanco en un circuito de competencia"><figcaption>Referencia de otra competencia · U.S. Navy · Miles McDonough · dominio público. Foto recortada. <a href="https://commons.wikimedia.org/wiki/File:Firefighters_conduct_hose_accuracy_drill_during_competition_exercise_at_outdoor_training_facility_(9877198).jpg" target="_blank" rel="noopener">Fuente</a></figcaption></figure><h2>Indicaciones</h2>
       <ul class="indicaciones">
         <li><strong>Kaiser</strong></li>
         <li>* Se debe golpear el peso hasta que el mismo recorra un metro.</li>
@@ -98,26 +95,5 @@
     </section>
   </main>
   <div id="footer"></div>
-  
-<script>
-// Fallback nav for estacion3
-(function(){
-  function ensureNav(){
-    try{
-      var main = document.querySelector('[data-station-index]'); if(!main) return; var idx=parseInt(main.getAttribute('data-station-index'),10); if(isNaN(idx)) return; if(document.querySelector('.station-nav')) return;
-      var prev = document.createElement('button'); prev.className='nav-arrow prev-arrow'; prev.innerHTML='<span class="arrow-icon">←</span><span class="arrow-text">Anterior</span>'; prev.disabled = idx<=1; prev.addEventListener('click', function(){ if(idx>1){ var segs=location.pathname.split('/').filter(Boolean); var estIndex = segs.findIndex(s=>s.toLowerCase()==='estaciones'); var prefix = estIndex>=0?('/'+segs.slice(0,estIndex+1).join('/')+'/'):'/Estaciones/'; location.href = prefix + 'estacion'+(idx-1) + '/index.html?recorrido=1'; }});
-      var next = document.createElement('button'); next.className='nav-arrow next-arrow'; next.innerHTML='<span class="arrow-text">Siguiente</span><span class="arrow-icon">→</span>'; next.disabled = idx>=5; next.addEventListener('click', function(){ if(idx<5){ var segs=location.pathname.split('/').filter(Boolean); var estIndex = segs.findIndex(s=>s.toLowerCase()==='estaciones'); var prefix = estIndex>=0?('/'+segs.slice(0,estIndex+1).join('/')+'/'):'/Estaciones/'; location.href = prefix + 'estacion'+(idx+1) + '/index.html?recorrido=1'; }});
-      var wrap = document.createElement('div'); wrap.className='station-nav'; wrap.appendChild(prev); wrap.appendChild(next); document.body.appendChild(wrap);
-    }catch(e){console.warn('ensureNav failed',e)}
-  }
-  if(document.readyState==='complete' || document.readyState==='interactive') ensureNav(); else document.addEventListener('DOMContentLoaded', ensureNav);
-})();
-</script>
-
-  <script>
-  document.addEventListener('DOMContentLoaded', function(){
-    try{ var el=document.querySelector('[data-station-index]'); if(!el) return; var idx=parseInt(el.getAttribute('data-station-index'),10); if(window.initStopwatch) window.initStopwatch(idx);}catch(e){console.warn('fallback initStopwatch failed',e)}
-  });
-  </script>
-
+</body>
 </html>

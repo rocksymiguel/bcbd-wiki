@@ -1,4 +1,10 @@
 :80 {
+  handle /api/competitions/* {
+    request_body {
+      max_size 4KB
+    }
+    reverse_proxy bcbd-competitions:8002
+  }
   handle /api/environment/* {
     reverse_proxy bcbd-environment:8001
   }

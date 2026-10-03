@@ -31,16 +31,6 @@
       }
       head.appendChild(link);
 
-      var layout = document.createElement('script');
-      layout.defer = true;
-      layout.src = repoPrefix ? repoPrefix + '/js/layout.js' : rel + 'js/layout.js';
-      head.appendChild(layout);
-
-      var fc = document.createElement('script');
-      fc.defer = true;
-      fc.src = repoPrefix ? repoPrefix + '/js/fire-challenge.js' : rel + 'js/fire-challenge.js';
-      head.appendChild(fc);
-
     })();
   </script>
   <link rel="stylesheet" href="../../css/styles.css">

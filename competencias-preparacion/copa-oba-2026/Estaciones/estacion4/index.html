@@ -30,10 +30,11 @@
         link.href = rel + 'css/styles.css';
       }
       head.appendChild(link);
-      var layout = document.createElement('script'); layout.defer = true; layout.src = repoPrefix ? repoPrefix + '/js/layout.js' : rel + 'js/layout.js'; head.appendChild(layout);
-      var fc = document.createElement('script'); fc.defer = true; fc.src = repoPrefix ? repoPrefix + '/js/fire-challenge.js' : rel + 'js/fire-challenge.js'; head.appendChild(fc);
     })();
   </script>
+<script defer src="../../../../js/layout.js"></script>
+<script defer src="../../../../js/competition-register.js"></script>
+<script defer src="../../../../js/fire-challenge.js"></script>
 </head>
 
 <body>
@@ -46,13 +47,12 @@
       </div>
     </section>
     <section class="overview">
-      <h2>Pasos</h2>
+      <h2>Recorrido de la estación</h2><figure class="station-circuit"><img src="../../../imagenes/estacion4-copa-oba-2026.svg" style="min-width:300px" alt="Secuencia: Trasladar al muñeco hasta la zona asignada"><figcaption>Secuencia de entrenamiento según los pasos de esta página. No representa distancias ni el plano oficial.</figcaption></figure><h2>Pasos</h2>
       <div class="station-steps">
         <article class="step">
           <div class="step-badge">1</div>
           <div class="step-body">
             <h3>Trasladar al muñeco hasta la zona asignada</h3>
-            <img src="/bcbd-wiki/competencias-preparacion/illustraciones/rescate-victima.png" alt="Rescate de víctima" />
           </div>
         </article>
       </div>

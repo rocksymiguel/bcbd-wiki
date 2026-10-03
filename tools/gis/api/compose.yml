@@ -1,4 +1,26 @@
 services:
+  competitions:
+    build: .
+    image: bcbd-competitions:local
+    container_name: bcbd-competitions
+    command: [uvicorn, "competitions:app", --host, "0.0.0.0", --port, "8002", --no-proxy-headers]
+    restart: unless-stopped
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    pids_limit: 40
+    mem_limit: 192m
+    cpus: 0.5
+    environment:
+      BCBD_ORIGIN: http://192.168.18.150
+    volumes: [competitions_data:/data]
+    tmpfs: ["/tmp:size=16m,mode=1777,noexec,nosuid,nodev"]
+    networks: [gis_private]
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8002/api/competitions/health', timeout=3)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
   environment:
     image: bcbd-gis:local
     container_name: bcbd-environment
@@ -41,6 +63,8 @@ services:
       timeout: 5s
       retries: 3
 volumes:
+  competitions_data:
+    name: bcbd-competitions-data
   gis_data:
     name: bcbd-gis-data
 networks:

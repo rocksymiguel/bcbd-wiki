@@ -30,10 +30,11 @@
         link.href = rel + 'css/styles.css';
       }
       head.appendChild(link);
-      var layout = document.createElement('script'); layout.defer = true; layout.src = repoPrefix ? repoPrefix + '/js/layout.js' : rel + 'js/layout.js'; head.appendChild(layout);
-      var fc = document.createElement('script'); fc.defer = true; fc.src = repoPrefix ? repoPrefix + '/js/fire-challenge.js' : rel + 'js/fire-challenge.js'; head.appendChild(fc);
     })();
   </script>
+<script defer src="../../../../js/layout.js"></script>
+<script defer src="../../../../js/competition-register.js"></script>
+<script defer src="../../../../js/fire-challenge.js"></script>
 </head>
 
 <body>
@@ -46,34 +47,30 @@
       </div>
     </section>
     <section class="overview">
-      <h2>Pasos</h2>
+      <h2>Recorrido de la estación</h2><figure class="station-circuit"><img src="../../../imagenes/estacion1-copa-oba-2026.svg" style="min-width:1080px" alt="Secuencia: Recoger el tramo de 2 1/2&quot; → Subir la torre con el tramo → Subir el rollo/tramo con la soga → Bajar la torre"><figcaption>Secuencia de entrenamiento según los pasos de esta página. No representa distancias ni el plano oficial.</figcaption></figure><h2>Pasos</h2>
       <div class="station-steps">
         <article class="step">
           <div class="step-badge">1</div>
           <div class="step-body">
             <h3>Recoger el tramo de 2 1/2"</h3>
-            <img src="/bcbd-wiki/competencias-preparacion/illustraciones/recoger-tramo-torre.png" alt="Recoger tramo" />
           </div>
         </article>
         <article class="step">
           <div class="step-badge">2</div>
           <div class="step-body">
             <h3>Subir la torre con el tramo</h3>
-            <img src="/bcbd-wiki/competencias-preparacion/illustraciones/subir-torre.png" alt="Subir la torre" />
           </div>
         </article>
         <article class="step">
           <div class="step-badge">3</div>
           <div class="step-body">
             <h3>Subir el rollo/tramo con la soga</h3>
-            <img src="/bcbd-wiki/competencias-preparacion/illustraciones/jalar-rollo.png" alt="Jalar rollo" />
           </div>
         </article>
         <article class="step">
           <div class="step-badge">4</div>
           <div class="step-body">
             <h3>Bajar la torre</h3>
-            <img src="/bcbd-wiki/competencias-preparacion/illustraciones/bajar-torre.png" alt="Bajar la torre" />
           </div>
         </article>
       </div>
@@ -97,5 +94,4 @@
   </main>
   <div id="footer"></div>
 </body>
-
 </html>

@@ -14,6 +14,15 @@ código y controles de los visores. Los símbolos ausentes usan la fuente de
 respaldo del navegador; el texto dentro de imágenes y mapas rasterizados
 pertenece a esos recursos.
 
+## Preparación de competencias
+
+Cronómetro con participantes registrados por ID, búsqueda por nombre, tiempos por
+estación e historial/ranking compartido. En la VM usa SQLite y una API propia;
+los envíos pendientes se conservan en el navegador. El reloj sigue el tema claro
+u oscuro. Los recorridos tienen esquemas nuevos y fotos de referencia con fuente.
+Reglas oficiales aún pendientes. Respaldo verificado en TrueNAS: ver
+`tools/gis/api/COMPETITIONS.md`.
+
 ## GIS Daule
 
 En `Herramientas → Mapa operativo de Daule`: cartografía local, límites de

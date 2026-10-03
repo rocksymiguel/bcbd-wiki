@@ -31,10 +31,11 @@
             }
             head.appendChild(link);
             // load layout and page script at end of body to preserve execution order
-            var layout = document.createElement('script'); layout.defer = true; layout.src = repoPrefix ? repoPrefix + '/js/layout.js' : rel + 'js/layout.js'; head.appendChild(layout);
-            var fc = document.createElement('script'); fc.defer = true; fc.src = repoPrefix ? repoPrefix + '/js/fire-challenge.js' : rel + 'js/fire-challenge.js'; head.appendChild(fc);
         })();
     </script>
+<script defer src="../../../../js/layout.js"></script>
+<script defer src="../../../../js/competition-register.js"></script>
+<script defer src="../../../../js/fire-challenge.js"></script>
 </head>
 
 <body>
@@ -47,14 +48,12 @@
             </div>
         </section>
         <section class="overview">
-            <h2>Pasos</h2>
+            <h2>Recorrido de la estación</h2><figure class="station-circuit"><img src="../../../imagenes/estacion1-fire-challenge-sto-dmngo-2026.svg" style="min-width:820px" alt="Secuencia: Lanzamiento del tramo → Enrollado del tramo → Zona Asignada"><figcaption>Secuencia de entrenamiento según los pasos de esta página. No representa distancias ni el plano oficial.</figcaption></figure><h2>Pasos</h2>
             <div class="station-steps">
                 <article class="step">
                     <div class="step-badge">1</div>
                     <div class="step-body">
                         <h3>Lanzamiento del tramo</h3>
-                        <img src="/bcbd-wiki/competencias-preparacion/illustraciones/lanzamiento-de-tramo.png"
-                            alt="Lanzamiento de tramo" />
                     </div>
                 </article>
 
@@ -62,8 +61,6 @@
                     <div class="step-badge">2</div>
                     <div class="step-body">
                         <h3>Enrollado del tramo</h3>
-                        <img src="/bcbd-wiki/competencias-preparacion/illustraciones/enrollado-de-tramo.png"
-                            alt="Enrollado de tramo" />
                     </div>
                 </article>
 
@@ -71,8 +68,6 @@
                     <div class="step-badge">3</div>
                     <div class="step-body">
                         <h3>Zona Asignada</h3>
-                        <img src="/bcbd-wiki/competencias-preparacion/illustraciones/zona asignada.png"
-                            alt="Zona Asignada" />
                     </div>
                 </article>
             </div>
@@ -91,48 +86,4 @@
     </main>
     <div id="footer"></div>
 </body>
-
-<script>
-    // Fallback nav creation: ensure prev/next buttons appear even if external JS didn't run
-    (function () {
-        function ensureNav() {
-            try {
-                var main = document.querySelector('[data-station-index]');
-                if (!main) return;
-                var idx = parseInt(main.getAttribute('data-station-index'), 10);
-                if (isNaN(idx)) return;
-                // don't duplicate
-                if (document.querySelector('.station-nav')) return;
-
-                var prev = document.createElement('button');
-                prev.className = 'nav-arrow prev-arrow'; prev.innerHTML = '<span class="arrow-icon">←</span><span class="arrow-text">Anterior</span>';
-                prev.disabled = idx <= 1;
-                prev.addEventListener('click', function () { if (idx > 1) { var segs = location.pathname.split('/').filter(Boolean); var estIndex = segs.findIndex(s => s.toLowerCase() === 'estaciones'); var prefix = estIndex >= 0 ? ('/' + segs.slice(0, estIndex + 1).join('/') + '/') : '/Estaciones/'; location.href = prefix + 'estacion' + (idx - 1) + '/index.html?recorrido=1'; } });
-
-                var next = document.createElement('button');
-                next.className = 'nav-arrow next-arrow'; next.innerHTML = '<span class="arrow-text">Siguiente</span><span class="arrow-icon">→</span>';
-                next.disabled = idx >= 5;
-                next.addEventListener('click', function () { if (idx < 5) { var segs = location.pathname.split('/').filter(Boolean); var estIndex = segs.findIndex(s => s.toLowerCase() === 'estaciones'); var prefix = estIndex >= 0 ? ('/' + segs.slice(0, estIndex + 1).join('/') + '/') : '/Estaciones/'; location.href = prefix + 'estacion' + (idx + 1) + '/index.html?recorrido=1'; } });
-
-                var wrap = document.createElement('div'); wrap.className = 'station-nav'; wrap.appendChild(prev); wrap.appendChild(next); document.body.appendChild(wrap);
-            } catch (e) { console.warn('ensureNav failed', e) }
-        }
-        if (document.readyState === 'complete' || document.readyState === 'interactive') ensureNav(); else document.addEventListener('DOMContentLoaded', ensureNav);
-    })();
-</script>
-
-<script>
-    // Ensure stopwatch runs in case global loader didn't initialize it
-    document.addEventListener('DOMContentLoaded', function () {
-        try {
-            var el = document.querySelector('[data-station-index]');
-            if (!el) return;
-            var idx = parseInt(el.getAttribute('data-station-index'), 10);
-            if (window.initStopwatch) window.initStopwatch(idx);
-        } catch (e) { console.warn('fallback initStopwatch failed', e) }
-    });
-</script>
-
-</body>
-
 </html>

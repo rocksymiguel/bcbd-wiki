@@ -414,3 +414,25 @@ ul {
 .node-title {
   color: var(--theme-heading);
 }
+
+/* Shared competition timer and participant register follow the active theme. */
+.stopwatch-panel, .competition-results { background:var(--theme-surface); color:var(--theme-text); border:1px solid var(--theme-border); border-radius:12px; padding:20px; margin:16px 0; }
+.stopwatch-panel h2, .competition-results h2 { color:var(--theme-heading); }
+.sw-row { display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin:12px 0; }
+.stopwatch-panel input { flex:1 1 220px; min-width:0; }
+.stopwatch-panel input, .stopwatch-panel button, #competition-filter { font:inherit; background:var(--theme-surface-muted); color:var(--theme-text); border:1px solid var(--theme-border); border-radius:8px; padding:12px; }
+.stopwatch-panel button { cursor:pointer; min-height:44px; }
+.stopwatch-panel button:disabled { opacity:.55; cursor:default; }
+.stopwatch-panel #sw-start { background:#b71c1c; color:white; }
+.sw-display { display:block; font-size:clamp(32px,8vw,52px); font-weight:700; font-variant-numeric:tabular-nums; color:var(--theme-heading); margin:18px 0; }
+.participant-options { display:flex; flex-wrap:wrap; gap:8px; max-height:180px; overflow:auto; }
+.stopwatch-panel p, .participant-options button { overflow-wrap:anywhere; }
+.stopwatch-panel .sw-error { color:var(--theme-text); border-left:4px solid #ef4444; padding-left:12px; }
+.competition-results details { padding:12px 0; border-top:1px solid var(--theme-border); }
+.competition-results summary { cursor:pointer; }
+
+.station-circuit, .station-photo { margin:20px 0; }
+.station-circuit img { width:100%; height:auto; display:block; }
+.station-circuit { overflow-x:auto; }
+.station-photo img { width:100%; max-width:620px; height:auto; border-radius:12px; display:block; }
+.station-circuit figcaption, .station-photo figcaption { color:var(--theme-muted); font-size:13px; margin-top:8px; }

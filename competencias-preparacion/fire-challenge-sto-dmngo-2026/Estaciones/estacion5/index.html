@@ -29,10 +29,11 @@
         link.href = rel + 'css/styles.css';
       }
       head.appendChild(link);
-      var layout = document.createElement('script'); layout.defer = true; layout.src = repoPrefix ? repoPrefix + '/js/layout.js' : rel + 'js/layout.js'; head.appendChild(layout);
-      var fc = document.createElement('script'); fc.defer = true; fc.src = repoPrefix ? repoPrefix + '/js/fire-challenge.js' : rel + 'js/fire-challenge.js'; head.appendChild(fc);
     })();
   </script>
+<script defer src="../../../../js/layout.js"></script>
+<script defer src="../../../../js/competition-register.js"></script>
+<script defer src="../../../../js/fire-challenge.js"></script>
 </head>
 <body>
   <div id="header"></div>
@@ -44,34 +45,30 @@
       </div>
     </section>
     <section class="overview">
-      <h2>Pasos</h2>
+      <h2>Recorrido de la estación</h2><figure class="station-circuit"><img src="../../../imagenes/estacion5-fire-challenge-sto-dmngo-2026.svg" style="min-width:1080px" alt="Secuencia: Recoger el tramo de 2 1/2&quot; → Subir la torre con el tramo → Subir el rollo/tramo con la soga → Bajar la torre"><figcaption>Secuencia de entrenamiento según los pasos de esta página. No representa distancias ni el plano oficial.</figcaption></figure><h2>Pasos</h2>
       <div class="station-steps">
         <article class="step">
           <div class="step-badge">1</div>
           <div class="step-body">
             <h3>Recoger el tramo de 2 1/2"</h3>
-            <img src="/bcbd-wiki/competencias-preparacion/illustraciones/recoger-tramo-torre.png" alt="Recoger tramo" />
           </div>
         </article>
         <article class="step">
           <div class="step-badge">2</div>
           <div class="step-body">
             <h3>Subir la torre con el tramo</h3>
-            <img src="/bcbd-wiki/competencias-preparacion/illustraciones/subir-torre.png" alt="Subir la torre" />
           </div>
         </article>
         <article class="step">
           <div class="step-badge">3</div>
           <div class="step-body">
             <h3>Subir el rollo/tramo con la soga</h3>
-            <img src="/bcbd-wiki/competencias-preparacion/illustraciones/jalar-rollo.png" alt="Jalar rollo" />
           </div>
         </article>
         <article class="step">
           <div class="step-badge">4</div>
           <div class="step-body">
             <h3>Bajar la torre</h3>
-            <img src="/bcbd-wiki/competencias-preparacion/illustraciones/bajar-torre.png" alt="Bajar la torre" />
           </div>
         </article>
       </div>
@@ -93,26 +90,5 @@
     </section>
   </main>
   <div id="footer"></div>
-
-  <script>
-(function(){
-  function ensureNav(){
-    try{
-      var main = document.querySelector('[data-station-index]'); if(!main) return; var idx=parseInt(main.getAttribute('data-station-index'),10); if(isNaN(idx)) return; if(document.querySelector('.station-nav')) return;
-      var prev = document.createElement('button'); prev.className='nav-arrow prev-arrow'; prev.innerHTML='<span class="arrow-icon">←</span><span class="arrow-text">Anterior</span>'; prev.disabled = idx<=1; prev.addEventListener('click', function(){ if(idx>1){ var segs=location.pathname.split('/').filter(Boolean); var estIndex = segs.findIndex(s=>s.toLowerCase()==='estaciones'); var prefix = estIndex>=0?('/'+segs.slice(0,estIndex+1).join('/')+'/'):'/Estaciones/'; location.href = prefix + 'estacion'+(idx-1) + '/index.html?recorrido=1'; }});
-      var next = document.createElement('button'); next.className='nav-arrow next-arrow'; next.innerHTML='<span class="arrow-text">Siguiente</span><span class="arrow-icon">→</span>'; next.disabled = idx>=5; next.addEventListener('click', function(){ if(idx<5){ var segs=location.pathname.split('/').filter(Boolean); var estIndex = segs.findIndex(s=>s.toLowerCase()==='estaciones'); var prefix = estIndex>=0?('/'+segs.slice(0,estIndex+1).join('/')+'/'):'/Estaciones/'; location.href = prefix + 'estacion'+(idx+1) + '/index.html?recorrido=1'; }});
-      var wrap = document.createElement('div'); wrap.className='station-nav'; wrap.appendChild(prev); wrap.appendChild(next); document.body.appendChild(wrap);
-    }catch(e){console.warn('ensureNav failed',e)}
-  }
-  if(document.readyState==='complete' || document.readyState==='interactive') ensureNav(); else document.addEventListener('DOMContentLoaded', ensureNav);
-})();
-</script>
-
-  <script>
-  document.addEventListener('DOMContentLoaded', function(){
-    try{ var el=document.querySelector('[data-station-index]'); if(!el) return; var idx=parseInt(el.getAttribute('data-station-index'),10); if(window.initStopwatch) window.initStopwatch(idx);}catch(e){console.warn('fallback initStopwatch failed',e)}
-  });
-  </script>
-
 </body>
 </html>
