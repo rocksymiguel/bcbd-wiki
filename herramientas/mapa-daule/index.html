@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <title>Mapa operativo de Daule | BCBD</title>
+  <title>GIS Daule | BCBD</title>
   <link rel="stylesheet" href="../../css/styles.css">
   <link rel="stylesheet" href="../../js/vendor/leaflet/leaflet.css">
   <link rel="stylesheet" href="../../css/daule-map.css">
@@ -14,7 +14,7 @@
   <main class="map-content">
     <a class="map-back" href="../index.html">← Herramientas</a>
     <div class="map-heading">
-      <div><p class="map-eyebrow">Benemérito Cuerpo de Bomberos de Daule</p><h1>Mapa operativo de Daule</h1><p>Territorio, accesos y referencias para la planificación.</p></div>
+      <div><p class="map-eyebrow">Benemérito Cuerpo de Bomberos de Daule</p><h1>GIS Daule</h1><p>Mapa operativo · Territorio, accesos y observaciones de campo.</p></div>
       <span class="map-stage">Base cartográfica · Sin telemetría</span>
     </div>
     <div class="map-workspace">
@@ -34,16 +34,21 @@
           <label><input type="checkbox" data-layer="places" checked disabled><span class="map-swatch place"></span>Poblados y sectores</label>
           <label><input type="checkbox" data-layer="facilities" disabled><span class="map-swatch facility"></span>Servicios cartografiados</label>
           <label><input type="checkbox" data-layer="susceptibility" disabled><span class="map-swatch susceptibility"></span>Susceptibilidad a inundación</label>
-          <label><input type="checkbox" data-layer="reports" checked disabled><span class="map-swatch report"></span>Mis observaciones</label>
+          <label><input type="checkbox" data-layer="reports" checked disabled><span class="map-swatch report"></span>Observaciones de campo</label>
         </fieldset>
         <div id="map-hazard-legend" hidden>
           <p class="map-caption">Susceptibilidad territorial · Fuente SGR</p>
           <div class="map-risk-key"><span><i class="risk-high"></i>Alta</span><span><i class="risk-medium"></i>Media</span><span><i class="risk-low"></i>Baja</span><span><i class="risk-na"></i>No aplicable / sin</span></div>
           <p class="map-caption">No indica inundación actual, profundidad ni probabilidad para una fecha.</p>
         </div>
-        <label class="map-background"><input id="map-basemap" type="checkbox">Fondo de calles en línea <small>OpenStreetMap · Requiere internet</small></label>
+        <fieldset class="map-backgrounds"><legend>Fondo del mapa</legend>
+          <label><input id="map-basemap" data-basemap="streets" type="checkbox" checked>Calles en línea <small>OpenStreetMap · Requiere internet</small></label>
+          <label><input data-basemap="satellite" type="checkbox">Vista satelital <small>Esri World Imagery · No es una imagen en vivo</small></label>
+          <label><input data-basemap="relief" type="checkbox">Relieve sombreado <small>Esri World Hillshade · No mide altitud en un punto</small></label>
+          <label><input data-basemap="none" type="checkbox">Nada · Sin fondo <small>Solo las capas y observaciones</small></label>
+        </fieldset>
         <div class="map-actions"><button id="map-fit" type="button" disabled>Ver todo Daule</button><button id="map-add" type="button" disabled aria-pressed="false">Añadir observación</button></div>
-        <p id="map-report-hint" class="map-caption" hidden>Selecciona un punto del mapa. La observación se guarda solo en este navegador.</p>
+        <p id="map-report-hint" class="map-caption" hidden>Selecciona un punto del mapa. La observación se compartirá en la Wiki de la VM.</p>
         <section id="map-detail" class="map-detail" aria-labelledby="map-detail-title" aria-live="polite"><h2 id="map-detail-title">Explora el territorio</h2><p>Selecciona un elemento para consultar su fuente y características.</p></section>
       </aside>
       <section class="map-canvas-column" aria-label="Cartografía">
@@ -54,16 +59,17 @@
       </section>
     </div>
     <section class="map-records" aria-labelledby="map-records-title">
-      <div><h2 id="map-records-title">Mis observaciones de campo</h2><p>Registro local para tu análisis. No se envía a BCBD ni se comparte entre usuarios.</p></div>
+      <div><h2 id="map-records-title">Observaciones de campo</h2><p>Registro compartido en la VM. Los aportes quedan pendientes de verificación.</p></div>
       <div class="map-actions"><button id="map-export" type="button" disabled>Exportar observaciones</button><label class="map-import" for="map-import">Importar observaciones<input id="map-import" type="file" accept=".geojson,.json,application/geo+json,application/json" disabled></label></div>
-      <p id="map-storage-status" role="status"></p>
+      <p id="map-storage-status" role="status">Conectando con el registro de la VM…</p><button id="map-migrate" type="button" hidden>Compartir registros anteriores de este navegador</button>
       <ul id="map-report-list" class="map-report-list"><li>No hay observaciones guardadas.</li></ul>
     </section>
     <details class="map-sources"><summary>Fuentes, fecha y cobertura de los datos</summary>
       <p id="map-source-date"></p><ul id="map-source-list"></ul>
       <p>La capa territorial publicada por CONALI incluye Daule, Juan Bautista Aguirre, Laurel, Limonal y Los Lojas. La Aurora se incorpora como referencia de sector donde existe en la cartografía, sin inventar un límite parroquial separado.</p>
       <p>Los datos externos al cantón son contexto geográfico. La ausencia de un elemento o de una zona coloreada no confirma ausencia de amenaza. Las vías y servicios requieren comprobación de campo; no hay información de transitabilidad ni disponibilidad de recursos.</p>
-      <p>La lluvia, los niveles de ríos, las mareas y las simulaciones hidráulicas se incorporarán en fases posteriores. Las capas descargadas pueden consultarse sin servicios externos si esta página está disponible en un servidor local.</p>
+      <p>Estas capas son descargas fechadas, no telemetría en tiempo real. La lluvia, los niveles de ríos, las mareas y las simulaciones aún no están conectados. Las observaciones compartidas se consultan al abrir la página y cada 30 segundos mientras está visible.</p>
+      <p>Fondos en línea: OpenStreetMap, <a href="https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer" target="_blank" rel="noopener">Esri World Imagery</a> y <a href="https://services.arcgisonline.com/ArcGIS/rest/services/Elevation/World_Hillshade/MapServer" target="_blank" rel="noopener">Esri World Hillshade</a>. La imagen satelital y el relieve no muestran condiciones en vivo. El relieve es una referencia visual; aún no hay consulta de altitud ni modelo de inundación.</p>
       <p><a href="../../assets/gis/daule/manifest.json" download>Descargar inventario de fuentes</a> · <a href="https://www.openstreetmap.org/fixthemap" target="_blank" rel="noopener noreferrer">Informar un problema cartográfico en OpenStreetMap</a></p>
     </details>
   </main>
@@ -75,8 +81,9 @@
       <label for="map-report-name">Sector o referencia</label><input id="map-report-name" required maxlength="100" placeholder="Nombre del sitio">
       <label for="map-report-time">Fecha y hora de la observación (Ecuador)</label><input id="map-report-time" type="datetime-local" required>
       <label for="map-report-note">Detalle</label><textarea id="map-report-note" rows="3" maxlength="1000" placeholder="Qué observaste, alcance y fuente de la información"></textarea>
-      <p class="map-caption">Registro del usuario, pendiente de verificación. Usa referencias operativas sin datos personales.</p>
-      <p id="map-report-error" role="alert"></p><button class="map-primary" type="submit">Guardar en este navegador</button>
+      <label for="map-report-media">Fotos o videos (opcional)</label><input id="map-report-media" type="file" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm,video/quicktime" multiple>
+      <p class="map-caption">Hasta 3 adjuntos: 50 MB por imagen, 100 MB por video y 200 MB por envío. Videos de hasta 10 minutos. La VM guarda una copia preparada para visualizarla, sin metadatos de cámara; los originales no se conservan. Usa referencias operativas sin datos personales.</p>
+      <p id="map-report-error" role="alert"></p><button class="map-primary" type="submit">Compartir en la VM</button>
     </form>
   </dialog>
   <div id="footer"></div>

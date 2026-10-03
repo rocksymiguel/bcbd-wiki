@@ -34,6 +34,17 @@ body.map-page main.map-content { padding: 0 clamp(16px, 3vw, 48px); margin:24px 
 .map-swatch.report { background:#e11d48; border-radius:50%; }
 .map-background { padding:12px 0; border-top:1px solid var(--theme-border); font-weight:400!important; }
 .map-background small { display:block; color:var(--theme-muted); font-size:12px; margin:7px 0 0 24px; }
+.map-backgrounds { border:0; border-top:1px solid var(--theme-border); margin:14px 0; padding:16px 0 0; }
+.map-backgrounds legend { padding-top:10px; font-weight:700; }
+.map-backgrounds label { font-weight:400; padding:7px 0; }
+.map-backgrounds input { width:17px; height:17px; accent-color:#2563eb; vertical-align:middle; margin-right:7px; }
+.map-backgrounds small { display:block; margin:5px 0 0 27px; color:var(--theme-muted); font-size:11px; line-height:1.5; }
+.map-attachments { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+.map-attachments img,.map-attachments video { width:100%; max-height:240px; object-fit:contain; border-radius:7px; background:var(--theme-surface-muted); }
+.map-report-copy { flex:1; min-width:180px; }
+.map-report-copy p { margin:5px 0; white-space:pre-wrap; overflow-wrap:anywhere; }
+.map-report-list .map-attachments { max-width:280px; }
+#daule-map { overscroll-behavior:contain; }
 .map-actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
 .map-actions button { font-size:13px; }
 .map-content button[aria-pressed="true"], .map-report-dialog .map-primary { background:#1d4ed8; color:#fff; }

@@ -1,0 +1,14 @@
+:80 {
+  handle /api/gis/* {
+    request_body {
+      max_size 210MB
+    }
+    reverse_proxy bcbd-gis:8000
+  }
+  handle {
+    root * /srv
+    @private path /tools/* /.git/* /.local/*
+    respond @private 404
+    file_server
+  }
+}

@@ -49,5 +49,10 @@ document.addEventListener('DOMContentLoaded', () => {
     return a;
   }
 
-  sections.forEach(s => cardsContainer.appendChild(createCard(s)));
+  const gis = document.createElement('article');
+  gis.className = 'home-column home-gis';
+  gis.innerHTML = '<a class="home-gis-link" href="herramientas/mapa-daule/index.html"><span class="home-gis-eyebrow">Territorio y observaciones de campo</span><h3>GIS Daule</h3><img src="assets/gis/daule/rivers-preview.svg" alt="Red de ríos y cauces de Daule y su entorno" width="480" height="400"><span class="home-gis-open">Abrir mapa operativo →</span></a><p class="home-gis-credit">Ríos: © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · 2 oct 2026</p>';
+  cardsContainer.appendChild(gis);
+  // Resources remain available in their section and the shared navigation.
+  sections.slice(0,2).forEach(s => cardsContainer.appendChild(createCard(s)));
 });

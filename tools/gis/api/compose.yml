@@ -1,0 +1,31 @@
+services:
+  gis:
+    build: .
+    image: bcbd-gis:local
+    container_name: bcbd-gis
+    restart: unless-stopped
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    pids_limit: 80
+    mem_limit: 768m
+    cpus: 1.5
+    environment:
+      BCBD_ORIGIN: http://192.168.18.150
+    volumes:
+      - gis_data:/data
+    tmpfs:
+      - /tmp:size=300m,mode=1777,noexec,nosuid,nodev
+    networks: [gis_private]
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/gis/health', timeout=3)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+volumes:
+  gis_data:
+    name: bcbd-gis-data
+networks:
+  gis_private:
+    name: bcbd-gis-private
+    internal: true

@@ -22,7 +22,30 @@ for(const name of ['daule','banife','pula']) assert(read('waterways.geojson').fe
   (f.properties.name || '').toLowerCase().includes(name)),'missing river '+name);
 assert(read('places.geojson').features.some(f => (f.properties.name || '').toLowerCase()==='la aurora'),'La Aurora location');
 
-const server=http.createServer(handler);
+// A deterministic HTTP fixture exercises the shared frontend; the real Python
+// service has independent image/video, security and persistence integration tests.
+let records=[],sessionNumber=0;
+const server=http.createServer(async (req,res) => {
+  if(!req.url.startsWith('/api/gis/'))return handler(req,res);
+  const cookie=/bcbd_gis_session=([^;]+)/.exec(req.headers.cookie||'')?.[1]||'';
+  const reply=data=>{res.setHeader('Content-Type','application/json');res.end(JSON.stringify(data));};
+  if(req.url==='/api/gis/session'){const token=cookie||String(++sessionNumber);res.setHeader('Set-Cookie','bcbd_gis_session='+token+'; Path=/api/gis; HttpOnly; SameSite=Strict');return reply({csrf:token});}
+  if(req.method==='GET' && req.url==='/api/gis/reports')return reply({type:'FeatureCollection',updated_at:new Date().toISOString(),features:records.map(f=>({...f,properties:{...f.properties,can_delete:f.owner===cookie}}))});
+  let body='';for await(const chunk of req)body+=chunk;
+  if(req.method==='POST' && req.url==='/api/gis/reports'){
+    const boundary=req.headers['content-type'].split('boundary=')[1];
+    const report=body.split('--'+boundary).find(part=>part.includes('name="report"'));
+    const f=JSON.parse(report.split('\r\n\r\n')[1].trim());f.owner=cookie;
+    f.properties.client_id=f.properties.id;f.properties.attachments=[];records.push(f);return reply({created:true,id:f.properties.id});
+  }
+  if(req.method==='POST' && req.url==='/api/gis/import'){
+    const data=JSON.parse(body);let created=0;
+    data.features.forEach(f=>{if(records.some(old=>old.owner===cookie && old.properties.client_id===f.properties.id))return;
+      f.owner=cookie;f.properties.client_id=f.properties.id;f.properties.attachments=[];records.push(f);created++;});return reply({created});
+  }
+  if(req.method==='DELETE'){records=records.filter(f=>f.properties.id!==req.url.split('/').pop());return reply({deleted:true});}
+  res.writeHead(404).end();
+});
 (async () => {
   await new Promise(resolve => server.listen(0,'127.0.0.1',resolve));
   const base=`http://127.0.0.1:${server.address().port}`;
@@ -43,7 +66,7 @@ const server=http.createServer(handler);
       await page.route('https://tile.openstreetmap.org/**',route => route.abort());
       await page.goto(base+(config.prefix||'')+'/herramientas/mapa-daule/');
       await page.locator('#daule-map[data-ready="true"]').waitFor({timeout:30000});
-      assert.deepEqual(external,[],'local cartography must work without external requests');
+      assert(external.length>0 && external.every(url=>url.startsWith('https://tile.openstreetmap.org/')),'only viewport tiles may be requested externally by default');
       assert.match(await page.locator('#map-source-date').textContent(),/Ecuador/);
       assert.equal(await page.locator('#map-source-list li').count(),7);
       const layout=await page.evaluate(() => ({width:innerWidth,doc:document.documentElement.scrollWidth,
@@ -59,6 +82,20 @@ const server=http.createServer(handler);
       await page.locator('[data-layer="susceptibility"]').uncheck();
       assert(!(await page.locator('#map-hazard-legend').isVisible()));
       await page.locator('[data-layer="roads"]').uncheck();await page.locator('[data-layer="roads"]').check();
+      assert(await page.locator('[data-basemap="streets"]').isChecked());
+      await page.locator('[data-basemap="streets"]').uncheck();assert(await page.locator('[data-basemap="none"]').isChecked());
+      await page.route('https://services.arcgisonline.com/**',route=>route.abort());
+      await page.locator('[data-basemap="satellite"]').check();assert(!(await page.locator('[data-basemap="none"]').isChecked()));
+      await page.locator('[data-basemap="relief"]').check();assert(!(await page.locator('[data-basemap="satellite"]').isChecked()));
+      await page.locator('[data-basemap="relief"]').uncheck();assert(await page.locator('[data-basemap="none"]').isChecked());
+      if(!config.isMobile){
+        await page.locator('#daule-map').scrollIntoViewIfNeeded();
+        const scale=await page.locator('.leaflet-control-scale-line').first().innerText(),before=await page.evaluate(()=>scrollY);
+        await page.locator('#daule-map').hover();await page.mouse.wheel(0,-600);
+        await page.waitForFunction(old=>document.querySelector('.leaflet-control-scale-line').textContent!==old,scale);
+        assert.equal(await page.evaluate(()=>scrollY),before,'wheel over map must not scroll the page');
+        await page.mouse.move(10,200);await page.mouse.wheel(0,600);await page.waitForFunction(y=>scrollY>y,before);
+      }
       await page.locator('#map-fit').click();
       await page.locator('#map-add').click();
       await page.locator('#daule-map').click({position:{x:90,y:90}});
@@ -68,12 +105,17 @@ const server=http.createServer(handler);
       await page.locator('#map-report-time').fill('2026-10-02T14:30');
       await page.locator('#map-report-note').fill('Observación de prueba para validar almacenamiento local.');
       await page.locator('#map-report-form button[type="submit"]').click();
-      assert(!(await page.locator('#map-report-dialog').evaluate(d => d.open)));
+      await page.waitForFunction(()=>!document.querySelector('#map-report-dialog').open);
       assert.equal(await page.locator('#map-report-list img').count(),0,'user text must remain plain text');
       await page.reload();await page.locator('#daule-map[data-ready="true"]').waitFor();
-      assert.match(await page.locator('#map-report-list').innerText(),/Prueba de campo/);
-      const stored=await page.evaluate(() => JSON.parse(localStorage.getItem('bcbd-daule-observations-v1')));
-      assert.equal(stored.data.features[0].properties.observed_at,'2026-10-02T19:30:00.000Z');
+      await page.waitForFunction(()=>document.querySelector('#map-report-list').textContent.includes('Prueba de campo'));
+      await page.waitForFunction(()=>document.querySelector('#map-report-list').textContent.includes('Prueba de campo'));
+      assert.equal(records[0].properties.observed_at,'2026-10-02T19:30:00.000Z');
+      const guest=await browser.newContext(config),guestPage=await guest.newPage();
+      await guestPage.route('https://tile.openstreetmap.org/**',r=>r.abort());
+      await guestPage.goto(base+(config.prefix||'')+'/herramientas/mapa-daule/');
+      await guestPage.waitForFunction(()=>document.querySelector('#map-report-list').textContent.includes('Prueba de campo'));
+      assert.equal(await guestPage.getByRole('button',{name:'Eliminar observación',exact:false}).count(),0);await guest.close();
       const downloadWait=page.waitForEvent('download');await page.locator('#map-export').click();
       const download=await downloadWait;
       const exported=JSON.parse(fs.readFileSync(await download.path(),'utf8'));
@@ -86,9 +128,13 @@ const server=http.createServer(handler);
       assert.equal(await page.locator('#map-report-list li').count(),1);
       if(output) {fs.mkdirSync(output,{recursive:true});await page.screenshot({path:path.join(output,config.name+'.png'),fullPage:true});}
       await page.getByRole('button',{name:'Eliminar observación',exact:false}).click();
-      assert.match(await page.locator('#map-report-list').innerText(),/No hay observaciones/);
+      await page.waitForFunction(()=>document.querySelector('#map-report-list').textContent.includes('No hay observaciones'));
       assert.deepEqual(errors,[]);
-      console.log('PASS',config.name,JSON.stringify(layout),'search, layers, reports, persistence, import/export');
+      await page.goto(base+(config.prefix||'')+'/');
+      await page.locator('.home-gis img').waitFor();
+      assert.deepEqual(await page.locator('#cards h3').allTextContents(),['GIS Daule','Institución','Áreas operativas']);
+      await page.waitForFunction(()=>document.querySelector('.home-gis img').naturalWidth>0);
+      console.log('PASS',config.name,JSON.stringify(layout),'home, backgrounds, wheel, shared reports, safe text, import/export');
       await context.close();
     }
     const context=await browser.newContext(), page=await context.newPage();
@@ -97,9 +143,10 @@ const server=http.createServer(handler);
     await page.goto(base+'/herramientas/mapa-daule/');
     await page.locator('#map-retry').waitFor();
     assert(!(await page.locator('#map-add').isEnabled()));
+    await page.route('https://tile.openstreetmap.org/**',route => route.abort());
     fail=false;await page.locator('#map-retry').click();await page.locator('#daule-map[data-ready="true"]').waitFor();
     await page.route('https://tile.openstreetmap.org/**',route => route.abort());
-    await page.locator('#map-basemap').check();
+    await page.waitForFunction(()=>!document.querySelector('#map-add').disabled);
     await page.locator('#map-tile-status').waitFor();
     assert(await page.locator('#map-add').isEnabled(),'tile failure cannot disable local layers');
     await page.locator('#map-basemap').uncheck();

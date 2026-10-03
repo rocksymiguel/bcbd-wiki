@@ -4,11 +4,13 @@ Sitio educativo estático. Las pruebas locales y la publicación pública son pa
 separados: `Publicar BCBD Wiki.bat` permite actualizar la VM (opción 1) o publicar
 intencionalmente en GitHub Pages (opción 2).
 
-## Mapa operativo de Daule
+## GIS Daule
 
 En `Herramientas → Mapa operativo de Daule`: cartografía local, límites de
-CONALI, susceptibilidad SGR, ríos/vías/poblados OSM y observaciones personales
-con importación/exportación. Primera base GIS sin telemetría ni simulación.
+CONALI, susceptibilidad SGR y ríos/vías/poblados OSM. En la VM hay observaciones
+compartidas con texto, fotos y videos, guardadas en SQLite y un volumen Docker
+independiente. Fondos de calles, satélite, relieve y sin fondo; zoom con rueda.
+Primera base GIS sin telemetría ni simulación. Servicio: `tools/gis/api/README.md`.
 Vista local: `node tools/gis/serve.cjs` y abrir
 http://127.0.0.1:8765/herramientas/mapa-daule/.
 Fuentes, herramientas y validación en `tools/gis/README.md`.

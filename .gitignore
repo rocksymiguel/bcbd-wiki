@@ -4,3 +4,4 @@
 # GIS runtime, original country extracts and local preview/test outputs.
 /.local/
 /tools/gis/__pycache__/
+/tools/gis/api/__pycache__/

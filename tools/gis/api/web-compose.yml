@@ -1,0 +1,21 @@
+# /opt/bcbd-web/compose.yml on the VM: keep Caddy's existing volumes and ports.
+services:
+  caddy:
+    image: caddy:2-alpine
+    container_name: bcbd-web
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - /srv/bcbd-wiki:/srv:ro
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks: [default, gis_private]
+volumes:
+  caddy_data:
+  caddy_config:
+networks:
+  gis_private:
+    external: true
+    name: bcbd-gis-private
