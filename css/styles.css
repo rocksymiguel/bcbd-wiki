@@ -1,5 +1,15 @@
+/* JetBrains Mono v2.304, self-hosted under the SIL Open Font License. */
+@font-face { font-family:"JetBrains Mono"; font-style:normal; font-weight:400; font-display:swap; src:url("../assets/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2") format("woff2"); }
+@font-face { font-family:"JetBrains Mono"; font-style:normal; font-weight:500; font-display:swap; src:url("../assets/fonts/jetbrains-mono/JetBrainsMono-Medium.woff2") format("woff2"); }
+@font-face { font-family:"JetBrains Mono"; font-style:normal; font-weight:600; font-display:swap; src:url("../assets/fonts/jetbrains-mono/JetBrainsMono-SemiBold.woff2") format("woff2"); }
+@font-face { font-family:"JetBrains Mono"; font-style:normal; font-weight:700; font-display:swap; src:url("../assets/fonts/jetbrains-mono/JetBrainsMono-Bold.woff2") format("woff2"); }
+@font-face { font-family:"JetBrains Mono"; font-style:normal; font-weight:800; font-display:swap; src:url("../assets/fonts/jetbrains-mono/JetBrainsMono-ExtraBold.woff2") format("woff2"); }
+@font-face { font-family:"JetBrains Mono"; font-style:italic; font-weight:400; font-display:swap; src:url("../assets/fonts/jetbrains-mono/JetBrainsMono-Italic.woff2") format("woff2"); }
+@font-face { font-family:"JetBrains Mono"; font-style:italic; font-weight:700; font-display:swap; src:url("../assets/fonts/jetbrains-mono/JetBrainsMono-BoldItalic.woff2") format("woff2"); }
+
 /* ====== ESTILO GENERAL ====== */
 :root {
+  --site-font: "JetBrains Mono", ui-monospace, "Cascadia Mono", "DejaVu Sans Mono", monospace;
   color-scheme: light;
   --theme-page: #f6f7fb;
   --theme-surface: #ffffff;
@@ -41,7 +51,7 @@
 }
 
 body {
-  font-family: Inter, "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial;
+  font-family: var(--site-font);
   background-color: var(--theme-page);
   color: var(--theme-text);
   -webkit-font-smoothing: antialiased;
@@ -51,6 +61,18 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+}
+
+/* Native form controls and code elements do not inherit a page's font by default. */
+button, input, select, textarea, optgroup, option, code, kbd, samp, pre {
+  font-family: var(--site-font);
+}
+
+/* Keep map controls consistent without modifying the vendored libraries. */
+body .leaflet-container, body .leaflet-tooltip,
+body .leaflet-control-zoom-in, body .leaflet-control-zoom-out,
+body .maplibregl-map {
+  font-family: var(--site-font);
 }
 
 .home-page { padding-left:0; padding-right:0; }

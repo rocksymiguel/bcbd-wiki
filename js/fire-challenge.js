@@ -51,7 +51,7 @@ function initStopwatch(idx) {
           Nombre del participante
           <input id="participant-name" placeholder="Nombre participante" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px; font-size:14px;" />
         </label>
-        <div id="sw-display" class="sw-display" style="font-size:24px; font-weight:700; font-family:monospace; min-width:120px; text-align:center;">00:00:00</div>
+        <div id="sw-display" class="sw-display" style="font-size:24px; font-weight:700; font-family:inherit; min-width:120px; text-align:center;">00:00:00</div>
       </div>
       <div class="sw-row" style="display:flex; gap:8px; flex-wrap:wrap;">
         <button id="sw-start" class="primary" style="background:#b71c1c; color:white; border:0; padding:10px 16px; border-radius:4px; cursor:pointer; font-weight:600;">Iniciar</button>

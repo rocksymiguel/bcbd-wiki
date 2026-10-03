@@ -4,6 +4,16 @@ Sitio educativo estático. Las pruebas locales y la publicación pública son pa
 separados: `Publicar BCBD Wiki.bat` permite actualizar la VM (opción 1) o publicar
 intencionalmente en GitHub Pages (opción 2).
 
+## Tipografía
+
+Todas las páginas usan JetBrains Mono v2.304 desde `assets/fonts/jetbrains-mono`,
+con su licencia OFL. La fuente se sirve localmente en WOFF2; los visitantes no
+necesitan instalarla y no se consulta Google Fonts ni otro servicio externo.
+La familia compartida cubre títulos, texto, botones, formularios, cronómetros,
+código y controles de los visores. Los símbolos ausentes usan la fuente de
+respaldo del navegador; el texto dentro de imágenes y mapas rasterizados
+pertenece a esos recursos.
+
 ## GIS Daule
 
 En `Herramientas → Mapa operativo de Daule`: cartografía local, límites de
