@@ -78,13 +78,17 @@ def positions(value):
 
 def osm_features(obj):
     collections = {name: {"type": "FeatureCollection", "features": []}
-                   for name in ["waterways", "roads", "places", "facilities"]}
+                   for name in ["waterways", "riverbanks", "roads", "places", "facilities"]}
     for element in obj["elements"]:
         tags = element.get("tags", {})
-        category = ("waterways" if tags.get("waterway") else
+        if tags.get('highway') == 'bus_stop' or tags.get('amenity') == 'bus_station' or tags.get('public_transport') in {'platform', 'stop_position'}:
+            continue
+        category = ("riverbanks" if element.get('geojson') else "waterways" if tags.get("waterway") else
                     "roads" if tags.get("highway") else
                     "places" if tags.get("place") else "facilities")
-        if element["type"] == "node":
+        if element.get('geojson'):
+            geometry = element['geojson']
+        elif element["type"] == "node":
             geometry = {"type": "Point", "coordinates": [element["lon"], element["lat"]]}
         elif element["type"] == "way" and category in ["roads", "waterways"]:
             coords = [[point["lon"], point["lat"]] for point in element.get("geometry", [])]
@@ -97,7 +101,7 @@ def osm_features(obj):
                 continue
             geometry = {"type": "Point", "coordinates": [center["lon"], center["lat"]]}
         properties = {key: tags[key] for key in ["name", "waterway", "highway", "bridge", "ref",
-                      "place", "amenity", "healthcare", "emergency", "access", "surface"] if key in tags}
+                      "place", "amenity", "healthcare", "emergency", "access", "surface", "natural", "water", "width"] if key in tags}
         properties.update({"osm_id": f"{element['type']}/{element['id']}", "source": "OpenStreetMap"})
         collections[category]["features"].append({"type": "Feature", "geometry": geometry,
                                                  "properties": properties})

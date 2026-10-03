@@ -65,6 +65,25 @@ persistencia, fecha, importación/exportación, texto seguro, móvil, prefijo de
 y recuperación de fallos. No descargan teselas públicas durante las pruebas.
 `BCBD_MAP_TEST_OUTPUT` permite capturas en una carpeta elegida.
 
-Pendiente: teléfono físico, validación con BCBD, comprobación de accesos/servicios
-y conexión a mediciones de ríos/lluvia. El registro de la LAN aún no tiene
+El panel ambiental consulta mediciones de HM002/EMAPAG publicadas por INAMHI,
+modelos Open-Meteo y mareas INOCAR de Guayaquil–Río Guayas. Conserva fechas,
+intervalos y separación entre observación, estimación y predicción.
+La luna usa Astronomy Engine local. [Conector y contratos](api/README.md).
+
+La extracción OSM ensambla polígonos de río (9 en esta descarga) además de
+líneas; donde no hay huella no se infiere el ancho. Guarumal y Palo Alto siguen
+siendo puntos sin límites de recinto inventados. El detalle de susceptibilidad
+muestra los atributos publicados SGR: morfología (`umo`), pendiente (`pen`),
+textura (`txs`), clase (`sui`) y año. No se recalcula con clima ni mareas.
+
+Fondo de calles: MapLibre GL JS 5.24.0 + adaptador Leaflet 0.1.4, ambos
+distribuidos localmente con licencias originales e integridad npm verificada.
+`street-style.json` deriva de https://tiles.openfreemap.org/styles/positron
+(consulta 2026-10-03 UTC), sin POI ni símbolos de transporte. Fuente y guía:
+https://openfreemap.org/quick_start/. Los datos vectoriales siguen en línea;
+no se descargan por adelantado. Datos © OpenStreetMap, estilo OpenMapTiles.
+Astronomy Engine 2.1.19, MIT, también verificado contra npm.
+
+Pendiente: teléfono físico, validación de campo, comprobación de accesos/servicios
+y modelo hidráulico calibrado. El registro de la LAN aún no tiene
 cuentas ni roles; añadir autenticación y HTTPS antes de exponerlo fuera de la LAN.

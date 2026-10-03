@@ -80,3 +80,28 @@ importación atómica, duplicados, límites y eliminación de adjuntos propios.
 Fuentes: [FastAPI](https://fastapi.tiangolo.com/tutorial/request-files/),
 [Pillow](https://pillow.readthedocs.io/en/stable/reference/Image.html),
 [FFmpeg](https://ffmpeg.org/ffmpeg.html).
+
+## Conector ambiental
+
+`bcbd-environment` sirve `/api/environment/{station,weather,tides}` en puerto
+interno 8001. Solo ese contenedor tiene salida a internet; no monta el volumen de
+observaciones. El contenedor de adjuntos conserva su red interna sin salida.
+Las rutas de proveedores están fijadas en código, sin proxy de URL arbitraria.
+No hay puertos publicados adicionales. La caché es en memoria: 15 minutos para
+estación/modelo y 24 horas por fecha de marea, máximo 64 entradas. Ante fallo,
+una respuesta previa lleva `stale=true`; sin respuesta previa se devuelve 503.
+
+Estación HM002/64385, EMAPAG-EP (SAICA), visor INAMHI. Cada sensor tiene su
+propia fecha. Se descartan valores no finitos, fuera de rango y futuros; las
+lecturas antiguas se conservan con fecha y aviso. La precipitación es acumulada
+horaria y el datum de nivel no consta en la respuesta. Open-Meteo es un modelo,
+con intervalo de acumulación y punto de rejilla visibles en la API. No confirma
+precipitación puntual ni se mezcla con observaciones medidas.
+
+INOCAR: estación 374, Guayaquil–Río Guayas; tabla diaria pública, predicción
+horaria local UTC−5, alturas MLWS. No se interpolan niveles ni se trasladan a
+Daule. La fecha avanza al día actual en una página abierta; elegir otra fecha
+conserva esa selección. Luna calculada localmente con Astronomy Engine 2.1.19.
+
+Prueba del conector sin red: agregar `python test_environment.py` al comando del
+contenedor de pruebas. No se escriben registros reales.

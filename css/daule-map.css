@@ -55,6 +55,17 @@ body.map-page main.map-content { padding: 0 clamp(16px, 3vw, 48px); margin:24px 
 .map-detail dl { display:grid; grid-template-columns:90px minmax(0,1fr); font-size:13px; gap:7px; }
 .map-detail dt { color:var(--theme-muted); }.map-detail dd { margin:0; }
 .map-canvas-column { min-width:0; }
+.map-environment { border:1px solid var(--theme-border); border-radius:12px; background:var(--theme-surface); padding:16px; margin-bottom:14px; }
+.env-heading,.env-tide-heading { display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; }
+.env-heading h2 { margin:0; font-size:19px; }.env-heading button { font-size:12px; }
+.env-tide-heading h3 { font-size:14px; margin:12px 0; }.env-tide-heading>div { display:flex; flex-wrap:wrap; align-items:center; gap:8px; }
+.env-tide-heading label,.env-model label { font-size:12px; }.map-environment input,.map-environment select { min-width:0; max-width:100%; font:inherit; color:var(--theme-text); background:var(--theme-surface); border:1px solid var(--theme-border); border-radius:5px; padding:6px; }
+.env-station,.env-model { border-bottom:1px solid var(--theme-border); padding:12px 0 8px; }.map-environment summary { cursor:pointer; font-size:13px; font-weight:600; margin-bottom:8px; }
+.env-metrics,.env-tides { display:flex; flex-wrap:wrap; gap:8px; }.env-metric { background:var(--theme-surface-muted); border:1px solid var(--theme-border); border-radius:7px; padding:9px 11px; flex:1 1 130px; min-width:0; display:flex; flex-direction:column; gap:5px; }
+.env-metric span { font-size:11px; color:var(--theme-muted); }.env-metric strong { font-size:17px; font-variant-numeric:tabular-nums; }.env-metric small { font-size:11px; line-height:1.4; color:var(--theme-muted); }
+.env-old { border-color:#b7791f; }.env-error { color:var(--theme-text); border-left:3px solid #b7791f; padding-left:8px; }
+.env-tides .env-metric { flex-basis:100px; }.env-moon { display:flex; align-items:center; gap:10px; margin:12px 0; font-size:13px; }.env-moon-icon { font-size:25px; }.env-notice { margin-bottom:0; }
+.leaflet-maplibre-gl { pointer-events:none; }
 #daule-map { height:680px; height:clamp(520px,72vh,850px); background:#eaf0e8; border:1px solid var(--theme-border); border-radius:12px; z-index:0; }
 :root[data-theme="dark"] #daule-map { background:#182c32; }
 .map-status-row { display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between; font-size:12px; color:var(--theme-muted); align-items:center; }

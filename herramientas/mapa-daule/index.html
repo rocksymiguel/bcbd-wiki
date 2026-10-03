@@ -7,6 +7,7 @@
   <title>GIS Daule | BCBD</title>
   <link rel="stylesheet" href="../../css/styles.css">
   <link rel="stylesheet" href="../../js/vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="../../js/vendor/maplibre/maplibre-gl.css">
   <link rel="stylesheet" href="../../css/daule-map.css">
 </head>
 <body class="map-page">
@@ -14,8 +15,8 @@
   <main class="map-content">
     <a class="map-back" href="../index.html">← Herramientas</a>
     <div class="map-heading">
-      <div><p class="map-eyebrow">Benemérito Cuerpo de Bomberos de Daule</p><h1>GIS Daule</h1><p>Mapa operativo · Territorio, accesos y observaciones de campo.</p></div>
-      <span class="map-stage">Base cartográfica · Sin telemetría</span>
+      <div><h1>GIS Daule</h1><p>Mapa operativo · Territorio, accesos y observaciones de campo.</p></div>
+      <span class="map-stage">Cartografía · Ambiente · Observaciones</span>
     </div>
     <div class="map-workspace">
       <aside class="map-sidebar" aria-label="Explorar el mapa">
@@ -40,9 +41,10 @@
           <p class="map-caption">Susceptibilidad territorial · Fuente SGR</p>
           <div class="map-risk-key"><span><i class="risk-high"></i>Alta</span><span><i class="risk-medium"></i>Media</span><span><i class="risk-low"></i>Baja</span><span><i class="risk-na"></i>No aplicable / sin</span></div>
           <p class="map-caption">No indica inundación actual, profundidad ni probabilidad para una fecha.</p>
+          <p class="map-caption">La capa SGR incluye morfología del terreno, pendiente y textura del suelo. Al seleccionar una zona se muestran esos atributos. La clasificación oficial se conserva; su servicio no documenta los pesos ni umbrales usados. La lluvia y las mareas del panel no recalculan esta capa.</p>
         </div>
         <fieldset class="map-backgrounds"><legend>Fondo del mapa</legend>
-          <label><input id="map-basemap" data-basemap="streets" type="checkbox" checked>Calles en línea <small>OpenStreetMap · Requiere internet</small></label>
+          <label><input id="map-basemap" data-basemap="streets" type="checkbox" checked>Calles en línea <small>OpenFreeMap / OSM · Sin paradas de buses</small></label>
           <label><input data-basemap="satellite" type="checkbox">Vista satelital <small>Esri World Imagery · No es una imagen en vivo</small></label>
           <label><input data-basemap="relief" type="checkbox">Relieve sombreado <small>Esri World Hillshade · No mide altitud en un punto</small></label>
           <label><input data-basemap="none" type="checkbox">Nada · Sin fondo <small>Solo las capas y observaciones</small></label>
@@ -52,6 +54,15 @@
         <section id="map-detail" class="map-detail" aria-labelledby="map-detail-title" aria-live="polite"><h2 id="map-detail-title">Explora el territorio</h2><p>Selecciona un elemento para consultar su fuente y características.</p></section>
       </aside>
       <section class="map-canvas-column" aria-label="Cartografía">
+        <section class="map-environment" aria-label="Clima, mareas y luna">
+          <div class="env-heading"><h2>Ambiente y mareas</h2><button id="env-refresh" type="button">Actualizar</button></div>
+          <details class="env-station" open><summary>Mediciones de estación · Daule · EMAPAG / INAMHI</summary><div id="env-station-values" class="env-metrics"><p>Cargando registros…</p></div><p id="env-station-status" class="map-caption" role="status"></p></details>
+          <details class="env-model"><summary>Referencia meteorológica de modelo · Open-Meteo</summary><label for="env-point">Punto de referencia</label> <select id="env-point"><option value="-1.861,-79.977">Daule</option></select><div id="env-weather-values" class="env-metrics"></div><p id="env-weather-status" class="map-caption" role="status">Consultando el modelo…</p></details>
+          <div class="env-tide-heading"><h3>Marea prevista · Guayaquil–Río Guayas</h3><div><label for="env-day">Fecha</label> <input id="env-day" type="date" min="2003-01-01"><button id="env-today" type="button">Hoy</button></div></div>
+          <div id="env-tides" class="env-tides" aria-live="polite"><p>Consultando INOCAR…</p></div><p id="env-tide-status" class="map-caption" role="status"></p>
+          <div id="env-moon" class="env-moon" aria-live="polite"></div>
+          <p class="map-caption env-notice">Horas de Ecuador continental (UTC−5). Las mareas son predicciones de INOCAR respecto a MLWS; no son niveles medidos en Daule. La fase lunar se calcula para la fecha seleccionada. Cada sensor muestra su propia hora; una lectura antigua no describe las condiciones actuales.</p>
+        </section>
         <div id="daule-map" role="region" aria-label="Mapa interactivo de Daule" aria-busy="true"></div>
         <div class="map-status-row"><p id="map-status" role="status">Cargando cartografía local…</p><span id="map-coordinate"></span></div>
         <p id="map-tile-status" class="map-caption" role="status" hidden></p>
@@ -67,9 +78,11 @@
     <details class="map-sources"><summary>Fuentes, fecha y cobertura de los datos</summary>
       <p id="map-source-date"></p><ul id="map-source-list"></ul>
       <p>La capa territorial publicada por CONALI incluye Daule, Juan Bautista Aguirre, Laurel, Limonal y Los Lojas. La Aurora se incorpora como referencia de sector donde existe en la cartografía, sin inventar un límite parroquial separado.</p>
+      <p>Guarumal y Palo Alto son puntos de referencia de recintos. No se dispone aquí de polígonos oficiales que delimiten su extensión; el contorno de una parroquia no es el límite de un recinto. Los polígonos de agua representan la huella cartografiada en OpenStreetMap, no la orilla actual; donde no hay un polígono se conserva la línea del cauce.</p>
       <p>Los datos externos al cantón son contexto geográfico. La ausencia de un elemento o de una zona coloreada no confirma ausencia de amenaza. Las vías y servicios requieren comprobación de campo; no hay información de transitabilidad ni disponibilidad de recursos.</p>
-      <p>Estas capas son descargas fechadas, no telemetría en tiempo real. La lluvia, los niveles de ríos, las mareas y las simulaciones aún no están conectados. Las observaciones compartidas se consultan al abrir la página y cada 30 segundos mientras está visible.</p>
-      <p>Fondos en línea: OpenStreetMap, <a href="https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer" target="_blank" rel="noopener">Esri World Imagery</a> y <a href="https://services.arcgisonline.com/ArcGIS/rest/services/Elevation/World_Hillshade/MapServer" target="_blank" rel="noopener">Esri World Hillshade</a>. La imagen satelital y el relieve no muestran condiciones en vivo. El relieve es una referencia visual; aún no hay consulta de altitud ni modelo de inundación.</p>
+      <p>Las capas cartográficas son descargas fechadas. El panel consulta registros de EMAPAG publicados en el <a href="https://inamhi.gob.ec/info/visor/" target="_blank" rel="noopener">visor INAMHI</a> y estimaciones de <a href="https://open-meteo.com/en/docs" target="_blank" rel="noopener">Open-Meteo</a> cada 15 minutos mientras está visible. La precipitación de estación es acumulada horaria; el modelo muestra su propio intervalo. Los relojes se presentan tal como los entrega cada fuente. El datum del sensor de nivel no está documentado: no se compara con MLWS ni se infiere desbordamiento.</p>
+      <p>El calendario usa la <a href="https://www.inocar.mil.ec/mareas/form_mareas.php" target="_blank" rel="noopener">tabla de mareas INOCAR</a> de Guayaquil–Río Guayas (estación 374), referencia aguas abajo. MLWS es el promedio de bajamares de sicigia. No se traslada su altura al río Daule. Luna: cálculo local con <a href="https://github.com/cosinekitty/astronomy" target="_blank" rel="noopener">Astronomy Engine</a>; no es una lectura de sensor ni un predictor de inundación. Las observaciones compartidas se consultan cada 30 segundos. Aún no hay simulación hidrológica.</p>
+      <p>Fondos en línea: <a href="https://openfreemap.org/quick_start/" target="_blank" rel="noopener">OpenFreeMap</a> con estilo local sin puntos de transporte, <a href="https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer" target="_blank" rel="noopener">Esri World Imagery</a> y <a href="https://services.arcgisonline.com/ArcGIS/rest/services/Elevation/World_Hillshade/MapServer" target="_blank" rel="noopener">Esri World Hillshade</a>. La imagen satelital y el relieve no muestran condiciones en vivo. El relieve es una referencia visual; aún no hay consulta de altitud ni modelo de inundación.</p>
       <p><a href="../../assets/gis/daule/manifest.json" download>Descargar inventario de fuentes</a> · <a href="https://www.openstreetmap.org/fixthemap" target="_blank" rel="noopener noreferrer">Informar un problema cartográfico en OpenStreetMap</a></p>
     </details>
   </main>
@@ -89,6 +102,10 @@
   <div id="footer"></div>
   <script src="../../js/layout.js"></script>
   <script src="../../js/vendor/leaflet/leaflet.js"></script>
+  <script src="../../js/vendor/maplibre/maplibre-gl.js"></script>
+  <script src="../../js/vendor/maplibre-leaflet/leaflet-maplibre-gl.js"></script>
+  <script src="../../js/vendor/astronomy/astronomy.browser.min.js"></script>
   <script src="../../js/daule-map.js"></script>
+  <script src="../../js/daule-environment.js"></script>
 </body>
 </html>

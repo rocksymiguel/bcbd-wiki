@@ -1,4 +1,22 @@
 services:
+  environment:
+    image: bcbd-gis:local
+    container_name: bcbd-environment
+    command: [uvicorn, "environment:app", --host, "0.0.0.0", --port, "8001", --no-proxy-headers]
+    restart: unless-stopped
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    pids_limit: 40
+    mem_limit: 192m
+    cpus: 0.5
+    tmpfs: ["/tmp:size=16m,mode=1777,noexec,nosuid,nodev"]
+    networks: [gis_private, environment_out]
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8001/api/environment/health', timeout=3)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
   gis:
     build: .
     image: bcbd-gis:local
@@ -26,6 +44,8 @@ volumes:
   gis_data:
     name: bcbd-gis-data
 networks:
+  environment_out:
+    name: bcbd-environment-out
   gis_private:
     name: bcbd-gis-private
     internal: true

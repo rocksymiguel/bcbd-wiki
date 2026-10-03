@@ -21,11 +21,21 @@ assert.equal(read('parishes.geojson').features.length,5);
 for(const name of ['daule','banife','pula']) assert(read('waterways.geojson').features.some(f =>
   (f.properties.name || '').toLowerCase().includes(name)),'missing river '+name);
 assert(read('places.geojson').features.some(f => (f.properties.name || '').toLowerCase()==='la aurora'),'La Aurora location');
+assert(read('riverbanks.geojson').features.some(f=>f.properties.name==='Río Daule' && f.geometry.type==='MultiPolygon'),'Daule geographic water footprint');
+assert(read('street-style.json').layers.every(l=>l['source-layer']!=='poi'&&!/bus|transit/i.test(l.id)),'street style excludes bus/transit POIs');
 
 // A deterministic HTTP fixture exercises the shared frontend; the real Python
 // service has independent image/video, security and persistence integration tests.
 let records=[],sessionNumber=0;
 const server=http.createServer(async (req,res) => {
+  if(req.url.startsWith('/api/environment/')) {
+    res.setHeader('Content-Type','application/json');
+    const now=new Date().toISOString(), old=new Date(Date.now()-8*3600000).toISOString();
+    if(req.url.includes('/station'))return res.end(JSON.stringify({code:'HM002',measurements:{precipitation_hour:{value:1.9,at:now},temperature:{value:24.9,at:old},river_level:{value:4.13,at:old}},fetched_at:now,stale:false}));
+    if(req.url.includes('/weather'))return res.end(JSON.stringify({values:{temperature_2m:25,precipitation:0,wind_speed_10m:3,wind_direction_10m:101,wind_gusts_10m:12},valid_at:now,interval_seconds:900,fetched_at:now,stale:false}));
+    const day=new URL(req.url,'http://fixture').searchParams.get('day');
+    return res.end(JSON.stringify({day,days:{[day]:[{kind:'bajamar',time:'05:46',height_m:1.04,at:day+'T05:46:00-05:00'},{kind:'pleamar',time:'10:44',height_m:3.94,at:day+'T10:44:00-05:00'}]},fetched_at:now,stale:false}));
+  }
   if(!req.url.startsWith('/api/gis/'))return handler(req,res);
   const cookie=/bcbd_gis_session=([^;]+)/.exec(req.headers.cookie||'')?.[1]||'';
   const reply=data=>{res.setHeader('Content-Type','application/json');res.end(JSON.stringify(data));};
@@ -63,12 +73,20 @@ const server=http.createServer(async (req,res) => {
       const page=await context.newPage(),errors=[],external=[];
       page.on('pageerror',error => errors.push(error.message));
       page.on('request',request => {if(!request.url().startsWith(base))external.push(request.url());});
-      await page.route('https://tile.openstreetmap.org/**',route => route.abort());
+      await page.route('https://tiles.openfreemap.org/**',route => route.abort());
       await page.goto(base+(config.prefix||'')+'/herramientas/mapa-daule/');
       await page.locator('#daule-map[data-ready="true"]').waitFor({timeout:30000});
-      assert(external.length>0 && external.every(url=>url.startsWith('https://tile.openstreetmap.org/')),'only viewport tiles may be requested externally by default');
+      await page.waitForFunction(()=>document.querySelector('#env-tides').textContent.includes('Pleamar'));
+      assert(external.every(url=>url.startsWith('https://tiles.openfreemap.org/')),'only vector street provider may be requested externally by default');
       assert.match(await page.locator('#map-source-date').textContent(),/Ecuador/);
-      assert.equal(await page.locator('#map-source-list li').count(),7);
+      assert.equal(await page.locator('#map-source-list li').count(),8);
+      assert.equal(await page.locator('.map-eyebrow').count(),0,'no institutional ownership line above GIS title');
+      assert.match(await page.locator('#env-station-values').innerText(),/1,9|1\.9/);
+      assert.match(await page.locator('#env-station-values .env-old').first().innerText(),/Lectura antigua/);
+      assert.match(await page.locator('#env-moon').innerText(),/iluminada/);
+      await page.locator('#env-day').fill('2026-10-03');await page.locator('#env-day').dispatchEvent('change');
+      await page.waitForFunction(()=>document.querySelector('#env-tide-status').textContent.includes('2026-10-03'));
+      assert.match(await page.locator('#env-tides').innerText(),/MLWS/);
       const layout=await page.evaluate(() => ({width:innerWidth,doc:document.documentElement.scrollWidth,
         map:document.querySelector('#daule-map').clientWidth,canvas:document.querySelectorAll('#daule-map canvas').length}));
       assert(layout.doc<=layout.width+1,JSON.stringify(layout));assert(layout.map>270 && layout.canvas>0);
@@ -77,6 +95,10 @@ const server=http.createServer(async (req,res) => {
       assert.match(await page.locator('#map-detail').innerText(),/Banife/);
       await page.locator('#map-sector').selectOption({label:'La Aurora'});
       assert.match(await page.locator('#map-detail').innerText(),/La Aurora/);
+      await page.locator('#map-sector').selectOption({label:'Guarumal'});
+      assert.match(await page.locator('#map-detail').innerText(),/No delimita/);
+      await page.locator('#map-sector').selectOption({label:'Palo Alto'});
+      assert.match(await page.locator('#map-detail').innerText(),/Palo Alto/);
       await page.locator('[data-layer="susceptibility"]').check();
       assert(await page.locator('#map-hazard-legend').isVisible());
       await page.locator('[data-layer="susceptibility"]').uncheck();
@@ -112,7 +134,7 @@ const server=http.createServer(async (req,res) => {
       await page.waitForFunction(()=>document.querySelector('#map-report-list').textContent.includes('Prueba de campo'));
       assert.equal(records[0].properties.observed_at,'2026-10-02T19:30:00.000Z');
       const guest=await browser.newContext(config),guestPage=await guest.newPage();
-      await guestPage.route('https://tile.openstreetmap.org/**',r=>r.abort());
+      await guestPage.route('https://tiles.openfreemap.org/**',r=>r.abort());
       await guestPage.goto(base+(config.prefix||'')+'/herramientas/mapa-daule/');
       await guestPage.waitForFunction(()=>document.querySelector('#map-report-list').textContent.includes('Prueba de campo'));
       assert.equal(await guestPage.getByRole('button',{name:'Eliminar observación',exact:false}).count(),0);await guest.close();
@@ -143,9 +165,9 @@ const server=http.createServer(async (req,res) => {
     await page.goto(base+'/herramientas/mapa-daule/');
     await page.locator('#map-retry').waitFor();
     assert(!(await page.locator('#map-add').isEnabled()));
-    await page.route('https://tile.openstreetmap.org/**',route => route.abort());
+    await page.route('https://tiles.openfreemap.org/**',route => route.abort());
     fail=false;await page.locator('#map-retry').click();await page.locator('#daule-map[data-ready="true"]').waitFor();
-    await page.route('https://tile.openstreetmap.org/**',route => route.abort());
+    await page.route('https://tiles.openfreemap.org/**',route => route.abort());
     await page.waitForFunction(()=>!document.querySelector('#map-add').disabled);
     await page.locator('#map-tile-status').waitFor();
     assert(await page.locator('#map-add').isEnabled(),'tile failure cannot disable local layers');

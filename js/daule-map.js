@@ -1,9 +1,9 @@
-/* BCBD: local cartography and shared VM observations. No live telemetry. */
+/* BCBD: dated local cartography and shared VM observations. */
 (function () {
   'use strict';
   const dataBase = new URL('../assets/gis/daule/', document.currentScript.src);
   const el = id => document.getElementById(id);
-  const names = {canton:'Límite cantonal',parishes:'Parroquias',waterways:'Ríos, esteros y canales',
+  const names = {canton:'Límite cantonal',parishes:'Parroquias',riverbanks:'Huella cartografiada de ríos',waterways:'Ríos, esteros y canales',
     roads:'Vías',places:'Poblados y sectores',facilities:'Servicios cartografiados',susceptibility:'Susceptibilidad a inundación'};
   const labels = {observation:'Observación',flood:'Inundación observada',closure:'Acceso comprometido',resource:'Recurso por verificar'};
   const storageKey = 'bcbd-daule-observations-v1';
@@ -19,6 +19,18 @@
   };
   const fold = value => String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
   const sourceFor = key => manifest.sources.find(source => source.id === key);
+  const controlFor = key => key==='riverbanks'?'waterways':key;
+  function parishAt(feature) {
+    if(feature.geometry.type!=='Point')return null;
+    const [x,y]=feature.geometry.coordinates;
+    const inRing=ring=>{let inside=false;for(let i=0,j=ring.length-1;i<ring.length;j=i++){
+      const [xi,yi]=ring[i],[xj,yj]=ring[j];if((yi>y)!==(yj>y)&&x<(xj-xi)*(y-yi)/(yj-yi)+xi)inside=!inside;
+    }return inside;};
+    return collections.parishes.features.find(f=>{
+      const polygons=f.geometry.type==='MultiPolygon'?f.geometry.coordinates:[f.geometry.coordinates];
+      return polygons.some(rings=>inRing(rings[0])&&!rings.slice(1).some(inRing));
+    })?.properties.name;
+  }
   const titleFor = f => f.properties.name || f.properties.ref || ({fire_station:'Estación de bomberos',
     hospital:'Hospital',clinic:'Centro de atención',police:'Policía'}[f.properties.amenity]) ||
     (f.properties.waterway ? 'Cauce sin nombre registrado' : 'Elemento sin nombre registrado');
@@ -38,7 +50,8 @@
   function selected(feature,key,layer,zoom) {
     if (!map.hasLayer(layers[key])) {
       map.addLayer(layers[key]);
-      document.querySelector(`[data-layer="${key}"]`).checked = true;
+      document.querySelector(`[data-layer="${controlFor(key)}"]`).checked = true;
+      if(key==='riverbanks'||key==='waterways'){layers.riverbanks.addTo(map);layers.waterways.addTo(map);}
       if (key === 'susceptibility') el('map-hazard-legend').hidden = false;
     }
     if (selection) selection.remove();
@@ -53,25 +66,29 @@
       ['Capa',names[key]],['Fuente',key === 'canton' || key === 'parishes' ? 'CONALI · portal SGR' : source.source],
       ['Descarga',dateFormat.format(new Date(source.retrieved_at))],
       ['Referencia',p.ref || p.dpa_parroq || p.dpa_canton],['Tipo',p.waterway || p.place || p.amenity || p.highway],
-      ['Superficie',p.surface],['Puente',p.bridge],['Susceptibilidad',p.sui],['Año de capa',p.anno || p.dpa_anio]
+      ['Superficie',p.surface],['Puente',p.bridge],['Susceptibilidad',p.sui],['Morfología',p.umo],['Pendiente',p.pen],['Textura del suelo',p.txs],['Año de capa',p.anno || p.dpa_anio],
+      ['Parroquia en esta capa',key==='places'?parishAt(feature):null]
     ],key === 'susceptibility' ? 'Clasificación territorial de referencia. No es una inundación actual ni una simulación.' :
       key === 'roads' ? 'Transitabilidad desconocida. Esta línea no confirma que el acceso esté habilitado.' :
       key === 'facilities' ? 'Referencia de OpenStreetMap, pendiente de comprobación. No informa disponibilidad operativa.' :
-      key === 'waterways' ? 'Geometría cartográfica. Sin mediciones de nivel, caudal o profundidad.' : 'Referencia cartográfica para localizar el sector.');
+      key === 'riverbanks' ? 'Huella de agua cartografiada en OpenStreetMap: representa su extensión geográfica sin inventar un ancho. No es la orilla actual ni la extensión de una inundación.' :
+      key === 'waterways' ? 'Línea de referencia del cauce; su grosor no mide el ancho del río. Donde existe, el área azul muestra su huella cartográfica.' :
+      key === 'places' ? 'Punto de referencia del sector. No delimita la extensión del recinto; el límite parroquial es una capa distinta.' : 'Referencia cartográfica para localizar el sector.');
   }
 
   function layerStyle(key,f) {
     const dark = document.documentElement.dataset.theme === 'dark';
     if (key === 'canton') return {color:dark?'#c4b5fd':'#7c3aed',weight:2.5,dashArray:'9 5',fill:false};
     if (key === 'parishes') return {color:dark?'#94a3b8':'#64748b',weight:1.2,dashArray:'5 5',fill:false};
-    if (key === 'waterways') return {color:dark?'#38bdf8':'#0284c7',weight:f.properties.waterway === 'river'?3:1.3};
+    if (key === 'riverbanks') return {color:dark?'#38bdf8':'#0284c7',weight:.6,fillColor:dark?'#38bdf8':'#0284c7',fillOpacity:.38};
+    if (key === 'waterways') return {color:dark?'#38bdf8':'#0284c7',weight:/daule|babahoyo/i.test(f.properties.name||'')?1:f.properties.waterway === 'river'?2:1.3};
     if (key === 'roads') return {color:dark?'#7c9297':'#889490',weight:/^(trunk|primary|motorway)$/.test(f.properties.highway)?2.3:1,opacity:.8};
     const colors = {ALTA:'#dc2626',MEDIA:'#f59e0b',BAJA:'#eab308','NO APLICABLE':'#94a3b8',SIN:'#94a3b8'};
     return {color:colors[f.properties.sui] || '#94a3b8',weight:.25,fillOpacity:.28};
   }
 
   function addLayer(key,data) {
-    layers[key] = L.geoJSON(data,{pane:key === 'susceptibility'?'hazard':key === 'roads'?'roads':key === 'waterways'?'rivers':'references',
+    layers[key] = L.geoJSON(data,{pane:key === 'susceptibility'?'hazard':key === 'roads'?'roads':key === 'riverbanks'?'riverbanks':key === 'waterways'?'rivers':'references',
       style:f => layerStyle(key,f),
       pointToLayer:(f,latlng) => L.circleMarker(latlng,{radius:key==='facilities'?6:4,color:key==='facilities'?'#7c3aed':'#334155',
         weight:1.5,fillColor:key==='facilities'?'#a78bfa':'#f8fafc',fillOpacity:1}),
@@ -83,13 +100,13 @@
         }
         if (feature.properties.name || feature.properties.ref) index.push({feature,key,layer,title:titleFor(feature)});
       }});
-    if (document.querySelector(`[data-layer="${key}"]`).checked) layers[key].addTo(map);
+    if (document.querySelector(`[data-layer="${controlFor(key)}"]`).checked) layers[key].addTo(map);
   }
 
   function updateLabels() {
     // Display a collision-free subset at each zoom; all sites remain searchable.
     const occupied=[], bounds=map.getBounds(), mapRect=map.getContainer().getBoundingClientRect();
-    const main=['daule','la aurora','laurel','limonal','juan bautista aguirre','los lojas'];
+    const main=['daule','la aurora','laurel','limonal','juan bautista aguirre','los lojas','guarumal','palo alto'];
     const priority=item => {const i=main.indexOf(fold(item.feature.properties.name));return i<0?100:i;};
     const fits=box => box.left>=mapRect.left+40 && box.right<=mapRect.right-6 && box.top>=mapRect.top+8 && box.bottom<=mapRect.bottom-25 &&
       !occupied.some(r => box.left<r.right+9 && box.right>r.left-9 && box.top<r.bottom+7 && box.bottom>r.top-7);
@@ -329,7 +346,8 @@
   function setupBackground() {
     // No bulk download or prefetch; fetch only the viewport the visitor opens.
     const backgrounds={
-      streets:L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}),
+      streets:L.maplibreGL({style:new URL('street-style.json',dataBase).href,interactive:false,attributionControl:false,
+        attribution:'<a href="https://openfreemap.org/">OpenFreeMap</a> · © <a href="https://www.openmaptiles.org/">OpenMapTiles</a> · <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}),
       satellite:L.tileLayer('https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:'Imagery © Esri, Vantor, Earthstar Geographics, GIS User Community'}),
       relief:L.tileLayer('https://services.arcgisonline.com/ArcGIS/rest/services/Elevation/World_Hillshade/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:'Relief: Esri, Vantor, Airbus DS, USGS, NGA, NASA, CGIAR, N Robinson, NCEAS, NLS, OS, NMA, Geodatastyrelsen, Rijkswaterstaat, GSA, Geoland, FEMA, Intermap, GIS User Community'})
     };
@@ -339,10 +357,22 @@
       el('map-tile-status').hidden=false;el('map-tile-status').textContent='El fondo en línea no está disponible. Puedes elegir otro o usar las capas locales sin fondo.';
     }));
     const select=name => {
-      Object.values(backgrounds).forEach(layer=>layer.remove());active=name;
+      Object.values(backgrounds).filter(Boolean).forEach(layer=>layer.remove());active=name;
       el('map-tile-status').hidden=true;
       document.querySelectorAll('[data-basemap]').forEach(input=>input.checked=input.dataset.basemap===name);
-      if(backgrounds[name])backgrounds[name].addTo(map);
+      if(backgrounds[name]) {
+        try {backgrounds[name].addTo(map);} catch(error) {
+          // A device without WebGL must still be able to use local cartography.
+          const broken=backgrounds[name];try{broken.remove();}catch{}
+          backgrounds[name]=null;active='none';
+          document.querySelectorAll('[data-basemap]').forEach(input=>input.checked=input.dataset.basemap==='none');
+          el('map-tile-status').hidden=false;el('map-tile-status').textContent='Este navegador no pudo abrir el fondo vectorial. Las capas locales están disponibles sin fondo.';return;
+        }
+        if(name==='streets')backgrounds.streets.getMaplibreMap().on('error',()=>{
+          if(active!=='streets')return;el('map-tile-status').hidden=false;
+          el('map-tile-status').textContent='No se pudo cargar parte del fondo de calles. Las capas locales siguen disponibles; puedes elegir Nada o reactivar Calles.';
+        });
+      }
     };
     document.querySelectorAll('[data-basemap]').forEach(input=>input.addEventListener('change',()=>select(input.checked?input.dataset.basemap:'none')));
     select(active);
@@ -370,21 +400,22 @@
       manifest=results[0]; keys.forEach((key,i) => collections[key]=results[i+1]);
       if(!map) {
         map=L.map('daule-map',{preferCanvas:true,scrollWheelZoom:true,minZoom:9,maxZoom:19});
-        [['hazard',210],['roads',250],['rivers',300],['references',350],['selection',410],['observations',420]].forEach(([name,z]) => {map.createPane(name).style.zIndex=z;});
+        [['hazard',210],['roads',250],['riverbanks',280],['rivers',300],['references',350],['selection',410],['observations',420]].forEach(([name,z]) => {map.createPane(name).style.zIndex=z;});
         map.attributionControl.addAttribution('Datos © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> (ODbL) · CONALI / SGR');
         L.control.scale({imperial:false}).addTo(map);
         keys.forEach(key => addLayer(key,collections[key]));
+        map.fitBounds(layers.canton.getBounds(),{padding:[25,25]});
         setupReports();setupBackground();
         document.querySelectorAll('[data-layer]').forEach(input => input.addEventListener('change',() => {
           if(input.checked)layers[input.dataset.layer].addTo(map);else layers[input.dataset.layer].remove();
+          if(input.dataset.layer==='waterways'){if(input.checked)layers.riverbanks.addTo(map);else layers.riverbanks.remove();}
           if(selection){selection.remove();selection=null;}
           if(input.dataset.layer==='susceptibility')el('map-hazard-legend').hidden=!input.checked;
           updateLabels();
         }));
         const select=el('map-sector');
         const sectorItems=index.filter(item => item.key==='parishes');
-        const aurora=index.find(item => item.key==='places' && fold(item.title)==='la aurora');
-        if(aurora)sectorItems.push(aurora);
+        ['la aurora','guarumal','palo alto'].forEach(name=>{const item=index.find(item=>item.key==='places'&&fold(item.title)===name);if(item)sectorItems.push(item);});
         sectorItems.forEach((item,i) => {const option=node('option',item.title);option.value=String(i);select.append(option);});
         select.addEventListener('change',() => {if(select.value==='')map.fitBounds(layers.canton.getBounds(),{padding:[25,25]});
           else {const item=sectorItems[Number(select.value)];selected(item.feature,item.key,item.layer,true);}});

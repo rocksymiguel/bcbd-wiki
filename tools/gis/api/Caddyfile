@@ -1,4 +1,7 @@
 :80 {
+  handle /api/environment/* {
+    reverse_proxy bcbd-environment:8001
+  }
   handle /api/gis/* {
     request_body {
       max_size 210MB

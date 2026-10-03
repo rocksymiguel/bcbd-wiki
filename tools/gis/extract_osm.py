@@ -24,6 +24,8 @@ class Extract(osmium.SimpleHandler):
         super().__init__()
         self.bbox = bbox
         self.elements = []
+        self.geometry_factory = osmium.geom.GeoJSONFactory()
+        self.area_errors = 0
 
     def inside(self, lon, lat):
         w, s, e, n = self.bbox
@@ -55,6 +57,21 @@ class Extract(osmium.SimpleHandler):
                               'lat': (min(c[1] for c in coords)+max(c[1] for c in coords))/2}
         self.elements.append(item)
 
+    def area(self, obj):
+        tags = dict(obj.tags)
+        water = tags.get('natural') == 'water' and tags.get('water') == 'river'
+        if not water and tags.get('waterway') != 'riverbank':
+            return
+        try:
+            geometry = json.loads(self.geometry_factory.create_multipolygon(obj))
+            coords = list(positions(geometry['coordinates']))
+            if not any(self.inside(c[0], c[1]) for c in coords):
+                return
+            self.elements.append({'type': 'way' if obj.from_way() else 'relation',
+                                  'id': obj.orig_id(), 'tags': tags, 'geojson': geometry})
+        except (RuntimeError, ValueError):
+            self.area_errors += 1
+
 
 def main():
     parser = argparse.ArgumentParser()
@@ -79,8 +96,9 @@ def main():
         'url': original['url'], 'retrieved_at': original['retrieved_at'],
         'extracted_at': datetime.now(timezone.utc).isoformat(), 'sha256': hashlib.sha256(content).hexdigest(),
         'original_pbf_sha256': original['sha256'], 'original_pbf_md5': original['md5'],
-        'bbox': bbox, 'method': 'PyOsmium nodes and ways with a vertex in the context rectangle; no relations.',
-        'omissions': 'Footpaths, tracks, service roads, multipolygon/relation-only facilities and areas are not extracted.'})
+        'bbox': bbox, 'method': 'PyOsmium nodes/ways and assembled river multipolygons with a vertex in the context rectangle.',
+        'area_errors': handler.area_errors,
+        'omissions': 'Footpaths, tracks, service roads and multipolygon/relation-only facilities are not extracted. Missing riverbanks are not inferred from line width.'})
     print('OSM extract:', len(handler.elements), 'elements. Data timestamp:', timestamp, flush=True)
 
 
