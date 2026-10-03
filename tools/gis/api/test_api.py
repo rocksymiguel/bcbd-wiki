@@ -89,6 +89,17 @@ class API(unittest.TestCase):
         self.assertEqual(self.create('fake-video', [('media', ('video.mp4', b'<html>bad</html>', 'video/mp4'))]).status_code, 422)
         self.client.delete('/api/gis/reports/' + r.json()['id'], headers=self.headers)
 
+    def test_individual_file_size_limits(self):
+        # Sparse files exercise real byte limits without allocating huge buffers.
+        source = Path(work.name) / 'oversized'
+        for name, limit in [('photo.jpg', service.MAX_IMAGE), ('video.mp4', service.MAX_VIDEO)]:
+            with source.open('wb') as target:
+                target.truncate(limit + 1)
+            with self.assertRaises(service.HTTPException) as raised:
+                service.normalize(source, name, Path(work.name) / 'output')
+            self.assertEqual(raised.exception.status_code, 413)
+        source.unlink()
+
     def test_import_atomicity_dedup_and_limits(self):
         body = {'type': 'FeatureCollection', 'features': [feature('import')]}
         r = self.client.post('/api/gis/import', headers=self.headers, json=body)

@@ -76,7 +76,7 @@
       pointToLayer:(f,latlng) => L.circleMarker(latlng,{radius:key==='facilities'?6:4,color:key==='facilities'?'#7c3aed':'#334155',
         weight:1.5,fillColor:key==='facilities'?'#a78bfa':'#f8fafc',fillOpacity:1}),
       onEachFeature:(feature,layer) => {
-        layer.on('click',event => { L.DomEvent.stopPropagation(event); if(!adding) selected(feature,key,layer,false); });
+        layer.on('click',event => { if(adding)return; L.DomEvent.stopPropagation(event); selected(feature,key,layer,false); });
         if (key === 'places' && feature.properties.name) {
           layer.bindTooltip(node('span',titleFor(feature)),{direction:'right',className:'map-place-label'});
           placeLabels.push({feature,layer});
