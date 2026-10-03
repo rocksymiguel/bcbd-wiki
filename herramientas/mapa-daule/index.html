@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Mapa operativo de Daule | BCBD</title>
+  <link rel="stylesheet" href="../../css/styles.css">
+  <link rel="stylesheet" href="../../js/vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="../../css/daule-map.css">
+</head>
+<body class="map-page">
+  <div id="header"></div>
+  <main class="map-content">
+    <a class="map-back" href="../index.html">← Herramientas</a>
+    <div class="map-heading">
+      <div><p class="map-eyebrow">Benemérito Cuerpo de Bomberos de Daule</p><h1>Mapa operativo de Daule</h1><p>Territorio, accesos y referencias para la planificación.</p></div>
+      <span class="map-stage">Base cartográfica · Sin telemetría</span>
+    </div>
+    <div class="map-workspace">
+      <aside class="map-sidebar" aria-label="Explorar el mapa">
+        <form id="map-search-form" role="search">
+          <label for="map-search">Buscar un sector, río o vía</label>
+          <div class="map-search-row"><input id="map-search" type="search" placeholder="Daule, Banife, La Aurora…" autocomplete="off" disabled><button type="submit" disabled>Buscar</button></div>
+        </form>
+        <div id="map-results" class="map-results" aria-live="polite"></div>
+        <label for="map-sector">Ir a un sector</label>
+        <select id="map-sector" disabled><option value="">Todo el cantón</option></select>
+        <fieldset class="map-layers"><legend>Capas del mapa</legend>
+          <label><input type="checkbox" data-layer="canton" checked disabled><span class="map-swatch boundary"></span>Límite cantonal <small>CONALI</small></label>
+          <label><input type="checkbox" data-layer="parishes" checked disabled><span class="map-swatch parish"></span>Parroquias <small>CONALI</small></label>
+          <label><input type="checkbox" data-layer="waterways" checked disabled><span class="map-swatch river"></span>Ríos, esteros y canales</label>
+          <label><input type="checkbox" data-layer="roads" checked disabled><span class="map-swatch road"></span>Vías de referencia</label>
+          <label><input type="checkbox" data-layer="places" checked disabled><span class="map-swatch place"></span>Poblados y sectores</label>
+          <label><input type="checkbox" data-layer="facilities" disabled><span class="map-swatch facility"></span>Servicios cartografiados</label>
+          <label><input type="checkbox" data-layer="susceptibility" disabled><span class="map-swatch susceptibility"></span>Susceptibilidad a inundación</label>
+          <label><input type="checkbox" data-layer="reports" checked disabled><span class="map-swatch report"></span>Mis observaciones</label>
+        </fieldset>
+        <div id="map-hazard-legend" hidden>
+          <p class="map-caption">Susceptibilidad territorial · Fuente SGR</p>
+          <div class="map-risk-key"><span><i class="risk-high"></i>Alta</span><span><i class="risk-medium"></i>Media</span><span><i class="risk-low"></i>Baja</span><span><i class="risk-na"></i>No aplicable / sin</span></div>
+          <p class="map-caption">No indica inundación actual, profundidad ni probabilidad para una fecha.</p>
+        </div>
+        <label class="map-background"><input id="map-basemap" type="checkbox">Fondo de calles en línea <small>OpenStreetMap · Requiere internet</small></label>
+        <div class="map-actions"><button id="map-fit" type="button" disabled>Ver todo Daule</button><button id="map-add" type="button" disabled aria-pressed="false">Añadir observación</button></div>
+        <p id="map-report-hint" class="map-caption" hidden>Selecciona un punto del mapa. La observación se guarda solo en este navegador.</p>
+        <section id="map-detail" class="map-detail" aria-labelledby="map-detail-title" aria-live="polite"><h2 id="map-detail-title">Explora el territorio</h2><p>Selecciona un elemento para consultar su fuente y características.</p></section>
+      </aside>
+      <section class="map-canvas-column" aria-label="Cartografía">
+        <div id="daule-map" role="region" aria-label="Mapa interactivo de Daule" aria-busy="true"></div>
+        <div class="map-status-row"><p id="map-status" role="status">Cargando cartografía local…</p><span id="map-coordinate"></span></div>
+        <p id="map-tile-status" class="map-caption" role="status" hidden></p>
+        <button id="map-retry" type="button" hidden>Reintentar carga</button>
+      </section>
+    </div>
+    <section class="map-records" aria-labelledby="map-records-title">
+      <div><h2 id="map-records-title">Mis observaciones de campo</h2><p>Registro local para tu análisis. No se envía a BCBD ni se comparte entre usuarios.</p></div>
+      <div class="map-actions"><button id="map-export" type="button" disabled>Exportar observaciones</button><label class="map-import" for="map-import">Importar observaciones<input id="map-import" type="file" accept=".geojson,.json,application/geo+json,application/json" disabled></label></div>
+      <p id="map-storage-status" role="status"></p>
+      <ul id="map-report-list" class="map-report-list"><li>No hay observaciones guardadas.</li></ul>
+    </section>
+    <details class="map-sources"><summary>Fuentes, fecha y cobertura de los datos</summary>
+      <p id="map-source-date"></p><ul id="map-source-list"></ul>
+      <p>La capa territorial publicada por CONALI incluye Daule, Juan Bautista Aguirre, Laurel, Limonal y Los Lojas. La Aurora se incorpora como referencia de sector donde existe en la cartografía, sin inventar un límite parroquial separado.</p>
+      <p>Los datos externos al cantón son contexto geográfico. La ausencia de un elemento o de una zona coloreada no confirma ausencia de amenaza. Las vías y servicios requieren comprobación de campo; no hay información de transitabilidad ni disponibilidad de recursos.</p>
+      <p>La lluvia, los niveles de ríos, las mareas y las simulaciones hidráulicas se incorporarán en fases posteriores. Las capas descargadas pueden consultarse sin servicios externos si esta página está disponible en un servidor local.</p>
+      <p><a href="../../assets/gis/daule/manifest.json" download>Descargar inventario de fuentes</a> · <a href="https://www.openstreetmap.org/fixthemap" target="_blank" rel="noopener noreferrer">Informar un problema cartográfico en OpenStreetMap</a></p>
+    </details>
+  </main>
+  <dialog id="map-report-dialog" class="map-report-dialog" aria-labelledby="map-report-title">
+    <form id="map-report-form">
+      <div class="map-dialog-heading"><h2 id="map-report-title">Observación de campo</h2><button id="map-report-cancel" type="button" aria-label="Cerrar formulario">×</button></div>
+      <p id="map-report-coordinates"></p>
+      <label for="map-report-type">Tipo</label><select id="map-report-type"><option value="observation">Observación</option><option value="flood">Inundación observada</option><option value="closure">Acceso comprometido</option><option value="resource">Recurso por verificar</option></select>
+      <label for="map-report-name">Sector o referencia</label><input id="map-report-name" required maxlength="100" placeholder="Nombre del sitio">
+      <label for="map-report-time">Fecha y hora de la observación (Ecuador)</label><input id="map-report-time" type="datetime-local" required>
+      <label for="map-report-note">Detalle</label><textarea id="map-report-note" rows="3" maxlength="1000" placeholder="Qué observaste, alcance y fuente de la información"></textarea>
+      <p class="map-caption">Registro del usuario, pendiente de verificación. Usa referencias operativas sin datos personales.</p>
+      <p id="map-report-error" role="alert"></p><button class="map-primary" type="submit">Guardar en este navegador</button>
+    </form>
+  </dialog>
+  <div id="footer"></div>
+  <script src="../../js/layout.js"></script>
+  <script src="../../js/vendor/leaflet/leaflet.js"></script>
+  <script src="../../js/daule-map.js"></script>
+</body>
+</html>

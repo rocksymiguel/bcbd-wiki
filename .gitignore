@@ -1,2 +1,6 @@
 # Blender keeps previous saves locally; retain sources without publishing backups.
 *.blend[0-9]
+
+# GIS runtime, original country extracts and local preview/test outputs.
+/.local/
+/tools/gis/__pycache__/
