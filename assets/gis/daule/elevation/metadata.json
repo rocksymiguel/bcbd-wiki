@@ -1,0 +1,132 @@
+{
+  "format": "float32-le-row-major-gzip",
+  "file": "heights.f32.gz",
+  "width": 1094,
+  "height": 1230,
+  "west": -80.09347222222222,
+  "north": -1.7484722222222222,
+  "step_lon": 0.0002777777777777778,
+  "step_lat": 0.0002777777777777778,
+  "bbox": [
+    -80.09347222222222,
+    -2.0901388888888888,
+    -79.78958333333333,
+    -1.7484722222222222
+  ],
+  "crs": "EPSG:4326",
+  "vertical_datum": "EGM2008",
+  "unit": "m",
+  "spacing_arc_seconds": 1,
+  "nominal_spacing_m": 30,
+  "source": "Copernicus DEM GLO-30",
+  "release": "2021 (AWS COG)",
+  "source_page": "https://copernicus-dem-30m.s3.amazonaws.com/readme.html",
+  "generated_at": "2026-10-03T03:58:16.069271+00:00",
+  "processing": "Crop and mosaic at original spacing; no interpolation; original float32 samples.",
+  "minimum_m": 0.0,
+  "maximum_m": 304.7673645019531,
+  "sha256": "c1a78674288e516e77a9294fea7e2cf04faf752c662d8f8d8e9d3aa47ad30817",
+  "bytes": 4716877,
+  "originals": [
+    {
+      "url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_S03_00_W081_00_DEM/Copernicus_DSM_COG_10_S03_00_W081_00_DEM.tif",
+      "retrieved_at": "2026-10-03T03:57:51.926330+00:00",
+      "bytes": 25653645,
+      "sha256": "730b5e76e7bd2082e875b92e94dd2aa9441178f73635aa6a4fbc79bc019443b5"
+    },
+    {
+      "url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_S03_00_W080_00_DEM/Copernicus_DSM_COG_10_S03_00_W080_00_DEM.tif",
+      "retrieved_at": "2026-10-03T03:58:06.250964+00:00",
+      "bytes": 42799388,
+      "sha256": "df26d4b46117ef2830fed7451cfbd7c0bc8e59b6337c5d0ee40ddd025b10a596"
+    },
+    {
+      "url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_S02_00_W081_00_DEM/Copernicus_DSM_COG_10_S02_00_W081_00_DEM.tif",
+      "retrieved_at": "2026-10-03T03:58:10.377196+00:00",
+      "bytes": 40306380,
+      "sha256": "110ab3c5145d255c0482b6c13413d829971e6a41955aa69eaa6f2ff923c5692e"
+    },
+    {
+      "url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_S02_00_W080_00_DEM/Copernicus_DSM_COG_10_S02_00_W080_00_DEM.tif",
+      "retrieved_at": "2026-10-03T03:58:15.015513+00:00",
+      "bytes": 49628961,
+      "sha256": "9d3e6b538147017d8238cee654d8422dd93a3b9abfc9a9bdcbfebc55824a4e10"
+    }
+  ],
+  "validation_samples": [
+    {
+      "lon": -79.977,
+      "lat": -1.861,
+      "height_m": 8.59902286529541
+    },
+    {
+      "lon": -79.873,
+      "lat": -2.056,
+      "height_m": 4.196547985076904
+    },
+    {
+      "lon": -80.001,
+      "lat": -2.001,
+      "height_m": 4.190315246582031
+    },
+    {
+      "lon": -79.999,
+      "lat": -1.999,
+      "height_m": 2.088458299636841
+    },
+    {
+      "lon": -80.001,
+      "lat": -1.999,
+      "height_m": 2.5666022300720215
+    },
+    {
+      "lon": -79.999,
+      "lat": -2.001,
+      "height_m": 2.059187173843384
+    }
+  ],
+  "attribution": "produced using Copernicus WorldDEM-30 © DLR e.V. 2010-2014 and © Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved",
+  "liability": "Las organizaciones encargadas del programa Copernicus por ley o delegación no asumen responsabilidad por el uso de Copernicus WorldDEM-30.",
+  "palette": [
+    {
+      "below": 0,
+      "color": "#81c8c5",
+      "label": "Menos de 0 m"
+    },
+    {
+      "below": 5,
+      "color": "#36794b",
+      "label": "0–5 m"
+    },
+    {
+      "below": 10,
+      "color": "#70a657",
+      "label": "5–10 m"
+    },
+    {
+      "below": 20,
+      "color": "#b5cb74",
+      "label": "10–20 m"
+    },
+    {
+      "below": 50,
+      "color": "#e8d17d",
+      "label": "20–50 m"
+    },
+    {
+      "below": 100,
+      "color": "#c39b63",
+      "label": "50–100 m"
+    },
+    {
+      "below": 200,
+      "color": "#a5744a",
+      "label": "100–200 m"
+    },
+    {
+      "below": null,
+      "color": "#79553e",
+      "label": "200 m o más"
+    }
+  ]
+}

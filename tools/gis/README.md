@@ -17,6 +17,47 @@ Política: https://operations.osmfoundation.org/policies/tiles/.
 
 ## Procesamiento
 
+### Altitud por colores
+
+`Altitud por colores` lee una matriz local de alturas, no una imagen coloreada
+ni un proveedor externo de teselas. El navegador dibuja cada tesela en canvas
+con la paleta del inventario. La consulta de un punto usa la misma celda que
+el dibujo; usa el vecino más cercano, sin interpolación ni resolución inventada.
+Las celdas fuera del recorte o sin datos quedan transparentes y no devuelven altura.
+Se conserva el fondo de calles inicial. La matriz se descarga solo al activar
+la altitud (4,7 MB comprimidos); se reutiliza en memoria al cambiar de fondo.
+La intensidad admite 20–100 %, persiste en este navegador, y la leyenda permanece
+dentro del mapa también en móvil. Requiere un navegador con DecompressionStream.
+
+Datos: Copernicus DEM GLO-30, edición AWS COG 2021, EPSG:4326,
+alturas ortométricas EGM2008. Modelo **de superficie**, no de terreno desnudo;
+incluye vegetación y edificios. Resolución nominal ~30 m, error de varios metros;
+no se combina su altura con MLWS ni con el nivel de estación sin datum conocido.
+No calcula inundaciones. Bandas: <0, 0–5, 5–10, 10–20, 20–50, 50–100,
+100–200 y ≥200 m. Límites inferiores inclusivos, superiores exclusivos.
+
+Reproducción desde la raíz:
+
+```powershell
+& 'C:\Users\rocks\AppData\Local\BCBD-GIS\venv\Scripts\python.exe' -m pip install -r tools/gis/requirements-elevation.txt
+& 'C:\Users\rocks\AppData\Local\BCBD-GIS\venv\Scripts\python.exe' tools/gis/build_elevation.py
+```
+
+Conserva cuatro GeoTIFF originales y sus SHA-256 en `.local/gis-sources/copernicus/`.
+Recorta el cantón con margen de 0,025° sin cambiar la alineación de las celdas,
+comprueba puntos a ambos lados de las uniones y rechaza cobertura incompleta.
+`assets/gis/daule/elevation/metadata.json` registra cobertura, geometría de matriz,
+fuentes, descarga, muestras de verificación, licencia y hash del gzip float32
+little-endian en orden de filas norte a sur. El servidor estático sirve esos
+datos sin instalaciones GIS adicionales en la VM.
+Fuente y licencia: https://copernicus-dem-30m.s3.amazonaws.com/readme.html.
+
+Validación: `node tools/tests/daule-elevation.cjs` verifica integridad, cobertura,
+muestras originales en uniones, colores de los píxeles después de la proyección,
+consulta sin extrapolación, recuperación de fallo, intensidad, persistencia y
+vista móvil/subruta. `BCBD_ELEVATION_VM_URL=http://192.168.18.150` ejecuta las
+mismas comprobaciones contra los datos efectivamente publicados en la VM.
+
 PyOsmium 4.3.1 se instaló aislado en
 `C:\Users\rocks\AppData\Local\BCBD-GIS\venv`; el repositorio está en una unidad
 de red. El mapa web no necesita ese entorno para funcionar.

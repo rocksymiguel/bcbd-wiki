@@ -10,6 +10,7 @@
   const dateFormat = new Intl.DateTimeFormat('es-EC',{timeZone:'America/Guayaquil',dateStyle:'medium',timeStyle:'short'});
   const layers = {}, collections = {};
   const placeLabels = [], riverLabelLayers = [];
+  let elevation;
   let map, manifest, index = [], selection, reports = [], reportLayer, draft, adding = false, storageError = false, serverReady = false, csrf = "", loadingReports = false;
   const node = (tag,text,className) => {
     const item = document.createElement(tag);
@@ -93,7 +94,7 @@
       pointToLayer:(f,latlng) => L.circleMarker(latlng,{radius:key==='facilities'?6:4,color:key==='facilities'?'#7c3aed':'#334155',
         weight:1.5,fillColor:key==='facilities'?'#a78bfa':'#f8fafc',fillOpacity:1}),
       onEachFeature:(feature,layer) => {
-        layer.on('click',event => { if(adding)return; L.DomEvent.stopPropagation(event); selected(feature,key,layer,false); });
+        layer.on('click',event => { if(adding)return; elevation?.query(event.latlng); L.DomEvent.stopPropagation(event); selected(feature,key,layer,false); });
         if (key === 'places' && feature.properties.name) {
           layer.bindTooltip(node('span',titleFor(feature)),{direction:'right',className:'map-place-label'});
           placeLabels.push({feature,layer});
@@ -300,6 +301,7 @@
     el('map-add').addEventListener('click',() => {if(serverReady)setAdding(!adding);});
     map.on('click',event => {
       el('map-coordinate').textContent=event.latlng.lat.toFixed(6)+', '+event.latlng.lng.toFixed(6);
+      if(!adding)elevation?.query(event.latlng);
       if(!adding)return;
       draft=[Number(event.latlng.lng.toFixed(6)),Number(event.latlng.lat.toFixed(6))];setAdding(false);el('map-report-form').reset();
       el('map-report-time').value=localTimeNow();el('map-report-coordinates').textContent=`Latitud ${draft[1]} · Longitud ${draft[0]}`;
@@ -344,8 +346,10 @@
   }
 
   function setupBackground() {
+    elevation=window.DauleElevation.create(map);
     // No bulk download or prefetch; fetch only the viewport the visitor opens.
     const backgrounds={
+      elevation:elevation.layer,
       streets:L.maplibreGL({style:new URL('street-style.json',dataBase).href,interactive:false,
         attributionControl:{customAttribution:'<a href="https://openfreemap.org/">OpenFreeMap</a> · © <a href="https://www.openmaptiles.org/">OpenMapTiles</a> · <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}}),
       satellite:L.tileLayer('https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:'Imagery © Esri, Vantor, Earthstar Geographics, GIS User Community'}),
@@ -369,6 +373,7 @@
       Object.values(backgrounds).filter(Boolean).forEach(layer=>layer.remove());active=name;
       el('map-tile-status').hidden=true;
       el('map-relief-controls').hidden=name!=='relief';
+      elevation.setActive(name==='elevation');
       document.querySelectorAll('[data-basemap]').forEach(input=>input.checked=input.dataset.basemap===name);
       if(backgrounds[name]) {
         try {backgrounds[name].addTo(map);} catch(error) {
