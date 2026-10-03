@@ -7,7 +7,7 @@
   <title>BCBD Wiki | Plataforma de Aprendizaje</title>
 
   <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/hose-viewer.css?v=20260930b">
+  <link rel="stylesheet" href="css/hose-viewer.css?v=20261002a">
   <script type="importmap">
     {"imports":{"three":"./js/vendor/three/build/three.module.js","three/addons/":"./js/vendor/three/addons/"}}
   </script>
@@ -43,7 +43,7 @@
       <div>
         <span class="hose-eyebrow">Exploración interactiva · 3D</span>
         <h2 id="hose-entry-title">Conoce los acoples de la manguera</h2>
-        <p>Gira la pareja acoplada, observa sus salientes y separa las piezas para reconocer el macho y la hembra.</p>
+        <p>Explora las piezas, desenrosca la unión y practica cómo orientarte hacia la unidad o el pitón.</p>
         <button id="hose-open" class="hose-primary" type="button" aria-haspopup="dialog" aria-controls="hose-dialog">Abrir visor 3D <span aria-hidden="true">↗</span></button>
       </div>
     </section>
@@ -58,12 +58,25 @@
       <div class="hose-viewport-column">
         <div id="hose-viewport" class="hose-viewport" aria-busy="true">
           <p id="hose-status" class="hose-status" role="status">Preparando visor…</p>
+          <span id="hose-label" class="hose-label" hidden></span>
         </div>
-        <p class="hose-gesture">Arrastra para girar · Rueda o pellizca para acercar · Flechas del teclado para rotar</p>
+        <p id="hose-gesture" class="hose-gesture">Toca una pieza para identificarla. Arrastra para girar; rueda o pellizca para acercar.</p>
       </div>
       <aside class="hose-controls" aria-label="Controles y explicación del modelo">
+        <section class="hose-practice" aria-labelledby="hose-practice-title">
+          <span class="hose-eyebrow">Línea de vida · Orientación</span>
+          <h3 id="hose-practice-title">¿Hacia dónde seguirías?</h3>
+          <p id="hose-question" aria-live="polite">La unión girará durante 4 segundos. Después, elige el lado que te llevaría al destino indicado.</p>
+          <button id="hose-challenge" class="hose-primary" type="button" disabled>Iniciar ejercicio</button>
+          <div id="hose-answers" class="hose-button-row hose-answers" role="group" aria-label="Escoge por dónde continuar" hidden>
+            <button type="button" data-hose-answer="male" disabled>Tramo detrás del macho</button>
+            <button type="button" data-hose-answer="female" disabled>Tramo detrás de la hembra</button>
+          </div>
+          <p id="hose-feedback" class="hose-feedback" aria-live="polite" hidden></p>
+        </section>
+        <div id="hose-explore">
         <h3>Explora la unión</h3>
-        <p>Empieza con los acoples unidos. Separa las piezas para observar las roscas que quedan ocultas al acoplarlas.</p>
+        <p>Toca el cuerpo, los salientes, el collar o las roscas para conocer sus partes.</p>
         <div class="hose-button-row" role="group" aria-label="Presentación">
           <button type="button" data-hose-view="coupled" aria-pressed="true" disabled>Acoplada</button>
           <button type="button" data-hose-view="separated" aria-pressed="false" disabled>Separada</button>
@@ -74,11 +87,23 @@
           <button type="button" data-hose-part="female" aria-pressed="false" disabled>Hembra</button>
         </div>
         <p id="hose-explanation" class="hose-explanation" aria-live="polite">Selecciona una pieza para resaltarla y conocer sus características.</p>
+        <div class="hose-button-row" role="group" aria-label="Modo de interacción">
+          <button type="button" data-hose-mode="orbit" aria-pressed="true" disabled>Girar vista</button>
+          <button type="button" data-hose-mode="thread" aria-pressed="false" disabled>Manipular rosca</button>
+        </div>
+        <label class="hose-thread-label" for="hose-thread">Desenroscado <output id="hose-thread-value" for="hose-thread">0%</output></label>
+        <input id="hose-thread" class="hose-thread" type="range" min="0" max="100" value="0" aria-label="Porcentaje de desenroscado" disabled>
         <div class="hose-button-row">
           <button id="hose-rotate" type="button" aria-pressed="false" disabled>Giro automático</button>
           <button id="hose-reset" type="button" disabled>Restablecer vista</button>
         </div>
-        <p class="hose-note">Modelo visual aproximado. Esta primera versión no evalúa direcciones hacia la unidad o el pitón ni sustituye la práctica con el equipo real.</p>
+        </div>
+        <details class="hose-note">
+          <summary>Configuración de este ejercicio</summary>
+          <p>Línea de ataque convencional: salida macho de la unidad → entrada hembra del primer tramo; extremo macho del último tramo → pitón hembra, sin adaptadores que inviertan la unión. Aquí se elige la manguera detrás de cada cuerpo del acople, no el extremo libre de un tramo completo.</p>
+          <p>Modelo aproximado para repaso visual. Confirma esta disposición con tu instructor y tu equipo real. La separación representa una línea sin presión.</p>
+          <a href="https://www.actioncoupling.com/action-arrows" target="_blank" rel="noopener noreferrer">Referencia: orientación de acoples · Action Coupling</a>
+        </details>
       </aside>
     </div>
   </dialog>
@@ -88,7 +113,7 @@
   <!-- SCRIPTS AL FINAL -->
   <script src="js/layout.js"></script>
   <script src="js/home.js"></script>
-  <script src="js/hose-modal.js?v=20260930b"></script>
+  <script src="js/hose-modal.js?v=20261002a"></script>
 </body>
 
 </html>

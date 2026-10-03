@@ -23,7 +23,9 @@ La escala está expresada en metros y es ilustrativa. En Blender las aberturas
 apuntan hacia +Z; la exportación glTF convierte a su sistema habitual +Y arriba.
 
 El inicio integra la pareja acoplada en un visor de exploración, cargado solo
-al abrir su modal. Todavía no hay cuestionario ni animación de desenroscado.
+al abrir su modal. El visor anima el collar giratorio por separado y permite
+seleccionar piezas y responder preguntas de orientación sobre una línea
+convencional sin adaptadores (ver `README.md` del proyecto).
 Los archivos `.blend1` se conservan localmente, pero Git ignora estas copias.
 Antes de programar respuestas operativas, verificar con el instructor el equipo
 real y la configuración de las líneas utilizadas por la institución.

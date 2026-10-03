@@ -1,22 +1,24 @@
 /* Scoped to the new explorer; existing pages and competition modals are unchanged. */
 .hose-entry { display:grid; grid-template-columns:minmax(240px,.65fr) minmax(0,1fr); gap:32px; align-items:center; margin:28px clamp(28px,4.3vw,80px) 0; padding:24px; border:1px solid var(--theme-border); border-radius:12px; background:var(--theme-surface); box-shadow:0 6px 18px var(--theme-shadow); }
-.hose-entry img { display:block; width:100%; height:230px; object-fit:cover; border-radius:9px; }
+.hose-entry img { display:block; width:100%; max-width:320px; aspect-ratio:1; height:auto; object-fit:cover; border-radius:9px; justify-self:center; }
 .hose-eyebrow { color:var(--theme-muted); font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
 .hose-entry h2 { margin:10px 0; color:var(--theme-heading); font-size:clamp(24px,2vw,32px); }
 .hose-entry p { max-width:760px; color:var(--theme-muted); line-height:1.65; }
 .hose-primary { display:inline-flex; gap:18px; align-items:center; border:0; border-radius:9px; padding:13px 20px; background:#b91c1c; color:white; font-family:inherit; font-size:16px; font-weight:600; cursor:pointer; min-height:46px; }
 .hose-primary:hover { background:#991b1b; }
-.hose-dialog { box-sizing:border-box; width:min(1320px,calc(100% - 48px)); max-width:none; max-height:calc(100dvh - 48px); margin:auto; padding:26px; border:1px solid var(--theme-border); border-radius:16px; background:var(--theme-surface); color:var(--theme-text); box-shadow:0 30px 100px rgba(0,0,0,.45); overflow:auto; }
+.hose-dialog { box-sizing:border-box; width:min(1140px,calc(100% - 48px)); max-width:none; max-height:calc(100dvh - 48px); margin:auto; padding:26px; border:1px solid var(--theme-border); border-radius:16px; background:var(--theme-surface); color:var(--theme-text); box-shadow:0 30px 100px rgba(0,0,0,.45); overflow:auto; }
 .hose-dialog::backdrop { background:rgba(8,15,27,.78); }
 .hose-dialog-head { position:sticky; top:-26px; z-index:2; display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:20px; padding:12px 0; background:var(--theme-surface); }
 .hose-dialog-head h2 { margin:6px 0 0; font-size:clamp(20px,2vw,28px); color:var(--theme-heading); }
 .hose-close { flex:0 0 44px; height:44px; padding:0; border:1px solid var(--theme-border); border-radius:9px; background:var(--theme-surface-muted); color:var(--theme-text); font-size:30px; cursor:pointer; }
-.hose-dialog-grid { display:grid; grid-template-columns:minmax(0,1fr) 300px; gap:24px; }
+.hose-dialog-grid { display:grid; grid-template-columns:minmax(0,1fr) 350px; gap:24px; align-items:start; }
 .hose-viewport-column { min-width:0; }
-.hose-viewport { position:relative; height:clamp(360px,57vh,610px); border-radius:12px; overflow:hidden; background:#111923; border:1px solid var(--theme-border); }
+.hose-viewport { box-sizing:border-box; position:relative; width:100%; aspect-ratio:1; border-radius:12px; overflow:hidden; background:#111923; border:1px solid var(--theme-border); }
 .hose-viewport canvas { display:block; width:100%; height:100%; touch-action:none; }
 .hose-status { position:absolute; z-index:1; top:50%; left:50%; transform:translate(-50%,-50%); width:85%; margin:0; color:#e5e7eb; text-align:center; line-height:1.6; }
 .hose-status[hidden] { display:none; }
+.hose-label { position:absolute; top:16px; left:16px; right:16px; width:fit-content; max-width:calc(100% - 32px); padding:9px 13px; border:1px solid #53657a; border-radius:8px; background:rgba(13,23,36,.92); color:#f1f5f9; font-size:14px; pointer-events:none; }
+.hose-label[hidden], .hose-controls [hidden] { display:none; }
 .hose-gesture { margin:12px 0 0; font-size:13px; color:var(--theme-muted); line-height:1.6; }
 .hose-controls h3 { color:var(--theme-heading); font-size:18px; margin:0 0 10px; }
 .hose-controls p { line-height:1.6; margin:0 0 16px; font-size:14px; color:var(--theme-muted); }
@@ -27,13 +29,34 @@
 .hose-button-row button:disabled { opacity:.5; cursor:wait; }
 .hose-controls .hose-explanation { padding:14px; background:var(--theme-surface-muted); border-left:3px solid #2563eb; border-radius:5px; min-height:72px; }
 .hose-controls .hose-note { border-top:1px solid var(--theme-border); padding-top:16px; font-size:12px; margin-bottom:0; }
+.hose-note summary { cursor:pointer; font-weight:600; line-height:1.6; }
+.hose-note p { font-size:12px; margin:12px 0; }
+.hose-note a { color:var(--theme-text); }
+.hose-practice { border:1px solid var(--theme-border); border-radius:12px; padding:18px; margin-bottom:24px; background:var(--theme-surface-muted); }
+.hose-practice h3 { margin-top:9px; font-size:22px; }
+.hose-practice .hose-primary { width:100%; justify-content:center; }
+.hose-primary:disabled { opacity:.55; cursor:wait; }
+.hose-answers { margin:14px 0 0; }
+.hose-answers button { flex-basis:100%; }
+.hose-controls .hose-feedback { margin:14px 0 0; padding:12px; border-left:3px solid #3b82f6; color:var(--theme-text); }
+.hose-feedback[data-correct="true"] { border-color:#22c55e; }
+.hose-feedback[data-correct="false"] { border-color:#f59e0b; }
+.hose-thread-label { display:flex; justify-content:space-between; color:var(--theme-muted); font-size:14px; }
+.hose-thread { display:block; box-sizing:border-box; width:100%; min-height:44px; margin:0 0 18px; accent-color:#2563eb; cursor:pointer; }
 .hose-dialog button:focus-visible, .hose-primary:focus-visible, .hose-viewport canvas:focus-visible { outline:3px solid #60a5fa; outline-offset:3px; }
 @media (max-width:850px) {
   .hose-dialog-grid { grid-template-columns:1fr; gap:20px; }
   .hose-dialog { width:calc(100% - 20px); max-height:calc(100dvh - 20px); padding:18px; border-radius:12px; }
   .hose-dialog-head { top:-18px; }
-  .hose-viewport { height:clamp(260px,42dvh,420px); }
+  .hose-viewport { aspect-ratio:3/4; }
   .hose-button-row { margin-bottom:18px; }
   .hose-entry { grid-template-columns:1fr; margin:24px 20px 0; padding:20px; gap:20px; }
-  .hose-entry img { height:190px; }
+  .hose-entry img { max-width:100%; aspect-ratio:4/3; }
+}
+@media (max-width:950px) and (orientation:landscape) and (max-height:600px) {
+  .hose-dialog { width:calc(100% - 20px); max-height:calc(100dvh - 20px); padding:16px; }
+  .hose-dialog-head { top:-16px; margin-bottom:12px; }
+  .hose-dialog-grid { grid-template-columns:minmax(0,1fr) minmax(230px,.7fr); gap:16px; }
+  .hose-viewport { aspect-ratio:16/9; }
+  .hose-entry img { aspect-ratio:16/9; }
 }
