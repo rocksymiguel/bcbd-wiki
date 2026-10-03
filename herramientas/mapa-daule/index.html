@@ -47,6 +47,7 @@
           <label><input id="map-basemap" data-basemap="streets" type="checkbox" checked>Calles en línea <small>OpenFreeMap / OSM · Sin paradas de buses</small></label>
           <label><input data-basemap="satellite" type="checkbox">Vista satelital <small>Esri World Imagery · No es una imagen en vivo</small></label>
           <label><input data-basemap="relief" type="checkbox">Relieve sombreado <small>Esri World Hillshade · No mide altitud en un punto</small></label>
+          <div id="map-relief-controls" class="map-relief-controls" hidden><label for="map-relief-brightness">Brillo del relieve <output id="map-relief-value" for="map-relief-brightness">75 %</output></label><input id="map-relief-brightness" type="range" min="30" max="100" step="5" value="75" aria-valuetext="75 por ciento"><div><span>Más oscuro</span><span>Más claro</span></div></div>
           <label><input data-basemap="none" type="checkbox">Nada · Sin fondo <small>Solo las capas y observaciones</small></label>
         </fieldset>
         <div class="map-actions"><button id="map-fit" type="button" disabled>Ver todo Daule</button><button id="map-add" type="button" disabled aria-pressed="false">Añadir observación</button></div>

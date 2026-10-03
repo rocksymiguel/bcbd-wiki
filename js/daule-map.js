@@ -351,6 +351,15 @@
       satellite:L.tileLayer('https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:'Imagery © Esri, Vantor, Earthstar Geographics, GIS User Community'}),
       relief:L.tileLayer('https://services.arcgisonline.com/ArcGIS/rest/services/Elevation/World_Hillshade/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:'Relief: Esri, Vantor, Airbus DS, USGS, NGA, NASA, CGIAR, N Robinson, NCEAS, NLS, OS, NMA, Geodatastyrelsen, Rijkswaterstaat, GSA, Geoland, FEMA, Intermap, GIS User Community'})
     };
+    const brightness=el('map-relief-brightness'), brightnessKey='gis-daule-relief-brightness';
+    try {const saved=Number(localStorage.getItem(brightnessKey));if(saved>=30&&saved<=100)brightness.value=String(saved);}catch{}
+    const dimRelief=()=>{
+      const amount=Math.min(100,Math.max(30,Number(brightness.value)||75));
+      el('map-relief-value').textContent=amount+' %';brightness.setAttribute('aria-valuetext',amount+' por ciento');
+      const container=backgrounds.relief.getContainer();if(container)container.style.filter=`brightness(${amount/100})`;
+    };
+    brightness.addEventListener('input',()=>{dimRelief();try{localStorage.setItem(brightnessKey,brightness.value);}catch{}});
+    dimRelief();
     let active='streets';
     Object.values(backgrounds).forEach(layer => layer.on('tileerror',() => {
       if(!map.hasLayer(layer))return;
@@ -359,6 +368,7 @@
     const select=name => {
       Object.values(backgrounds).filter(Boolean).forEach(layer=>layer.remove());active=name;
       el('map-tile-status').hidden=true;
+      el('map-relief-controls').hidden=name!=='relief';
       document.querySelectorAll('[data-basemap]').forEach(input=>input.checked=input.dataset.basemap===name);
       if(backgrounds[name]) {
         try {backgrounds[name].addTo(map);} catch(error) {
@@ -368,6 +378,7 @@
           document.querySelectorAll('[data-basemap]').forEach(input=>input.checked=input.dataset.basemap==='none');
           el('map-tile-status').hidden=false;el('map-tile-status').textContent='Este navegador no pudo abrir el fondo vectorial. Las capas locales están disponibles sin fondo.';return;
         }
+        if(name==='relief')dimRelief();
         if(name==='streets')backgrounds.streets.getMaplibreMap().on('error',()=>{
           if(active!=='streets')return;el('map-tile-status').hidden=false;
           el('map-tile-status').textContent='No se pudo cargar parte del fondo de calles. Las capas locales siguen disponibles; puedes elegir Nada o reactivar Calles.';
