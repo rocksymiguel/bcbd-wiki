@@ -9,8 +9,18 @@
   const storageKey = 'bcbd-daule-observations-v1';
   const dateFormat = new Intl.DateTimeFormat('es-EC',{timeZone:'America/Guayaquil',dateStyle:'medium',timeStyle:'short'});
   const layers = {}, collections = {};
+  const boundaryDefaults={canton:{light:'#7c3aed',dark:'#c4b5fd',weight:2.5},parishes:{light:'#64748b',dark:'#94a3b8',weight:1.2}};
+  const boundaryStyles={};
+  Object.keys(boundaryDefaults).forEach(key=>{
+    boundaryStyles[key]={};
+    try{
+      const saved=JSON.parse(localStorage.getItem('gis-daule-boundary-style-'+key));
+      if(/^#[0-9a-f]{6}$/i.test(saved?.color))boundaryStyles[key].color=saved.color;
+      if(typeof saved?.weight==='number'&&Number.isFinite(saved.weight)&&saved.weight>=.5&&saved.weight<=10)boundaryStyles[key].weight=saved.weight;
+    }catch{}
+  });
   const placeLabels = [], riverLabelLayers = [];
-  let elevation;
+  let elevation, selectionKey;
   let map, manifest, index = [], selection, reports = [], reportLayer, draft, adding = false, storageError = false, serverReady = false, csrf = "", loadingReports = false;
   const node = (tag,text,className) => {
     const item = document.createElement(tag);
@@ -54,10 +64,12 @@
       document.querySelector(`[data-layer="${controlFor(key)}"]`).checked = true;
       if(key==='riverbanks'||key==='waterways'){layers.riverbanks.addTo(map);layers.waterways.addTo(map);}
       if (key === 'susceptibility') el('map-hazard-legend').hidden = false;
+      if(boundaryDefaults[key])updateBoundaryControls();
     }
     if (selection) selection.remove();
     selection = L.geoJSON(feature,{interactive:false,pane:'selection',style:{color:'#ec4899',weight:5,fill:false},
       pointToLayer:(_f,latlng) => L.circleMarker(latlng,{radius:11,color:'#ec4899',weight:3,fill:false})}).addTo(map);
+    selectionKey=key;
     if (zoom) {
       if (layer.getBounds) map.fitBounds(layer.getBounds(),{padding:[35,35],maxZoom:15});
       else map.setView(layer.getLatLng(),15);
@@ -79,13 +91,40 @@
 
   function layerStyle(key,f) {
     const dark = document.documentElement.dataset.theme === 'dark';
-    if (key === 'canton') return {color:dark?'#c4b5fd':'#7c3aed',weight:2.5,dashArray:'9 5',fill:false};
-    if (key === 'parishes') return {color:dark?'#94a3b8':'#64748b',weight:1.2,dashArray:'5 5',fill:false};
+    if (boundaryDefaults[key]) return {...boundaryStyleFor(key),dashArray:key==='canton'?'9 5':'5 5',fill:false};
     if (key === 'riverbanks') return {color:dark?'#38bdf8':'#0284c7',weight:.6,fillColor:dark?'#38bdf8':'#0284c7',fillOpacity:.38};
     if (key === 'waterways') return {color:dark?'#38bdf8':'#0284c7',weight:/daule|babahoyo/i.test(f.properties.name||'')?1:f.properties.waterway === 'river'?2:1.3};
     if (key === 'roads') return {color:dark?'#7c9297':'#889490',weight:/^(trunk|primary|motorway)$/.test(f.properties.highway)?2.3:1,opacity:.8};
     const colors = {ALTA:'#dc2626',MEDIA:'#f59e0b',BAJA:'#eab308','NO APLICABLE':'#94a3b8',SIN:'#94a3b8'};
     return {color:colors[f.properties.sui] || '#94a3b8',weight:.25,fillOpacity:.28};
+  }
+
+  function boundaryStyleFor(key) {
+    const defaults=boundaryDefaults[key],saved=boundaryStyles[key];
+    return {color:saved.color||(document.documentElement.dataset.theme==='dark'?defaults.dark:defaults.light),weight:saved.weight??defaults.weight};
+  }
+  function updateBoundaryControls() {
+    Object.keys(boundaryDefaults).forEach(key=>{
+      const style=boundaryStyleFor(key);
+      el('map-'+key+'-controls').hidden=!document.querySelector(`[data-layer="${key}"]`).checked;
+      el('map-'+key+'-color').value=style.color;
+      el('map-'+key+'-width').value=String(style.weight);
+      const text=new Intl.NumberFormat('es-EC',{maximumFractionDigits:1}).format(style.weight)+' px';
+      el('map-'+key+'-width-value').textContent=text;el('map-'+key+'-width').setAttribute('aria-valuetext',text);
+      document.querySelector(`[data-layer="${key}"]`).closest('label').querySelector('.map-swatch').style.borderColor=style.color;
+    });
+  }
+  function setupBoundaryControls() {
+    Object.keys(boundaryDefaults).forEach(key=>{
+      const apply=()=>{
+        layers[key].setStyle(f=>layerStyle(key,f));updateBoundaryControls();
+        if(selection&&selectionKey===key){selection.remove();selection=null;}
+        try{localStorage.setItem('gis-daule-boundary-style-'+key,JSON.stringify(boundaryStyles[key]));}catch{}
+      };
+      el('map-'+key+'-color').addEventListener('input',event=>{boundaryStyles[key].color=event.target.value;apply();});
+      el('map-'+key+'-width').addEventListener('input',event=>{boundaryStyles[key].weight=Number(event.target.value);apply();});
+    });
+    updateBoundaryControls();
   }
 
   function addLayer(key,data) {
@@ -421,12 +460,13 @@
         L.control.scale({imperial:false}).addTo(map);
         keys.forEach(key => addLayer(key,collections[key]));
         map.fitBounds(layers.canton.getBounds(),{padding:[25,25]});
-        setupReports();setupBackground();
+        setupReports();setupBackground();setupBoundaryControls();
         document.querySelectorAll('[data-layer]').forEach(input => input.addEventListener('change',() => {
           if(input.checked)layers[input.dataset.layer].addTo(map);else layers[input.dataset.layer].remove();
           if(input.dataset.layer==='waterways'){if(input.checked)layers.riverbanks.addTo(map);else layers.riverbanks.remove();}
           if(selection){selection.remove();selection=null;}
           if(input.dataset.layer==='susceptibility')el('map-hazard-legend').hidden=!input.checked;
+          if(boundaryDefaults[input.dataset.layer])updateBoundaryControls();
           updateLabels();
         }));
         const select=el('map-sector');
@@ -437,7 +477,7 @@
           else {const item=sectorItems[Number(select.value)];selected(item.feature,item.key,item.layer,true);}});
         el('map-search-form').addEventListener('submit',search);
         el('map-fit').addEventListener('click',() => {map.fitBounds(layers.canton.getBounds(),{padding:[25,25]});select.value='';if(selection){selection.remove();selection=null;}});
-        new MutationObserver(() => Object.keys(names).forEach(key => layers[key].setStyle?.(f => layerStyle(key,f)))).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+        new MutationObserver(() => {Object.keys(names).forEach(key => layers[key].setStyle?.(f => layerStyle(key,f)));updateBoundaryControls();}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
         map.on('moveend zoomend resize',updateLabels);
       }
       map.fitBounds(layers.canton.getBounds(),{padding:[25,25]});

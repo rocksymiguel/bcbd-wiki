@@ -28,8 +28,12 @@
         <label for="map-sector">Ir a un sector</label>
         <select id="map-sector" disabled><option value="">Todo el cantón</option></select>
         <fieldset class="map-layers"><legend>Capas del mapa</legend>
-          <label><input type="checkbox" data-layer="canton" checked disabled><span class="map-swatch boundary"></span>Límite cantonal <small>CONALI</small></label>
-          <label><input type="checkbox" data-layer="parishes" checked disabled><span class="map-swatch parish"></span>Parroquias <small>CONALI</small></label>
+          <div class="map-boundary-layer"><label><input type="checkbox" data-layer="canton" checked disabled><span class="map-swatch boundary"></span>Límite cantonal <small>CONALI</small></label>
+            <div id="map-canton-controls" class="map-boundary-controls" hidden><label for="map-canton-color">Color de la línea <input id="map-canton-color" type="color" value="#7c3aed" disabled></label><label for="map-canton-width">Grosor <output id="map-canton-width-value" for="map-canton-width">2,5 px</output></label><input id="map-canton-width" type="range" min="0.5" max="10" step="0.1" value="2.5" disabled></div>
+          </div>
+          <div class="map-boundary-layer"><label><input type="checkbox" data-layer="parishes" checked disabled><span class="map-swatch parish"></span>Parroquias <small>CONALI</small></label>
+            <div id="map-parishes-controls" class="map-boundary-controls" hidden><label for="map-parishes-color">Color de la línea <input id="map-parishes-color" type="color" value="#64748b" disabled></label><label for="map-parishes-width">Grosor <output id="map-parishes-width-value" for="map-parishes-width">1,2 px</output></label><input id="map-parishes-width" type="range" min="0.5" max="10" step="0.1" value="1.2" disabled></div>
+          </div>
           <label><input type="checkbox" data-layer="waterways" checked disabled><span class="map-swatch river"></span>Ríos, esteros y canales</label>
           <label><input type="checkbox" data-layer="roads" checked disabled><span class="map-swatch road"></span>Vías de referencia</label>
           <label><input type="checkbox" data-layer="places" checked disabled><span class="map-swatch place"></span>Poblados y sectores</label>
