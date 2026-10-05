@@ -98,6 +98,25 @@ horaria y el datum de nivel no consta en la respuesta. Open-Meteo es un modelo,
 con intervalo de acumulación y punto de rejilla visibles en la API. No confirma
 precipitación puntual ni se mezcla con observaciones medidas.
 
+El cuadro principal identifica la fuente en **cada variable**. Mantiene HM002
+hasta superar estrictamente cinco horas desde la medición, incluso si falla una
+consulta. Después usa Open-Meteo como respaldo para temperatura, velocidad y
+dirección del viento o precipitación si el valor del modelo es finito, su fecha
+no es futura, tiene como máximo cinco horas y la respuesta no está marcada como
+`stale`. Conserva la última medición de HM002 en el cuadro del respaldo y vuelve
+a la estación al recibir una lectura reciente. Si el modelo no sirve, muestra
+la medición antigua con aviso. Sin fecha válida de HM002 no se activa respaldo:
+no se puede acreditar el umbral. El nivel del río permanece en HM002.
+El respaldo usa siempre las coordenadas de Daule (-1.861, -79.977), sin depender
+del sector seleccionado en el explorador de modelo. La lluvia estimada conserva
+su intervalo original; no se etiqueta como acumulada horaria. Las dos fuentes
+tienen descripciones y horas de consulta separadas debajo de los cuadros.
+El navegador reevalúa las edades cada minuto y consulta cada 15 minutos mientras
+está visible. Una respuesta parcial conserva en memoria las últimas lecturas
+válidas conocidas, con sus fechas originales; no las rejuvenece. Sin una lectura
+previa en esta sesión no inventa la fecha de inicio de la ausencia.
+Prueba: `node tools/tests/daule-weather-backup.cjs`.
+
 INOCAR: estación 374, Guayaquil–Río Guayas; tabla diaria pública, predicción
 horaria local UTC−5, alturas MLWS. No se interpolan niveles ni se trasladan a
 Daule. La fecha avanza al día actual en una página abierta; elegir otra fecha

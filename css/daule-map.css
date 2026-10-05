@@ -68,6 +68,7 @@ body.map-page main.map-content { padding: 0 clamp(16px, 3vw, 48px); margin:24px 
 .env-metrics,.env-tides { display:flex; flex-wrap:wrap; gap:8px; }.env-metric { background:var(--theme-surface-muted); border:1px solid var(--theme-border); border-radius:7px; padding:9px 11px; flex:1 1 130px; min-width:0; display:flex; flex-direction:column; gap:5px; }
 .env-metric span { font-size:11px; color:var(--theme-muted); }.env-metric strong { font-size:17px; font-variant-numeric:tabular-nums; }.env-metric small { font-size:11px; line-height:1.4; color:var(--theme-muted); }
 .env-old { border-color:#b7791f; }.env-error { color:var(--theme-text); border-left:3px solid #b7791f; padding-left:8px; }
+.env-backup { border-color:#4387c1; }.env-metric .env-source { color:var(--theme-text); font-weight:600; }
 .env-tides .env-metric { flex-basis:100px; }.env-moon { display:flex; align-items:center; gap:10px; margin:12px 0; font-size:13px; }.env-moon-icon { font-size:25px; }.env-notice { margin-bottom:0; }
 .leaflet-maplibre-gl { pointer-events:none; }
 .map-elevation-legend { background:var(--theme-surface); color:var(--theme-text); border:1px solid var(--theme-border); border-radius:6px; padding:8px 10px; font-size:11px; line-height:1.5; box-shadow:0 1px 5px #0002; }

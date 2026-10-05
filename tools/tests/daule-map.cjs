@@ -84,6 +84,9 @@ const server=http.createServer(async (req,res) => {
       assert.equal(await page.locator('.map-eyebrow').count(),0,'no institutional ownership line above GIS title');
       assert.match(await page.locator('#env-station-values').innerText(),/1,9|1\.9/);
       assert.match(await page.locator('#env-station-values .env-old').first().innerText(),/Lectura antigua/);
+      await page.waitForFunction(()=>document.querySelector('[data-variable="temperature"]').dataset.source==='open-meteo');
+      assert.match(await page.locator('#env-backup-status').innerText(),/Respaldo activo: Temperatura/);
+      assert.equal(await page.locator('[data-variable="precipitation_hour"]').getAttribute('data-source'),'hm002');
       assert.match(await page.locator('#env-moon').innerText(),/iluminada/);
       await page.locator('#env-day').fill('2026-10-03');await page.locator('#env-day').dispatchEvent('change');
       await page.waitForFunction(()=>document.querySelector('#env-tide-status').textContent.includes('2026-10-03'));
