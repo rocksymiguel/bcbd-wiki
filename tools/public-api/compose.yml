@@ -1,0 +1,26 @@
+services:
+  public-api:
+    image: caddy:2-alpine
+    container_name: bcbd-public-api
+    restart: unless-stopped
+    ports: ["127.0.0.1:8010:8080"]
+    volumes: ["./Caddyfile:/etc/caddy/Caddyfile:ro"]
+    read_only: true
+    user: "1000:1000"
+    cap_drop: [ALL]
+    # Official Caddy binary has this file capability; retain it in the bounding set.
+    cap_add: [NET_BIND_SERVICE]
+    security_opt: [no-new-privileges:true]
+    pids_limit: 40
+    mem_limit: 96m
+    cpus: 0.5
+    tmpfs: ["/data:size=4m,mode=1777", "/config:size=4m,mode=1777"]
+    logging:
+      driver: json-file
+      options: {max-size: "5m", max-file: "2"}
+    # Default network is needed for loopback publishing; databases remain internal.
+    networks: [default, gis_private]
+networks:
+  gis_private:
+    external: true
+    name: bcbd-gis-private

@@ -1,5 +1,12 @@
 var isGitHub = window.location.hostname.includes("github.io");
 
+// Public Pages never connects to LAN databases or enables registration.
+// This HTTPS gateway exposes only the VM's read-only environment connector.
+window.BCBD_PUBLIC_ACCESS = Object.freeze({
+  readOnly: isGitHub,
+  environmentOrigin: 'https://bcbd-wiki.tail4eb990.ts.net'
+});
+
 var basePath = isGitHub
   ? "/bcbd-wiki/"
   : "/";

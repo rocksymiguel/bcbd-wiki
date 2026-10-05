@@ -1,6 +1,25 @@
 (() => {
   if (window.__competitionRegister) return;
   window.__competitionRegister = true;
+  if (window.BCBD_PUBLIC_ACCESS?.readOnly || location.hostname.endsWith('.github.io')) {
+    // No participant reads, session cookies, queued submissions, or database writes.
+    window.initStopwatch = function () {
+      if(document.querySelector('.public-competition-notice'))return;
+      const main=document.getElementById('main-content') || document.querySelector('main');
+      if(!main)return;
+      const note=document.createElement('p');note.className='public-competition-notice';
+      note.textContent='Vista pública de consulta. El registro de participantes y tiempos todavía no está habilitado.';
+      main.prepend(note);
+    };
+    function publicView() {
+      if(document.querySelector('[data-station-index]'))window.initStopwatch();
+      const panel=document.getElementById('results-panel');
+      if(panel)panel.textContent='Los registros y tiempos de la VM no se publican en esta vista. Registro público todavía no habilitado.';
+      const filter=document.getElementById('competition-filter');if(filter)filter.disabled=true;
+    }
+    if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',publicView);else publicView();
+    return;
+  }
   const API = '/api/competitions';
   let csrf;
   async function api(path, body) {

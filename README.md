@@ -25,6 +25,14 @@ Reglas oficiales aún pendientes. Respaldo verificado en TrueNAS: ver
 
 ## GIS Daule
 
+La vista de GitHub Pages es de solo lectura: publica las capas GIS y el visor 3D,
+sin registrar observaciones, adjuntos, participantes ni tiempos. El panel de
+ambiente consulta el mismo conector de la VM mediante una pasarela HTTPS
+separada; no publica las bases de datos ni el servidor privado completo.
+Configuración y verificación en `tools/public-api/README.md`. Los colores,
+grosores y opacidad siguen siendo preferencias por navegador, no parámetros
+globales sincronizados.
+
 En `Herramientas → Mapa operativo de Daule`: cartografía local, límites de
 CONALI, susceptibilidad SGR y ríos/vías/poblados OSM. En la VM hay observaciones
 compartidas con texto, fotos y videos, guardadas en SQLite y un volumen Docker

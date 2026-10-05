@@ -2,7 +2,8 @@
 (function () {
   'use strict';
   const root = new URL('../', document.currentScript.src), el = id => document.getElementById(id);
-  const endpoint = new URL('/api/environment/', location.origin);
+  const publicAccess = window.BCBD_PUBLIC_ACCESS;
+  const endpoint = new URL('/api/environment/', publicAccess?.readOnly ? publicAccess.environmentOrigin : location.origin);
   const format = new Intl.DateTimeFormat('es-EC', {timeZone:'America/Guayaquil',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
   const number = new Intl.NumberFormat('es-EC', {maximumFractionDigits:2});
   const today = () => new Date(Date.now()-5*3600000).toISOString().slice(0,10);
@@ -29,7 +30,7 @@
     if(note)item.append(node('small',note));if(warning)item.classList.add('env-old');return item;
   }
   async function get(path) {
-    const response=await fetch(new URL(path,endpoint),{signal:AbortSignal.timeout(55000)});
+    const response=await fetch(new URL(path,endpoint),{credentials:'omit',signal:AbortSignal.timeout(55000)});
     if(!response.ok)throw new Error('Fuente sin respuesta o sin datos para esta consulta.');
     return response.json();
   }

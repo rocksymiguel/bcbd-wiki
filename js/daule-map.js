@@ -1,6 +1,7 @@
 /* BCBD: dated local cartography and shared VM observations. */
 (function () {
   'use strict';
+  const publicReadOnly = window.BCBD_PUBLIC_ACCESS?.readOnly || location.hostname.endsWith('.github.io');
   const dataBase = new URL('../assets/gis/daule/', document.currentScript.src);
   const el = id => document.getElementById(id);
   const names = {canton:'Límite cantonal',parishes:'Parroquias',riverbanks:'Huella cartografiada de ríos',waterways:'Ríos, esteros y canales',
@@ -322,6 +323,19 @@
   }
 
   function setupReports() {
+    if(publicReadOnly) {
+      // Do not read private LAN records, create sessions, or attach write handlers.
+      el('map-add').hidden=true;
+      document.querySelector('[data-layer="reports"]').closest('label').hidden=true;
+      document.querySelector('.map-records').hidden=true;
+      const notice=node('p','Vista pública de solo lectura. Observaciones, fotos, videos y registros no habilitados.','map-caption');
+      document.querySelector('.map-heading').append(notice);
+      map.on('click',event => {
+        el('map-coordinate').textContent=event.latlng.lat.toFixed(6)+', '+event.latlng.lng.toFixed(6);
+        elevation?.query(event.latlng);
+      });
+      return;
+    }
     reportLayer=L.geoJSON(null,{pane:'observations',pointToLayer:(_f,ll) => L.circleMarker(ll,{radius:8,color:'#fff',
       weight:2,fillColor:'#e11d48',fillOpacity:1}),onEachFeature:(f,l) => l.on('click',() => {if(!adding)showReport(f,false);})}).addTo(map);
     layers.reports=reportLayer;
@@ -485,6 +499,7 @@
       showSources();
       document.querySelectorAll('.map-sidebar input,.map-sidebar select,.map-sidebar button,#map-import').forEach(control => control.disabled=false);
       el('map-add').disabled=!serverReady;el('map-import').disabled=!serverReady;
+      if(publicReadOnly)document.querySelector('[data-layer="reports"]').disabled=true;
       el('daule-map').setAttribute('data-ready','true');
       el('map-status').textContent='Cartografía local cargada · Condiciones actuales sin verificar';
     } catch(error) {
