@@ -23,7 +23,7 @@ const server=http.createServer((req,res)=>{
   try {
     const context=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
     const page=await context.newPage(); const errors=[]; page.on('pageerror',e=>errors.push(e.message));
-    const station='/competencias-preparacion/fire-challenge-sto-dmngo-2026/Estaciones/estacion1/index.html';
+    const station='/competencias-preparacion/fire-challenge-sto-dmngo-2025/Estaciones/estacion1/index.html';
     await page.goto(base+station); await page.waitForSelector('.stopwatch-panel');
     await page.fill('#participant-name',run+' José María');
     const created=page.waitForResponse(r=>r.url().endsWith('/participants') && r.request().method()==='POST');
@@ -62,10 +62,10 @@ const server=http.createServer((req,res)=>{
     await other.getByText(run+' José María',{exact:false}).waitFor();
     const rows=await context.request.get(base+'/api/competitions/results');
     assert.equal((await rows.json()).filter(r=>r.participant_id===person.id).length,1);
-    for(const competition of ['copa-oba-2026','fire-challenge-sto-dmngo-2026']) {
+    for(const competition of ['copa-oba-2025','fire-challenge-sto-dmngo-2025']) {
       await page.goto(base+'/competencias-preparacion/'+competition+'/index.html');
       await page.click('#btn-estaciones'); assert.equal(await page.locator('#stations-modal').getAttribute('aria-hidden'),'false');
-      for(let n=1;n<=(competition==='copa-oba-2026'?4:5);n++) {
+      for(let n=1;n<=(competition==='copa-oba-2025'?4:5);n++) {
         await page.goto(base+'/competencias-preparacion/'+competition+'/Estaciones/estacion'+n+'/index.html');
         await page.waitForSelector('.stopwatch-panel');
         await page.locator('footer').count();
@@ -74,7 +74,7 @@ const server=http.createServer((req,res)=>{
         assert.equal(await page.locator('img[src*="illustraciones"]').count(),0);
       }
     }
-    await page.goto(base+'/competencias-preparacion/fire-challenge-sto-dmngo-2026/Reglas/index.html');
+    await page.goto(base+'/competencias-preparacion/fire-challenge-sto-dmngo-2025/Reglas/index.html');
     await page.getByText('El reglamento oficial aún no está incorporado.',{exact:false}).waitFor();
     if(!process.env.COMPETITIONS_TEST_URL) {
       await page.goto(base+'/bcbd-wiki'+station); await page.waitForSelector('.stopwatch-panel');

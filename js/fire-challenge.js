@@ -13,8 +13,8 @@ function getCompetitionFromUrl() {
       if (raw.includes('challenge')) return 'fire-challenge';
     }
     const path = window.location.pathname.toLowerCase();
-    if (path.includes('/copa-oba-2026/')) return 'copa-oba';
-    if (path.includes('/fire-challenge-sto-dmngo-2026/')) return 'fire-challenge';
+    if (path.includes('/copa-oba-2025/')) return 'copa-oba';
+    if (path.includes('/fire-challenge-sto-dmngo-2025/')) return 'fire-challenge';
   } catch (e) {
     console.warn('getCompetitionFromUrl failed', e);
   }
@@ -22,7 +22,7 @@ function getCompetitionFromUrl() {
 }
 
 function getCompetitionDisplayName(key) {
-  return key === 'copa-oba' ? 'Copa OBA 2026' : 'Fire Challenge Santo Domingo 2026';
+  return key === 'copa-oba' ? 'Copa OBA 2025' : 'Fire Challenge Santo Domingo 2025';
 }
 
 function getCompetitionStationLimit(key) {

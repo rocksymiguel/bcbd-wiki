@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Estación #1 — Fire Challenge 2025</title>
+    <script>
+        (function () {
+            var repoPrefix = location.hostname.includes('github.io') ? '/bcbd-wiki' : '';
+            var head = document.getElementsByTagName('head')[0];
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            var rel = '';
+            if (repoPrefix) {
+                link.href = repoPrefix + '/css/styles.css';
+            } else {
+                var segs = location.pathname.split('/').filter(Boolean);
+                var repoName = 'bcbd-wiki';
+                var repoIndex = segs.lastIndexOf(repoName);
+                var depth = 0;
+                if (repoIndex !== -1) {
+                    depth = segs.length - (repoIndex + 1);
+                    if (segs.length && segs[segs.length - 1].indexOf('.') !== -1) depth = Math.max(0, depth - 1);
+                } else {
+                    depth = segs.length;
+                    if (segs.length && segs[segs.length - 1].indexOf('.') !== -1) depth = Math.max(0, depth - 1);
+                }
+                rel = '../'.repeat(depth);
+                link.href = rel + 'css/styles.css';
+            }
+            head.appendChild(link);
+            // load layout and page script at end of body to preserve execution order
+        })();
+    </script>
+<script defer src="../../../../js/layout.js"></script>
+<script defer src="../../../../js/competition-register.js"></script>
+<script defer src="../../../../js/fire-challenge.js"></script>
+</head>
+
+<body>
+    <div id="header"></div>
+    <main id="main-content" data-station-index="1">
+        <section class="home-hero">
+            <div class="hero-inner">
+                <h1>Estación #1</h1>
+                <p class="lead">Entrada Forzada y Tendido enrollado simple de manguera de 2 ½ pulgadas.</p>
+            </div>
+        </section>
+        <section class="overview">
+            <h2>Recorrido de la estación</h2><figure class="station-circuit"><img src="../../../imagenes/estacion1-fire-challenge-sto-dmngo-2025.svg" style="min-width:820px" alt="Secuencia: Lanzamiento del tramo → Enrollado del tramo → Zona Asignada"><figcaption>Secuencia de entrenamiento según los pasos de esta página. No representa distancias ni el plano oficial.</figcaption></figure><h2>Pasos</h2>
+            <div class="station-steps">
+                <article class="step">
+                    <div class="step-badge">1</div>
+                    <div class="step-body">
+                        <h3>Lanzamiento del tramo</h3>
+                    </div>
+                </article>
+
+                <article class="step">
+                    <div class="step-badge">2</div>
+                    <div class="step-body">
+                        <h3>Enrollado del tramo</h3>
+                    </div>
+                </article>
+
+                <article class="step">
+                    <div class="step-badge">3</div>
+                    <div class="step-body">
+                        <h3>Zona Asignada</h3>
+                    </div>
+                </article>
+            </div>
+
+            <h2>Indicaciones</h2>
+            <ul class="indicaciones">
+                <li>El enrollado debe ser sin pliegue; debe estar bien enrollado.</li>
+                <li> </li>
+                <li><strong>Zona Asignada </strong></li>
+                <li> Colocar el tramo en la zona asignada <strong>"de pie" o "en vertical"</strong>.</li>
+                <li> Si el tramo cae existirá una penalización.</li>
+                <li> Si el tramo cae fuera del área o el participante lo coloca fuera del área asignada, el equipo
+                    tendrá una penalización de <strong>2 segundos</strong>.</li>
+            </ul>
+        </section>
+    </main>
+    <div id="footer"></div>
+</body>
+</html>

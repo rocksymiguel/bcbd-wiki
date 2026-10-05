@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Estación #3 — Fire Challenge 2025</title>
+  <script>
+      (function(){
+        var repoPrefix = location.hostname.includes('github.io') ? '/bcbd-wiki' : '';
+        var head = document.getElementsByTagName('head')[0];
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        var rel = '';
+        if (repoPrefix) {
+          link.href = repoPrefix + '/css/styles.css';
+        } else {
+          var segs = location.pathname.split('/').filter(Boolean);
+          var repoName = 'bcbd-wiki';
+          var repoIndex = segs.lastIndexOf(repoName);
+          var depth = 0;
+          if (repoIndex !== -1) {
+            depth = segs.length - (repoIndex + 1);
+            if (segs.length && segs[segs.length - 1].indexOf('.') !== -1) depth = Math.max(0, depth - 1);
+          } else {
+            depth = segs.length;
+            if (segs.length && segs[segs.length - 1].indexOf('.') !== -1) depth = Math.max(0, depth - 1);
+          }
+          rel = '../'.repeat(depth);
+          link.href = rel + 'css/styles.css';
+        }
+        head.appendChild(link);
+      })();
+  </script>
+<script defer src="../../../../js/layout.js"></script>
+<script defer src="../../../../js/competition-register.js"></script>
+<script defer src="../../../../js/fire-challenge.js"></script>
+</head>
+<body>
+  <div id="header"></div>
+  <main id="main-content" data-station-index="3">
+    <section class="home-hero">
+      <div class="hero-inner">
+        <h1>Estación #3</h1>
+        <p class="lead">Kaiser, zigzag, estirar tramo y pitonear al blanco.</p>
+      </div>
+    </section>
+    <section class="overview">
+      <h2>Recorrido de la estación</h2><figure class="station-circuit"><img src="../../../imagenes/estacion3-fire-challenge-sto-dmngo-2025.svg" style="min-width:1080px" alt="Secuencia: Kaiser → Zigzag → Estirar el tramo de 1 1/2&quot; presurizado → Pitonear al blanco"><figcaption>Secuencia de entrenamiento según los pasos de esta página. No representa distancias ni el plano oficial.</figcaption></figure><h2>Pasos</h2>
+      <div class="station-steps">
+        <article class="step">
+          <div class="step-badge">1</div>
+          <div class="step-body">
+            <h3>Kaiser</h3>
+          </div>
+        </article>
+        <article class="step">
+          <div class="step-badge">2</div>
+          <div class="step-body">
+            <h3>Zigzag</h3>
+          </div>
+        </article>
+        <article class="step">
+          <div class="step-badge">3</div>
+          <div class="step-body">
+            <h3>Estirar el tramo de 1 1/2" presurizado</h3>
+          </div>
+        </article>
+        <article class="step">
+          <div class="step-badge">4</div>
+          <div class="step-body">
+            <h3>Pitonear al blanco</h3>
+          </div>
+        </article>
+      </div>
+
+      <figure class="station-photo"><img src="../../../imagenes/kaiser.jpg" loading="lazy" alt="Golpe de mandarria sobre simulador de entrada forzada"><figcaption>Referencia de otra competencia · U.S. Air Force · Brittany Bateman/Auld · dominio público. Foto recortada. <a href="https://commons.wikimedia.org/wiki/File:Fire_Prevention_Week_121012-F-RB551-219.jpg" target="_blank" rel="noopener">Fuente</a></figcaption></figure><figure class="station-photo"><img src="../../../imagenes/piton.jpg" loading="lazy" alt="Pitón dirigido al blanco en un circuito de competencia"><figcaption>Referencia de otra competencia · U.S. Navy · Miles McDonough · dominio público. Foto recortada. <a href="https://commons.wikimedia.org/wiki/File:Firefighters_conduct_hose_accuracy_drill_during_competition_exercise_at_outdoor_training_facility_(9877198).jpg" target="_blank" rel="noopener">Fuente</a></figcaption></figure><h2>Indicaciones</h2>
+      <ul class="indicaciones">
+        <li><strong>Kaiser</strong></li>
+        <li>* Se debe golpear el peso hasta que el mismo recorra un metro.</li>
+        <li>* Solo puedes golpear el peso, si golpeas la estructura o "al aire" se tendrá una penalización de 2 segundos por golpe.</li>
+        <li>* Dejar la mandarria en la zona designada, caso contrario penalización de 5 segundos.</li>
+        <li><strong>Zigzag</strong></li>
+        <li>* Se debe recorrer por la parte externa, todos y cada uno de los conos; si no se lo hace o pasa por encima de uno, penalización de 5 segundos.</li>
+        <li><strong>Estirar el tramo</strong></li>
+        <li>* Agarras el pitón y cruzas en medio de la pista de conos; si mueves uno de los conos con el tramo, fuera de su zona, penalización de 2 segundos.</li>
+        <li><strong>Pitonear al blanco</strong></li>
+        <li>* Pitonear solamente en la zona asignada.</li>
+        <li>* Pasar una compuerta para pitonear al blanco.</li>
+        <li>* Pitonear antes de la apertura de la puerta, penalización de 2 segundos.</li>
+        <li>* Abrir el pitón antes de llegar al punto indicado, penalización de 2 segundos.</li>
+        <li>* Una vez acertado el blanco, cerrar el pitón y colocarlo suavemente en la zona designada.</li>
+        <li>* Botar el pitón al piso, 2 segundos de penalización.</li>
+        <li>* Dejar el pitón abierto, 2 segundos de penalización.</li>
+      </ul>
+    </section>
+  </main>
+  <div id="footer"></div>
+</body>
+</html>

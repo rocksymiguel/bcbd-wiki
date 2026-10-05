@@ -40,7 +40,7 @@ const publicBase='https://rocksymiguel.github.io/bcbd-wiki/';
       assert.equal(await page.locator('#env-weather-values .env-metric').count(),4);
       console.log('PASS real cross-origin browser weather read from the VM HTTPS gateway');
     }
-    await page.goto(publicBase+'competencias-preparacion/fire-challenge-sto-dmngo-2026/Estaciones/estacion1/');
+    await page.goto(publicBase+'competencias-preparacion/fire-challenge-sto-dmngo-2025/Estaciones/estacion1/');
     await page.locator('.public-competition-notice').waitFor();
     assert.equal(await page.locator('#participant-register').count(),0);
     await page.goto(publicBase+'competencias-preparacion/ranking/');

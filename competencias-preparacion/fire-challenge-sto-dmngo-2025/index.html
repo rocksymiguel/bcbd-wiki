@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fire Challenge Santo Domingo 2025 | Preparación</title>
+  <script>
+    (function(){
+      var repoPrefix = location.hostname.includes('github.io') ? '/bcbd-wiki' : '';
+      var head = document.getElementsByTagName('head')[0];
+      var link = document.createElement('link');
+      link.rel = 'stylesheet';
+      var rel = '';
+      if (repoPrefix) {
+        link.href = repoPrefix + '/css/styles.css';
+      } else {
+        var segs = location.pathname.split('/').filter(Boolean);
+        var repoName = 'bcbd-wiki';
+        var repoIndex = segs.lastIndexOf(repoName);
+        var depth = 0;
+        if (repoIndex !== -1) {
+          depth = segs.length - (repoIndex + 1);
+          if (segs.length && segs[segs.length - 1].indexOf('.') !== -1) depth = Math.max(0, depth - 1);
+        } else {
+          depth = segs.length;
+          if (segs.length && segs[segs.length - 1].indexOf('.') !== -1) depth = Math.max(0, depth - 1);
+        }
+        rel = '../'.repeat(depth);
+        link.href = rel + 'css/styles.css';
+      }
+      head.appendChild(link);
+
+    })();
+  </script>
+  <link rel="stylesheet" href="../../css/styles.css">
+</head>
+
+<body>
+  <div id="header"></div>
+  <main id="main-content">
+    <section class="home-hero">
+      <div class="hero-inner">
+        <h1>Fire Challenge Santo Domingo 2025</h1>
+        <p class="lead">Página de preparación para Fire Challenge Santo Domingo 2025.</p>
+      </div>
+    </section>
+
+    <section class="overview">
+      <h2>Secciones</h2>
+      <nav class="competition-nav">
+        <ul>
+          <li><a href="Reglas/index.html" class="link-like">Reglas</a></li>
+          <li><button id="btn-estaciones" class="link-like">Estaciones</button></li>
+        </ul>
+      </nav>
+
+      <div id="seccion-contenido" style="margin-top:18px">
+        <article id="reglas" class="hidden">
+          <h3>Reglas</h3>
+          <p>Se detallarán las reglas oficiales y criterios de evaluación.</p>
+        </article>
+
+        <article id="estaciones" class="hidden">
+          <h3>Estaciones</h3>
+          <p>Selecciona una opción para ver las estaciones o comenzar el recorrido.</p>
+          <button id="open-stations-modal" class="primary">Abrir lista de estaciones</button>
+        </article>
+      </div>
+    </section>
+
+    <!-- Stations modal (static, like org-modal) -->
+    <div id="stations-modal" class="stations-modal" aria-hidden="true">
+      <div class="stations-modal-backdrop" data-close></div>
+      <div class="stations-modal-panel" role="dialog" aria-modal="true" tabindex="-1">
+        <button class="org-modal-close" data-close aria-label="Cerrar">×</button>
+        <h4>Estaciones - Fire Challenge 2025</h4>
+        <p>Elige "Recorrido de Competencia" para navegar secuencialmente, o elige una estación individual.</p>
+        <div class="stations-list">
+          <a href="Estaciones/estacion1/index.html?recorrido=1">Recorrido de Competencia</a>
+          <a href="Estaciones/estacion1/index.html">Estación #1</a>
+          <a href="Estaciones/estacion2/index.html">Estación #2</a>
+          <a href="Estaciones/estacion3/index.html">Estación #3</a>
+          <a href="Estaciones/estacion4/index.html">Estación #4</a>
+          <a href="Estaciones/estacion5/index.html">Estación #5</a>
+        </div>
+        <div style="text-align:right; margin-top:12px;"><button class="primary" data-close>Cerrar</button></div>
+      </div>
+    </div>
+  </main>
+
+  <div id="footer"></div>
+  <script src="../../js/layout.js"></script>
+  <script src="../../js/fire-challenge.js"></script>
+</body>
+
+</html>

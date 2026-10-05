@@ -1,49 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Reglas — Fire Challenge 2026</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preparación de competencias 2025 | BCBD</title>
+  <meta http-equiv="refresh" content="0;url=../../fire-challenge-sto-dmngo-2025/Reglas/index.html">
   <script>
-    (function(){
-      var repoPrefix = location.hostname.includes('github.io') ? '/bcbd-wiki' : '';
-      var head = document.getElementsByTagName('head')[0];
-      var link = document.createElement('link');
-      link.rel = 'stylesheet';
-      var rel = '';
-      if (repoPrefix) {
-        link.href = repoPrefix + '/css/styles.css';
-      } else {
-        var segs = location.pathname.split('/').filter(Boolean);
-        var repoName = 'bcbd-wiki';
-        var repoIndex = segs.lastIndexOf(repoName);
-        var depth = 0;
-        if (repoIndex !== -1) {
-          depth = segs.length - (repoIndex + 1);
-          if (segs.length && segs[segs.length - 1].indexOf('.') !== -1) depth = Math.max(0, depth - 1);
-        } else {
-          depth = segs.length;
-          if (segs.length && segs[segs.length - 1].indexOf('.') !== -1) depth = Math.max(0, depth - 1);
-        }
-        rel = '../'.repeat(depth);
-        link.href = rel + 'css/styles.css';
-      }
-      head.appendChild(link);
-    })();
+    const target = new URL('../../fire-challenge-sto-dmngo-2025/Reglas/index.html', location.href);
+    target.search = location.search;
+    target.hash = location.hash;
+    location.replace(target.href);
   </script>
-  <link rel="stylesheet" href="../../../css/styles.css">
 </head>
-<body>
-  <div id="header"></div>
-  <main id="main-content">
-    <section class="home-hero">
-      <div class="hero-inner">
-        <h1>Reglas — Fire Challenge Santo Domingo 2026</h1>
-        <p class="lead">El reglamento oficial aún no está incorporado. Las indicaciones de cada estación están disponibles en sus respectivas páginas.</p>
-      </div>
-    </section>
-  </main>
-  <div id="footer"></div>
-  <script src="../../../js/layout.js"></script>
-</body>
+<body><p>Esta página se trasladó a <a href="../../fire-challenge-sto-dmngo-2025/Reglas/index.html">Preparación de competencias 2025</a>.</p></body>
 </html>

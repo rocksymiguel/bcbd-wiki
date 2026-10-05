@@ -39,12 +39,12 @@
   function read(key, fallback) { try {return JSON.parse(localStorage.getItem(key)) || fallback;} catch {return fallback;} }
   function write(key, value) {localStorage.setItem(key, JSON.stringify(value));}
   const format = c => [Math.floor(c/6000),Math.floor(c/100)%60,c%100].map(n=>String(n).padStart(2,'0')).join(':');
-  const labels = {'fire-challenge':'Fire Challenge Santo Domingo 2026','copa-oba':'Copa OBA 2026'};
+  const labels = {'fire-challenge':'Fire Challenge Santo Domingo 2025','copa-oba':'Copa OBA 2025'};
   const normalize = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
   const pendingKey = 'fc_pending_results';
   window.initStopwatch = function(idx) {
     if (document.querySelector('.stopwatch-panel')) return;
-    const competition = location.pathname.includes('/copa-oba-2026/') ? 'copa-oba' : 'fire-challenge';
+    const competition = location.pathname.includes('/copa-oba-2025/') ? 'copa-oba' : 'fire-challenge';
     const limit = competition === 'copa-oba' ? 4 : 5;
     const panel = document.createElement('section'); panel.className = 'stopwatch-panel';
     panel.innerHTML = `<h2>Cronómetro · Estación ${idx}</h2><p>${labels[competition]}</p>
