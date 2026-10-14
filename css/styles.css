@@ -163,7 +163,10 @@ main, .contenido { max-width: 1000px; margin: 28px auto; flex: 1; }
 /* ====== HEADER ====== */
 .site-header { display: block; }
 .site-header-inner { max-width: 1000px; margin: 18px auto; background: var(--theme-surface); padding: 10px 16px; border-radius: 12px; box-shadow: 0 6px 18px var(--theme-shadow); display:flex; align-items:center; justify-content:space-between; gap:12px; }
-.site-header { position: sticky; top: 12px; z-index: 60; }
+#header { display:flow-root; position:sticky; top:0; z-index:60; flex-shrink:0; transition:transform .2s ease; }
+#header.site-header-hidden { transform:translateY(-100%); }
+.site-header { position:static; }
+@media (prefers-reduced-motion:reduce) { #header { transition:none; } }
 .site-header--scrolled .site-header-inner { box-shadow: 0 10px 40px rgba(31,41,55,0.12); transform: translateY(-1px); }
 .site-header .site-header-inner { transition: box-shadow .18s ease, transform .18s ease; }
 .brand { font-weight:700; color:#dc2626; text-decoration:none; font-size:22px; }
@@ -171,6 +174,7 @@ main, .contenido { max-width: 1000px; margin: 28px auto; flex: 1; }
 .site-nav ul { list-style:none; display:flex; flex-wrap:wrap; gap:12px; margin:0; padding:0; }
 .site-nav a { display:inline-flex; align-items:center; color:var(--theme-text); text-decoration:none; padding:8px 12px; border:1px solid var(--theme-border); border-radius:8px; background:var(--theme-surface); box-shadow:0 2px 4px var(--theme-shadow); }
 .site-nav a:hover { background:var(--theme-hover); }
+.nav-study-star { color:#f59e0b; margin-right:7px; flex-shrink:0; }
 .home-gis-link { display:block; color:var(--theme-text); text-decoration:none; }
 .home-column.home-gis h3 { font-size:clamp(32px,3vw,44px); letter-spacing:-.04em; margin:8px 0; }
 .home-gis-eyebrow { color:var(--theme-muted); font-size:12px; }

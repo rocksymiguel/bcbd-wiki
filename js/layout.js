@@ -199,13 +199,25 @@ tryFetchPartial('partials/header.html', (err, html, usedPath) => {
     if (newHref !== originalHref) link.setAttribute("href", newHref);
   });
 
-  // Add scroll listener to toggle header scrolled state (shadow)
+  // The page-level host owns sticky positioning; an inner sticky header would
+  // otherwise stop at the bottom of its own short placeholder.
   const headerNode = document.querySelector('.site-header');
-  if (headerNode) {
+  if (headerNode && headerEl) {
+    let lastScrollY = Math.max(0, window.scrollY);
     const onScroll = () => {
-      if (window.scrollY > 8) headerNode.classList.add('site-header--scrolled');
-      else headerNode.classList.remove('site-header--scrolled');
+      const current = Math.max(0, window.scrollY);
+      const delta = current - lastScrollY;
+      headerNode.classList.toggle('site-header--scrolled', current > 8);
+      if (current <= headerEl.offsetHeight || headerEl.contains(document.activeElement)) {
+        headerEl.classList.remove('site-header-hidden');
+        lastScrollY = current;
+      } else if (Math.abs(delta) >= 6) {
+        headerEl.classList.toggle('site-header-hidden', delta > 0);
+        lastScrollY = current;
+      }
     };
+    // Keyboard navigation must reveal links even when the bar is tucked away.
+    headerEl.addEventListener('focusin', () => headerEl.classList.remove('site-header-hidden'));
     window.addEventListener('scroll', onScroll, { passive: true });
     // run once to set initial state
     onScroll();
