@@ -167,7 +167,8 @@ main, .contenido { max-width: 1000px; margin: 28px auto; flex: 1; }
 .site-header--scrolled .site-header-inner { box-shadow: 0 10px 40px rgba(31,41,55,0.12); transform: translateY(-1px); }
 .site-header .site-header-inner { transition: box-shadow .18s ease, transform .18s ease; }
 .brand { font-weight:700; color:#dc2626; text-decoration:none; font-size:22px; }
-.site-nav ul { list-style:none; display:flex; gap:12px; margin:0; padding:0; }
+.site-nav { min-width:0; }
+.site-nav ul { list-style:none; display:flex; flex-wrap:wrap; gap:12px; margin:0; padding:0; }
 .site-nav a { display:inline-flex; align-items:center; color:var(--theme-text); text-decoration:none; padding:8px 12px; border:1px solid var(--theme-border); border-radius:8px; background:var(--theme-surface); box-shadow:0 2px 4px var(--theme-shadow); }
 .site-nav a:hover { background:var(--theme-hover); }
 .home-gis-link { display:block; color:var(--theme-text); text-decoration:none; }

@@ -1,0 +1,1377 @@
+{
+  "source": {
+    "file": "Manual Bomberos I.md",
+    "sha256": "9054c98ea136f720db7253a2698126c23804fd0672f5eea3ff4e06cf4a04c68f",
+    "bytes": 73779
+  },
+  "chapters": [
+    {
+      "title": "Herramientas y equipos",
+      "id": "herramientas-y-equipos"
+    },
+    {
+      "title": "Teoría del fuego",
+      "id": "teoria-del-fuego"
+    },
+    {
+      "title": "Abastecimiento de agua",
+      "id": "abastecimiento-de-agua"
+    },
+    {
+      "title": "Escaleras portátiles",
+      "id": "escaleras-portatiles"
+    },
+    {
+      "title": "Equipo de respiración autónoma",
+      "id": "equipo-de-respiracion-autonoma"
+    },
+    {
+      "title": "Técnicas de entrada forzada",
+      "id": "tecnicas-de-entrada-forzada"
+    },
+    {
+      "title": "Técnicas y tácticas de control de incendios",
+      "id": "tecnicas-y-tacticas-de-control-de-incendios"
+    },
+    {
+      "title": "Ventilación",
+      "id": "ventilacion"
+    },
+    {
+      "title": "Búsqueda y rescate",
+      "id": "busqueda-y-rescate"
+    }
+  ],
+  "headings": 270,
+  "imageCount": 189,
+  "assets": [
+    {
+      "path": "Attachment/p06-hacha-bombero.png",
+      "bytes": 155302,
+      "sha256": "6ca7966b84eba8ecfab41562d630aa39e54e415652ccd26e090520b20afab71e",
+      "width": 690,
+      "height": 360
+    },
+    {
+      "path": "Attachment/p06-hacha-lenador.png",
+      "bytes": 170406,
+      "sha256": "c4edd2dc0eb930c096f8f3526853c5f374780ae730bbe3ef93ff3d88566e74dd",
+      "width": 750,
+      "height": 360
+    },
+    {
+      "path": "Attachment/p06-serrucho-carpintero.png",
+      "bytes": 204126,
+      "sha256": "025ba5a1d214b3b2639af63667cba26aa3b2b42bda724726a745cc617a0ea3fd",
+      "width": 690,
+      "height": 440
+    },
+    {
+      "path": "Attachment/p06-segueta-metales.png",
+      "bytes": 219164,
+      "sha256": "61634800a4020310fbceacb56239d298f6f3997a838e866d2dc5971e2811cdcc",
+      "width": 750,
+      "height": 440
+    },
+    {
+      "path": "Attachment/p07-sierra-circular.png",
+      "bytes": 266216,
+      "sha256": "7fb06835c162bdc699d522abcf92b04df5c354057c251e3f1b22201c03b0a5f9",
+      "width": 730,
+      "height": 420
+    },
+    {
+      "path": "Attachment/p07-motosierra.png",
+      "bytes": 244267,
+      "sha256": "5cc871e645e4465a3eb9bcebc28869498e52171d0f9d14363bb9b959c41545d3",
+      "width": 720,
+      "height": 420
+    },
+    {
+      "path": "Attachment/p07-sierra-sable-caladora.png",
+      "bytes": 251793,
+      "sha256": "33345031c14c462874960cdb381aaa795f1aa964088e35837eac10746d8da624",
+      "width": 880,
+      "height": 410
+    },
+    {
+      "path": "Attachment/p08-cizallas-cortafrios.png",
+      "bytes": 355235,
+      "sha256": "feee15296bc40f0271964acf3b4941a551653e0e7050b4f195176d2e046f2ea9",
+      "width": 730,
+      "height": 720
+    },
+    {
+      "path": "Attachment/p08-soplete-oxicorte.png",
+      "bytes": 339673,
+      "sha256": "30033055b45c39383c823d8b7e64b8b74b698a6db3145cb934e6e905b15d2350",
+      "width": 680,
+      "height": 730
+    },
+    {
+      "path": "Attachment/p09-palancas-manuales.png",
+      "bytes": 1009501,
+      "sha256": "a32587204aa2e18e6db3ba97d416d8471b251424bd69aa8539088dfe9d6f7729",
+      "width": 1410,
+      "height": 800
+    },
+    {
+      "path": "Attachment/p10-cortador-hidraulico.png",
+      "bytes": 269613,
+      "sha256": "1720daa1a92f33b56d9596cd3de41d7fdc21d311e7b29c33e399704604696f4d",
+      "width": 735,
+      "height": 580
+    },
+    {
+      "path": "Attachment/p10-expansor-hidraulico.png",
+      "bytes": 234882,
+      "sha256": "040652f726c89c3ee2bff8b6a12d9ec4a0bc01c31e856044e7e2ecca7c91dc1c",
+      "width": 750,
+      "height": 475
+    },
+    {
+      "path": "Attachment/p11-ariete-hidraulico.png",
+      "bytes": 400952,
+      "sha256": "9d4e2b6003349b17472ec1b2a9bfa41b0d0b191117b1a8feaef22652139bb82e",
+      "width": 720,
+      "height": 700
+    },
+    {
+      "path": "Attachment/p11-abre-puertas-hidraulico.png",
+      "bytes": 361765,
+      "sha256": "51cc08258e1d9b25ea4763a7f1cf99c66309bf3c5fe8ff56504e9828ffb3fae6",
+      "width": 690,
+      "height": 700
+    },
+    {
+      "path": "Attachment/p12-arpones.png",
+      "bytes": 680738,
+      "sha256": "a9ea84241226d82c9658ff12f246c665014a676d82b543bba4394ca88adcc8e1",
+      "width": 1570,
+      "height": 630
+    },
+    {
+      "path": "Attachment/p13-herramientas-golpeo.png",
+      "bytes": 869124,
+      "sha256": "39d5c4fb0d5c1f1984280c162c48d2f9f678804947e21208a2d514e348fd656d",
+      "width": 1270,
+      "height": 790
+    },
+    {
+      "path": "Attachment/p14-combinacion-herramientas.png",
+      "bytes": 221852,
+      "sha256": "ec630722adda39f6d7f83dbdbcaf965230f8e98e9b8b98f2868b900eee7ce36d",
+      "width": 480,
+      "height": 830
+    },
+    {
+      "path": "Attachment/p15-forzar-candados.png",
+      "bytes": 1002446,
+      "sha256": "cc8edcba088af60be2ba77b327b104e27f6403816a5675b2b6c1d73565c0f5e5",
+      "width": 1570,
+      "height": 830
+    },
+    {
+      "path": "Attachment/p20-calor-temperatura.png",
+      "bytes": 428677,
+      "sha256": "8006c0b8d5a6f05b17c669ee7119b374e14100aa1213f27328d9497fcb7bbb1c",
+      "width": 1480,
+      "height": 700
+    },
+    {
+      "path": "Attachment/p21-linea-tiempo-oxidacion.png",
+      "bytes": 460331,
+      "sha256": "bba8013dff7cae0738967e823f8721b3c0b74fe82f65bea805153b432b8d3b4c",
+      "width": 1300,
+      "height": 490
+    },
+    {
+      "path": "Attachment/p22-combustion.png",
+      "bytes": 1216087,
+      "sha256": "29f6eb297272027e6d835fe64e3309e301ec06a77ba7cab686abc739aa1003b0",
+      "width": 1670,
+      "height": 700
+    },
+    {
+      "path": "Attachment/p23-pirolisis-gasificacion.png",
+      "bytes": 1083801,
+      "sha256": "4a3e32ec4a66d9afe7872c5a0377192a1c7c51a905f8592b3a2e750d3f6b4cb0",
+      "width": 1770,
+      "height": 675
+    },
+    {
+      "path": "Attachment/p24-triangulo-tetraedro-fuego.png",
+      "bytes": 828689,
+      "sha256": "623ee326578d7ecb1b757f6940a112d1b73f40edc0805d3c68c222db457979bb",
+      "width": 1570,
+      "height": 790
+    },
+    {
+      "path": "Attachment/p25-combustibles-estados.png",
+      "bytes": 938259,
+      "sha256": "3886f6173aee867bfc4f8ed9576374cdd3dcb0e1ed3f735c9b4fd900e2f867c8",
+      "width": 1730,
+      "height": 700
+    },
+    {
+      "path": "Attachment/p26-combustible-gaseoso.png",
+      "bytes": 825256,
+      "sha256": "273e83e5580a9c31ec17b50970d7c363c6efb01e6aedd9c81b07e1b3401de50f",
+      "width": 1670,
+      "height": 630
+    },
+    {
+      "path": "Attachment/p27-combustible-liquido-vapores.png",
+      "bytes": 620117,
+      "sha256": "204cb76c9f94d685bfa0259ab2d4210bcfc3ffe5f80dcb708a9624e6acdf3e37",
+      "width": 1720,
+      "height": 540
+    },
+    {
+      "path": "Attachment/p28-combustible-solido-ignicion.png",
+      "bytes": 640685,
+      "sha256": "8e1efa1822c94db695aa57397cac8b0a0c3deac73e5ee54adf06debbd3c0803f",
+      "width": 1760,
+      "height": 660
+    },
+    {
+      "path": "Attachment/p29-oxigeno-acetileno.png",
+      "bytes": 1153977,
+      "sha256": "4c58f8cb686d581df31a2e8b26a3390a0ca40ebd8fadd5fede27080655c455e4",
+      "width": 1924,
+      "height": 658
+    },
+    {
+      "path": "Attachment/p30-oxigeno-fuego-respiracion.png",
+      "bytes": 1207227,
+      "sha256": "601913a1c2601dee2887f8c1ceb81927ae6112d8231ab5b6c961696131ae9111",
+      "width": 2010,
+      "height": 1290
+    },
+    {
+      "path": "Attachment/p31-limites-inflamabilidad.png",
+      "bytes": 685602,
+      "sha256": "75b1c574f8748fb2ecf71df82d6baa487b292ab4a8435e8a6f0ebffb5a7b8957",
+      "width": 1430,
+      "height": 860
+    },
+    {
+      "path": "Attachment/p32-reaccion-quimica-cadena.png",
+      "bytes": 343492,
+      "sha256": "77e97124ba14b7a744529ef007cabeecf605534c9983bbb3b266e1c90714c90d",
+      "width": 660,
+      "height": 580
+    },
+    {
+      "path": "Attachment/p33-energia-quimica.png",
+      "bytes": 793532,
+      "sha256": "1a72c29c0dedee2844420748d94717a761756364f10dd8b605bd3ea11d185361",
+      "width": 1750,
+      "height": 1140
+    },
+    {
+      "path": "Attachment/p34-energia-electrica-resistencia.png",
+      "bytes": 295556,
+      "sha256": "5dbdad7ebc315fc10683e77f87b4937d2392ab39a1af2df38b70870c6190265e",
+      "width": 670,
+      "height": 459
+    },
+    {
+      "path": "Attachment/p34-energia-electrica-arco-electrico.png",
+      "bytes": 265407,
+      "sha256": "4c3d7c84eae2f299bd6ba4433c59077e2f89fa04911b33cd8a39c58f6c7b7297",
+      "width": 664,
+      "height": 460
+    },
+    {
+      "path": "Attachment/p34-energia-electrica-sobrecarga.png",
+      "bytes": 294785,
+      "sha256": "91aa9b502370f0187495517d18d77552b37f59d34eae175c02933931f8d7d4b9",
+      "width": 663,
+      "height": 469
+    },
+    {
+      "path": "Attachment/p34-energia-electrica-cortocircuito.png",
+      "bytes": 306515,
+      "sha256": "ff37869e8122cf1783efa44649c0aa06e37a3cc535f1feadc6bed7dc3dd591c1",
+      "width": 650,
+      "height": 442
+    },
+    {
+      "path": "Attachment/p35-energia-mecanica-friccion.png",
+      "bytes": 474339,
+      "sha256": "31adb8616844265dd40b3b1e172e6cb7897f9034d14058c5ab243b579f00bd9a",
+      "width": 805,
+      "height": 514
+    },
+    {
+      "path": "Attachment/p35-energia-mecanica-compresion.png",
+      "bytes": 305314,
+      "sha256": "219f56efd8db2d4a052510ae8c62828ac0c38dd9496a7ad089c46dfb5b26619e",
+      "width": 730,
+      "height": 548
+    },
+    {
+      "path": "Attachment/p36-transferencia-calor.png",
+      "bytes": 904757,
+      "sha256": "bb382061a6b09037ff4eaad173b975755ce77b23c8110439fc0aff63f8b38ed0",
+      "width": 1250,
+      "height": 1110
+    },
+    {
+      "path": "Attachment/p37-conduccion-materiales.png",
+      "bytes": 154513,
+      "sha256": "3f8d2e9e242fb145dca211e714dd66a0cbddf8de2ab24f74ad04abf959b86de5",
+      "width": 771,
+      "height": 422
+    },
+    {
+      "path": "Attachment/p37-conduccion-estructuras.png",
+      "bytes": 586813,
+      "sha256": "0048c713bf2df8071b58dd94fd63c342f93a1f5125ebc9374968149633084c2c",
+      "width": 970,
+      "height": 740
+    },
+    {
+      "path": "Attachment/p38-radiacion.png",
+      "bytes": 1210734,
+      "sha256": "81b9aba703432d552255411f62b0177744b232872552c6ff67c1d7286f7bda9b",
+      "width": 1530,
+      "height": 888
+    },
+    {
+      "path": "Attachment/p39-conveccion.png",
+      "bytes": 855444,
+      "sha256": "3b4c0d23e0ad474f84d2c72b3ee81951bf7e33d97380703975980373024828ae",
+      "width": 1220,
+      "height": 775
+    },
+    {
+      "path": "Attachment/p40-etapas-fuego-curva.png",
+      "bytes": 860826,
+      "sha256": "213ea2d59d859c9760664e247b3ede0a8015dd3c1b82c544da3106792b2f685f",
+      "width": 1220,
+      "height": 880
+    },
+    {
+      "path": "Attachment/p41-ignicion.png",
+      "bytes": 1089736,
+      "sha256": "256c9575459c217de4d22a74ac2eac430691d3439a38318ff81af512511a8587",
+      "width": 1494,
+      "height": 880
+    },
+    {
+      "path": "Attachment/p42-crecimiento.png",
+      "bytes": 612990,
+      "sha256": "71cd1ba3f3a98bdb4a841ad387872fccc9fffd725d5b1f6a2ca22044baf99de7",
+      "width": 1170,
+      "height": 620
+    },
+    {
+      "path": "Attachment/p43-capas-termicas.png",
+      "bytes": 1599220,
+      "sha256": "2bb191bed150e0d791d20317eb61debeb50ad577f9ee9704899640447f835270",
+      "width": 1935,
+      "height": 1510
+    },
+    {
+      "path": "Attachment/p44-flashover.png",
+      "bytes": 828550,
+      "sha256": "e28d0c37283e4745dbf34b7fb9236abcdd7a09439ae37d12436a7aad5fa5cb6d",
+      "width": 1470,
+      "height": 750
+    },
+    {
+      "path": "Attachment/p45-desarrollo-completo.png",
+      "bytes": 797965,
+      "sha256": "e062444882cb49da2ccb28e9b4e14cc402da5c4826df8a3151b0671a29f3d034",
+      "width": 1480,
+      "height": 670
+    },
+    {
+      "path": "Attachment/p46-disminucion.png",
+      "bytes": 726064,
+      "sha256": "828ce9a378f64eaae26bdf2a30c9eccaac98f382cb23b3b2cdf987914c37c540",
+      "width": 1350,
+      "height": 610
+    },
+    {
+      "path": "Attachment/p47-flameover-rollover-1.png",
+      "bytes": 339199,
+      "sha256": "b204323233255c607392ca97a8500ceca262d3f895343c86dae2dc84875f6a8b",
+      "width": 850,
+      "height": 500
+    },
+    {
+      "path": "Attachment/p47-flameover-rollover-2.png",
+      "bytes": 338466,
+      "sha256": "cc8c7db37c2453313401b0c3ac537485ba9dd2617ec3badcd16cb036b9ea4635",
+      "width": 910,
+      "height": 500
+    },
+    {
+      "path": "Attachment/p49-backdraft.png",
+      "bytes": 886775,
+      "sha256": "3959fa3352605070c768f27c9e5029f9402cfc1b50b7fda9f5ba807d9175271f",
+      "width": 1320,
+      "height": 1030
+    },
+    {
+      "path": "Attachment/p50-bleve-incendio-bajo-deposito.png",
+      "bytes": 80497,
+      "sha256": "d9b82368d9b6ce55865656c7ddc04a6ddf656822e3ee09e3bdb2bc0c627c46ad",
+      "width": 472,
+      "height": 600
+    },
+    {
+      "path": "Attachment/p50-bleve-aumento-presion.png",
+      "bytes": 84506,
+      "sha256": "91d119017ac16e52156046e81c4ac40326aad6d7b6b8a85db56d6f7b0d280630",
+      "width": 468,
+      "height": 600
+    },
+    {
+      "path": "Attachment/p50-bleve-ruptura-deposito.png",
+      "bytes": 127892,
+      "sha256": "9fe44766d4838989d02a064451ff1433fe985290ffb5effc70c0346365131b73",
+      "width": 584,
+      "height": 600
+    },
+    {
+      "path": "Attachment/p50-bleve-bola-de-fuego.png",
+      "bytes": 171406,
+      "sha256": "898586595d339b798aece63b7e04f9152aee33d01e7475862df586f80b079679",
+      "width": 540,
+      "height": 600
+    },
+    {
+      "path": "Attachment/p51-boilover.png",
+      "bytes": 556127,
+      "sha256": "bc80d19375544599a8c92e7c4e719393ac1edb2fa5c4a1c9c9bf671173353068",
+      "width": 890,
+      "height": 810
+    },
+    {
+      "path": "Attachment/p53-fuego-industrial.png",
+      "bytes": 478974,
+      "sha256": "9008522d34a30038498f1ca384c3505f7110f9aa2a5775021eb4ce990ed1032f",
+      "width": 738,
+      "height": 578
+    },
+    {
+      "path": "Attachment/p53-incendio-forestal.png",
+      "bytes": 465789,
+      "sha256": "0891923f5846b1c842cdb17fde91e7dc4002243c74b19046bebd21a14e58712b",
+      "width": 688,
+      "height": 578
+    },
+    {
+      "path": "Attachment/p53-cisternas-en-operacion.png",
+      "bytes": 498468,
+      "sha256": "67b36c371425f61558290b6b8e28dfae91823244e50b12ba14ff53b905c5a68d",
+      "width": 702,
+      "height": 564
+    },
+    {
+      "path": "Attachment/p54-abastecimiento-simple.png",
+      "bytes": 497817,
+      "sha256": "2e5a48238ef160c7eb56cbb7cde3ae5bbfecb69f7634810ba4932e469731c85f",
+      "width": 1988,
+      "height": 296
+    },
+    {
+      "path": "Attachment/p55-abastecimiento-paralelo.png",
+      "bytes": 844463,
+      "sha256": "cb7076e3a151576a953122e84875e5ac84def47006feac05d87ac395eb005700",
+      "width": 2140,
+      "height": 514
+    },
+    {
+      "path": "Attachment/p56-abastecimiento-paralelo-multiples-lineas.png",
+      "bytes": 1522988,
+      "sha256": "4136afa7dd5c29754a8d2271dab32058ef9a2bdb621cd8930b5b6e9f81586c41",
+      "width": 2266,
+      "height": 865
+    },
+    {
+      "path": "Attachment/p57-bombeo-en-serie.png",
+      "bytes": 785976,
+      "sha256": "ff1201c0484517a76f1d1c614507d94fc584edd34af8789d59ecf66f3091e250",
+      "width": 1980,
+      "height": 725
+    },
+    {
+      "path": "Attachment/p58-camion-cisterna-y-autobomba.png",
+      "bytes": 626270,
+      "sha256": "fafa232063156582ddefde15f0cdc15e291331d88e50af4b7e8ba91ce078aec8",
+      "width": 2106,
+      "height": 578
+    },
+    {
+      "path": "Attachment/p59-abastecimiento-con-cisterna-y-carro-escalera.png",
+      "bytes": 1420789,
+      "sha256": "1b7edf89f395c94c6bee943f05871bc02582c04e9f393def470b4f04ce1f2220",
+      "width": 2224,
+      "height": 934
+    },
+    {
+      "path": "Attachment/p60-maniobra-combinada-con-cisternas.png",
+      "bytes": 2713954,
+      "sha256": "b8a3e59f86bb05d3cdd102217e35677375a798b44ee856d892fbbbdfb5aa3c89",
+      "width": 2252,
+      "height": 1082
+    },
+    {
+      "path": "Attachment/p61-abastecimiento-superficial.png",
+      "bytes": 248374,
+      "sha256": "ace070dfb5b2c308625a3e5cdeec94611b349cf95d1c887a980f851ba2910387",
+      "width": 386,
+      "height": 520
+    },
+    {
+      "path": "Attachment/p62-fuentes-alternativas.png",
+      "bytes": 554073,
+      "sha256": "7a451dcbe5a9dbb64fead6c3942c825537d6826f88b2d8170dd74c2531f3c40d",
+      "width": 1090,
+      "height": 515
+    },
+    {
+      "path": "Attachment/p63-hidrantes-seco-y-humedo.png",
+      "bytes": 363264,
+      "sha256": "d92a3bf7271bd4b60f90dd29da66ae1fbea4c670f220627962b7635287db5c4c",
+      "width": 1142,
+      "height": 712
+    },
+    {
+      "path": "Attachment/p64-hidrante-directo-y-relevo.png",
+      "bytes": 868295,
+      "sha256": "0736941b614fabf07d380fc7cf334d4c8032d74844a8fbdaee945ca6024fa732",
+      "width": 2150,
+      "height": 578
+    },
+    {
+      "path": "Attachment/p65-maniobras-desde-hidrante.png",
+      "bytes": 2037932,
+      "sha256": "39b99be68a43b4e847430a99406e8482245969d53de4fd481e0fd754ad920306",
+      "width": 2295,
+      "height": 919
+    },
+    {
+      "path": "Attachment/p66-succion-directa-altura-y-posicion.png",
+      "bytes": 702651,
+      "sha256": "4bd0f28eb8341ea074f9ac7e54bb152b522627fdf31eb5845cb7fe36ec4603c9",
+      "width": 1755,
+      "height": 695
+    },
+    {
+      "path": "Attachment/p67-succion-directa-fuentes.png",
+      "bytes": 1903522,
+      "sha256": "1fea98373b3f7b202735c8c8e45cb73df716f47ba702e6956659134d5ee7cab8",
+      "width": 2350,
+      "height": 1088
+    },
+    {
+      "path": "Attachment/p68-trasvase-disposicion.png",
+      "bytes": 386786,
+      "sha256": "ca41b9676d163b74a25f902ae85f93cd55100d38ca67a24d87f92e5606e53aac",
+      "width": 742,
+      "height": 1024
+    },
+    {
+      "path": "Attachment/p69-trasvase-configuraciones.png",
+      "bytes": 2346020,
+      "sha256": "c7f3ed2b2e53cad40c62b684e290b1e1d19db8ee78fd1d806fac23c108a3d53c",
+      "width": 2325,
+      "height": 1044
+    },
+    {
+      "path": "Attachment/p70-piscina-portatil.png",
+      "bytes": 762618,
+      "sha256": "bc3988c88e3b71ab5bb9c0b929c14b401dcc9fff149af47496f4bc304e6d17e6",
+      "width": 1830,
+      "height": 493
+    },
+    {
+      "path": "Attachment/p71-piscina-portatil-combinada.png",
+      "bytes": 2411937,
+      "sha256": "a2ba3f4b7a55fb3c6ce313e2c47dc2dc13523a9bfa2bc5449500fda96a9c13fc",
+      "width": 2296,
+      "height": 1062
+    },
+    {
+      "path": "Attachment/p72-hidrante-y-piscina-portatil.png",
+      "bytes": 1752503,
+      "sha256": "2feb8adf70ee4ea5542dc50efa3baa17ad95571edaa4d915e03239085e7c4bb8",
+      "width": 2278,
+      "height": 1051
+    },
+    {
+      "path": "Attachment/p73-trasvase-hidrante-y-piscina.png",
+      "bytes": 1208562,
+      "sha256": "49ac3dcbac6690cf730c72d63b4031fef55ea6fa7ca618ac53fc2d11870017e0",
+      "width": 2261,
+      "height": 966
+    },
+    {
+      "path": "Attachment/p74-paralelo-y-piscina-portatil.png",
+      "bytes": 1812164,
+      "sha256": "d8044fa2710088f0a8bcb17c91278e78a0cb8336302439f4a07970514de990fb",
+      "width": 2203,
+      "height": 1104
+    },
+    {
+      "path": "Attachment/p75-maniobras-combinadas-carros-escalera.png",
+      "bytes": 1767553,
+      "sha256": "1df22a896dfdbdfae39877c6a3fa24f1d82b7cf3ebbf30a904bbd8b426ddcee7",
+      "width": 2277,
+      "height": 1273
+    },
+    {
+      "path": "Attachment/p81-usos-de-escaleras.png",
+      "bytes": 1773995,
+      "sha256": "d7df725ac8d2c9278d8b9dbe213a23908270c7feb191d82d42c2494e90723b57",
+      "width": 1928,
+      "height": 1038
+    },
+    {
+      "path": "Attachment/p84-escalera-madera.png",
+      "bytes": 236479,
+      "sha256": "67466138ff45a447fd803f88274610fa608005c1520e527fd15b86d51fb777e7",
+      "width": 460,
+      "height": 1054
+    },
+    {
+      "path": "Attachment/p84-escalera-fibra-de-vidrio.png",
+      "bytes": 315947,
+      "sha256": "6004b17e5ae47aa1110ef610fda2c8316881fbad14fb89a360341d0f6f286f97",
+      "width": 460,
+      "height": 1172
+    },
+    {
+      "path": "Attachment/p84-escalera-aluminio.png",
+      "bytes": 310424,
+      "sha256": "1b4b6304dd796ab9eb8cbb18029158ea8577a20411c3388be546ebdb8cae76c4",
+      "width": 444,
+      "height": 1172
+    },
+    {
+      "path": "Attachment/p85-cabezal-y-base.png",
+      "bytes": 1302632,
+      "sha256": "b11b48c56b1f4b87f9f17a9957e4940a3aaa72952798bcf99d0e868b58a8f53d",
+      "width": 1779,
+      "height": 1320
+    },
+    {
+      "path": "Attachment/p86-largueros-peldanos-tramo-fijo.png",
+      "bytes": 1390173,
+      "sha256": "fe138c02d55ef190e796601f95855fc37fa27c773b24d0e8fade7d263ec090db",
+      "width": 1854,
+      "height": 1201
+    },
+    {
+      "path": "Attachment/p87-tramo-fijo-y-corredizo.png",
+      "bytes": 1297455,
+      "sha256": "c3a7f95ec133c9599e6dfc54057bae079a45b2bb0deb3b3ae32c1dc3c1cb943f",
+      "width": 1779,
+      "height": 1483
+    },
+    {
+      "path": "Attachment/p88-muescas-de-sujecion.png",
+      "bytes": 171886,
+      "sha256": "2f6fa12d9f1ddc8272a61ffe8170204d3a0fce347ebcde076f11cbedf905f114",
+      "width": 608,
+      "height": 444
+    },
+    {
+      "path": "Attachment/p88-indicador-de-calor.png",
+      "bytes": 206782,
+      "sha256": "cbe5454cf0cec0e66d4592705978aa32c6c49cf84535130e54f463603c7b38b8",
+      "width": 698,
+      "height": 504
+    },
+    {
+      "path": "Attachment/p88-ganchos.png",
+      "bytes": 290671,
+      "sha256": "68ecf6ee613410bb2f69057c103b59cdf3b577eee06f89d3081b9bae8da70815",
+      "width": 742,
+      "height": 504
+    },
+    {
+      "path": "Attachment/p89-seguros-de-sujecion.png",
+      "bytes": 240029,
+      "sha256": "ec4e6163064b30912f159d4d6f6eb23cf0a0b7bc3cd1f59defddcd4cd7436421",
+      "width": 652,
+      "height": 964
+    },
+    {
+      "path": "Attachment/p89-polea.png",
+      "bytes": 394904,
+      "sha256": "2c7925ad7a2b7e4bf4538b9bf086a6d462230e95394ee70a90ff60fca90109de",
+      "width": 1647,
+      "height": 697
+    },
+    {
+      "path": "Attachment/p90-escalera-simple-ilustracion.png",
+      "bytes": 323689,
+      "sha256": "fb41683cdbbd0d5959c59ed3a04929096e9220ab1cf6d7fcdd0e36ab259147c0",
+      "width": 698,
+      "height": 1174
+    },
+    {
+      "path": "Attachment/p91-escalera-de-gancho-ilustracion.png",
+      "bytes": 475546,
+      "sha256": "0785b97141922db7e4239354c732b8da9bfca472d195d3550f4ae769d018f999",
+      "width": 578,
+      "height": 1309
+    },
+    {
+      "path": "Attachment/p92-escalera-plegable-ilustracion.png",
+      "bytes": 568390,
+      "sha256": "2e183da171f9cadac941cb8a4c133860f400d4d87ab9c1d5796f9bbd98fc3d23",
+      "width": 590,
+      "height": 1339
+    },
+    {
+      "path": "Attachment/p93-escalera-de-extension-ilustracion.png",
+      "bytes": 330531,
+      "sha256": "5771edb4fb2847c6a401f39a1244849b3b7a3c05fc53ff28a56ce0ccc6365361",
+      "width": 580,
+      "height": 1324
+    },
+    {
+      "path": "Attachment/p94-escalera-con-puntales-ilustracion.png",
+      "bytes": 486540,
+      "sha256": "ad9f3a8cc71555a050f2ba4c79cf96fbf81878392585445d0a13a965cbf9b9df",
+      "width": 664,
+      "height": 1216
+    },
+    {
+      "path": "Attachment/p95-escalera-de-bisagra.png",
+      "bytes": 445528,
+      "sha256": "f08f71158bbc1a21c058f0d8d94fce89d50ef4aa1caa87579dbe799e42730f8b",
+      "width": 1632,
+      "height": 682
+    },
+    {
+      "path": "Attachment/p95-escalera-pompier.png",
+      "bytes": 69069,
+      "sha256": "49b4ce15b7db9b6b0dc29455d27bac2e556a635577d01dbc60cc5427cedad7a6",
+      "width": 275,
+      "height": 838
+    },
+    {
+      "path": "Attachment/p96-posicionamiento-regla-cuarta-parte.png",
+      "bytes": 1136051,
+      "sha256": "60b94a265ed1a2cc87d78b126aa5b1e1f4112575d0635d0eebf7a474cb17e746",
+      "width": 2047,
+      "height": 1305
+    },
+    {
+      "path": "Attachment/p97-no-instalar-obstrucciones.png",
+      "bytes": 279772,
+      "sha256": "1b470c00362cbe15bddf022a39da7916cef4b535429e303483f29e94d6474342",
+      "width": 571,
+      "height": 1046
+    },
+    {
+      "path": "Attachment/p97-no-instalar-apoyos-inestables.png",
+      "bytes": 280677,
+      "sha256": "5ea65013315f0bbe94089c320508b5c11b46c0c3d61e1a728581582bd3acf2e1",
+      "width": 460,
+      "height": 1053
+    },
+    {
+      "path": "Attachment/p98-ubicacion-correcta-e-incorrecta.png",
+      "bytes": 1073256,
+      "sha256": "47a24e385a5186f0acc1421938ee7b1d7b46d3739a65040c0b8b3525caf66974",
+      "width": 1720,
+      "height": 890
+    },
+    {
+      "path": "Attachment/p99-acceso-a-techo.png",
+      "bytes": 388638,
+      "sha256": "a47edea179df41d12cfff538ef872906f9c62293d36f03890269ec88d7557d7b",
+      "width": 675,
+      "height": 823
+    },
+    {
+      "path": "Attachment/p99-acceso-a-ventana.png",
+      "bytes": 453953,
+      "sha256": "103bc60f632f6810360b443f64bfa8c1697101c80261c65451e708aad8499b07",
+      "width": 756,
+      "height": 830
+    },
+    {
+      "path": "Attachment/p100-posicion-para-ventilar.png",
+      "bytes": 321529,
+      "sha256": "39ed0de71431a3d1459fe9598e5c7d05318da4dee66d06707dea9efa9bf391c1",
+      "width": 689,
+      "height": 808
+    },
+    {
+      "path": "Attachment/p100-posicion-para-rescate.png",
+      "bytes": 379958,
+      "sha256": "f4799b8aedb937298859db71c5cdf0a3b2fedab985b49683ab81aacc626a035e",
+      "width": 727,
+      "height": 757
+    },
+    {
+      "path": "Attachment/p101-levantamiento-seguro.png",
+      "bytes": 831836,
+      "sha256": "8684df031aae79ab322e10b79cbb5db60df2348e0c1baffc41bf386ddf352f63",
+      "width": 1261,
+      "height": 727
+    },
+    {
+      "path": "Attachment/p103-inspeccion-y-seguridad.png",
+      "bytes": 298117,
+      "sha256": "247a4257472b2ce2ec566c6698a7df74c2aad1fd53ea6dbc6dac607baf032c85",
+      "width": 623,
+      "height": 1172
+    },
+    {
+      "path": "Attachment/p104-transporte-secuencia-fotografica.png",
+      "bytes": 1305736,
+      "sha256": "5a366140a252204d0aef3b7f4c523c3ea43c55fb0f3d59d1b309f9a2a48ed0de",
+      "width": 1898,
+      "height": 964
+    },
+    {
+      "path": "Attachment/p105-transporte-escalera-de-gancho.png",
+      "bytes": 1630311,
+      "sha256": "5f600de3ee189f677e26f3221affc98041233fd9590d2f7f0d734d505ebae832",
+      "width": 1898,
+      "height": 964
+    },
+    {
+      "path": "Attachment/p106-transporte-larguero-al-hombro.png",
+      "bytes": 1740643,
+      "sha256": "bc936e6af483c7a227447085d5f91bf71ef51774d3a14f7ffad5c4aa453974b6",
+      "width": 1898,
+      "height": 964
+    },
+    {
+      "path": "Attachment/p107-transporte-brazo-estirado.png",
+      "bytes": 1664271,
+      "sha256": "409dc60340e99016b4affa4858786dc4d94809d2f9918d69c88d9647a917067f",
+      "width": 1898,
+      "height": 964
+    },
+    {
+      "path": "Attachment/p108-transporte-sobre-el-hombro.png",
+      "bytes": 1923795,
+      "sha256": "e0f663aa1f8d76b09d3ceef1be0a411ebb4532aa87827fe214d960652dcfe87e",
+      "width": 1898,
+      "height": 964
+    },
+    {
+      "path": "Attachment/p109-transporte-en-lugares-estrechos.png",
+      "bytes": 1842622,
+      "sha256": "02d797773bc238f90e55768c549c593bebb42bc55191c6f87291ba1efe2af684",
+      "width": 1898,
+      "height": 964
+    },
+    {
+      "path": "Attachment/p110-retirar-escalera-de-la-unidad.png",
+      "bytes": 1807517,
+      "sha256": "4a0df3add156e8ffd11d6b95554750fe174779e8bed027b082b0b07b056d118f",
+      "width": 1898,
+      "height": 964
+    },
+    {
+      "path": "Attachment/p111-aseguramiento-seguros.png",
+      "bytes": 640795,
+      "sha256": "c03d2305f4ae15b165b1e99d5bc34e8c9bc11ca58e7b79c1b8a3a41ce8eddc38",
+      "width": 616,
+      "height": 1142
+    },
+    {
+      "path": "Attachment/p111-aseguramiento-inclinacion.png",
+      "bytes": 815856,
+      "sha256": "7c5369084ee558aa5b9e19f729a4023ef4ff9bd6630d1c2ae4397462574ee851",
+      "width": 660,
+      "height": 1142
+    },
+    {
+      "path": "Attachment/p111-aseguramiento-proteccion.png",
+      "bytes": 741011,
+      "sha256": "1335c37f938068d5b6b9f7e333fec30517831c6966eec3585d341dbe631d46a2",
+      "width": 674,
+      "height": 1142
+    },
+    {
+      "path": "Attachment/p112-levantar-escalera-un-bombero.png",
+      "bytes": 1941930,
+      "sha256": "e7907958868880764208a7e627d801b2adb48c28bd2ed0e1656b7a96d2fd3499",
+      "width": 1662,
+      "height": 1172
+    },
+    {
+      "path": "Attachment/p113-levantar-escalera-dos-bomberos.png",
+      "bytes": 1920492,
+      "sha256": "9fca046a2d1335a4aa2354611bff54b7a29de8c249f331dd6709f651d9b9f4ec",
+      "width": 1631,
+      "height": 1276
+    },
+    {
+      "path": "Attachment/p114-mover-escalera.png",
+      "bytes": 1866564,
+      "sha256": "9e7fd4c242dae046658ec58c2b6b3802b022011765307a32868aa162ad013c6c",
+      "width": 1646,
+      "height": 1276
+    },
+    {
+      "path": "Attachment/p115-seguridad-y-candado-de-pierna.png",
+      "bytes": 1718188,
+      "sha256": "872474750f1b8c87915b243be956f313fe18bae00d1774fc1ba43885c71c0ca1",
+      "width": 1928,
+      "height": 994
+    },
+    {
+      "path": "Attachment/p116-escalera-sobre-techo.png",
+      "bytes": 2239801,
+      "sha256": "10247e059a8b079cbb6aed4003dae6910bed3913d5e4f22c4b942f9587cd93bb",
+      "width": 1987,
+      "height": 1157
+    },
+    {
+      "path": "Attachment/p117-rescate-con-escalera.png",
+      "bytes": 1343957,
+      "sha256": "b4e3397eda97dfbd338eac859ea1df8f850aeb4f24bda6f194d693f55bb7fdd5",
+      "width": 1928,
+      "height": 994
+    },
+    {
+      "path": "Attachment/p118-limpieza-e-inspeccion.png",
+      "bytes": 769759,
+      "sha256": "4802e506f7442562ccb6983e201e12c6f92cd36f2208f5eec31c20411b0cf2c5",
+      "width": 853,
+      "height": 1097
+    },
+    {
+      "path": "Attachment/p124-alarmas-pass.png",
+      "bytes": 405568,
+      "sha256": "2c6b60d7508556e7cce8874f81716248705b4b759287d6a51e7444cfca9f54c0",
+      "width": 1379,
+      "height": 444
+    },
+    {
+      "path": "Attachment/p126-mascara-resistencia-termica-v2.png",
+      "bytes": 1236530,
+      "sha256": "e304e57a7adc49157ebb590e29d6edbd2a327bf228fdf208d28e98f985a522fc",
+      "width": 920,
+      "height": 730
+    },
+    {
+      "path": "Attachment/p127-prueba-termica-scba-v2.png",
+      "bytes": 575350,
+      "sha256": "12ad22e989e80fa17c465ff3ecdcb646ba12e6611119004e8d0f6c2b91167635",
+      "width": 530,
+      "height": 535
+    },
+    {
+      "path": "Attachment/p128-sistema-respiracion-emergencia-v2.png",
+      "bytes": 494043,
+      "sha256": "cf9b0653de5f13ea700d062d3d45cc7d6bee057368c7765973e806029d9d448b",
+      "width": 570,
+      "height": 450
+    },
+    {
+      "path": "Attachment/p129-mascara-comunicacion-mecanica-v2.png",
+      "bytes": 435008,
+      "sha256": "680d149c929356b4df1f4c550cb6aeaa96ff1597d8b9be2b773d5acb3aa51304",
+      "width": 550,
+      "height": 570
+    },
+    {
+      "path": "Attachment/p135-pieza-facial-y-desinfeccion-v2.png",
+      "bytes": 661476,
+      "sha256": "f053c32f49afac08f03082e3dcfbb04f4616a6d297095dab5d8b6ecc42b2ed4e",
+      "width": 1070,
+      "height": 660
+    },
+    {
+      "path": "Attachment/p136-arnes-y-cilindro-limpieza-v2.png",
+      "bytes": 932065,
+      "sha256": "1552b8903f76cde0ae432ace9feda209719551f1385ee7ef6fd5398f992af024",
+      "width": 1045,
+      "height": 630
+    },
+    {
+      "path": "Attachment/p137-mantenimiento-era-v2.png",
+      "bytes": 3037551,
+      "sha256": "31dd39f0d9b3f224f774bb46474e483761b3481e826461e854d87f1ad630f410",
+      "width": 1960,
+      "height": 1490
+    },
+    {
+      "path": "Attachment/p149-tipos-puertas-v2.png",
+      "bytes": 1495888,
+      "sha256": "d5dd4ffe25507b0e8a3aec3565ab3f87a6773035615ecd4a39a0bdd00b72934d",
+      "width": 1760,
+      "height": 975
+    },
+    {
+      "path": "Attachment/p150-tipos-ventanas.png",
+      "bytes": 502961,
+      "sha256": "fbb2e88b75f5f63f29bd83e3bc00f1b5f02d83093cfe58a67f54b96d9fc5770a",
+      "width": 1602,
+      "height": 571
+    },
+    {
+      "path": "Attachment/p151-ventana-batiente-v2.png",
+      "bytes": 523712,
+      "sha256": "d43c8eec351597188bab1a07b9b6f31ae64dce4bdd72f7f6379feec039ba3a85",
+      "width": 800,
+      "height": 800
+    },
+    {
+      "path": "Attachment/p152-ventana-con-protecciones-v2.png",
+      "bytes": 961346,
+      "sha256": "5deaba8dfc9eddc32df9ffe8de649e26b3cbfe8d30a1a075d3f512b4ba25e276",
+      "width": 1035,
+      "height": 575
+    },
+    {
+      "path": "Attachment/p153-ejemplos-entrada-forzada.png",
+      "bytes": 1179824,
+      "sha256": "d5d9d902fdf6f9000a5f1d23175885835e878d3e2329b2a1e71a1fbb2e75254e",
+      "width": 1839,
+      "height": 1000
+    },
+    {
+      "path": "Attachment/p154-fragmentos-y-rotura-vidrio-v2.png",
+      "bytes": 599787,
+      "sha256": "0fdce912bf628725cd327f92af8e4535f472f7ea980a9984aad2d141062366b1",
+      "width": 620,
+      "height": 515
+    },
+    {
+      "path": "Attachment/p155-muros-exteriores-01.png",
+      "bytes": 472100,
+      "sha256": "94d8bcf31f0180f6b81f4372261de685c146622a3fa071ac1625c85d444d2964",
+      "width": 410,
+      "height": 510
+    },
+    {
+      "path": "Attachment/p155-muros-exteriores-02.png",
+      "bytes": 551123,
+      "sha256": "5b9c2da8eb05ef5c5bd9f9da0d9ce2576177e3d1f12527fdf0d7482ac402aa7a",
+      "width": 635,
+      "height": 510
+    },
+    {
+      "path": "Attachment/p156-muros-interiores-v2.png",
+      "bytes": 732044,
+      "sha256": "9f3b5d473ec1ce7782c4d9e1c5a55035f8244a6b576f07c06422964aba8e2fe7",
+      "width": 850,
+      "height": 570
+    },
+    {
+      "path": "Attachment/p157-cerradura-embutida-v2.png",
+      "bytes": 207735,
+      "sha256": "1decab991deec2bff1070f9cdc579c66304294554b815d3784c3f4428fcf7c98",
+      "width": 520,
+      "height": 555
+    },
+    {
+      "path": "Attachment/p158-cerraduras-cilindricas-y-de-caja-v2.png",
+      "bytes": 727053,
+      "sha256": "b83536adaefa277adf8f18d03b893e118b17c3f88d6a4196f6d0c68d293f30bc",
+      "width": 1400,
+      "height": 470
+    },
+    {
+      "path": "Attachment/p159-candado-v2.png",
+      "bytes": 115383,
+      "sha256": "0b4b8b6904765a73a5698fd0ccd4a4b071db2f33f27dae793ba1a2ff37774b97",
+      "width": 280,
+      "height": 340
+    },
+    {
+      "path": "Attachment/p160-pestillos-v2.png",
+      "bytes": 452261,
+      "sha256": "2131aa53f4b4ccfc29f894958bdec227840f5f4c35f1b5c46000b62e3dcd63ad",
+      "width": 1780,
+      "height": 560
+    },
+    {
+      "path": "Attachment/p161-puerta-enrollable.png",
+      "bytes": 933860,
+      "sha256": "b0096d9baab54a0640c4a2f6cfb37c703c460a45c19dbfbafe372312697737f4",
+      "width": 1831,
+      "height": 935
+    },
+    {
+      "path": "Attachment/p165-equipo-de-ataque-v2.png",
+      "bytes": 665771,
+      "sha256": "3af4d393bafec0d41ac25e5487f21354e8aa8052fd9dd89ad8d8904026b59363",
+      "width": 770,
+      "height": 500
+    },
+    {
+      "path": "Attachment/p166-trabajo-en-equipo-izquierda-v2.png",
+      "bytes": 1207385,
+      "sha256": "b7371fa11fbd62e31943065f39d310e01730b57282b512d7fda371b02322b870",
+      "width": 990,
+      "height": 680
+    },
+    {
+      "path": "Attachment/p166-trabajo-en-equipo-derecha-v2.png",
+      "bytes": 880547,
+      "sha256": "6a720ccf0ef2de2e95d2a9e05819100e73329fea227fd02e007bdaba23909a10",
+      "width": 1000,
+      "height": 680
+    },
+    {
+      "path": "Attachment/p168-mando-comunicacion-coordinacion-v2.png",
+      "bytes": 829903,
+      "sha256": "3f7503abd27a42d0ead622018fe567321381c3c95579a4524b348c362f541305",
+      "width": 1250,
+      "height": 1000
+    },
+    {
+      "path": "Attachment/p170-decisiones-del-comandante-v2.png",
+      "bytes": 2200306,
+      "sha256": "536f795c5c89041944115351162b339e16ead2426292ac6be1c60fba10329734",
+      "width": 1580,
+      "height": 1000
+    },
+    {
+      "path": "Attachment/p172-diagrama-ataque-directo-v2.png",
+      "bytes": 1387049,
+      "sha256": "e95beb12b8d052c4e697b37041c439e384363cd207a5a8968eb424f1d02ae276",
+      "width": 1440,
+      "height": 650
+    },
+    {
+      "path": "Attachment/p174-diagrama-ataque-indirecto-v2.png",
+      "bytes": 1446314,
+      "sha256": "8d686f75a2fe45ad043f0dbdfd7a86be2bf7e7f294fbac8cd255bb55a9405d18",
+      "width": 1490,
+      "height": 650
+    },
+    {
+      "path": "Attachment/p178-patron-t-v2.png",
+      "bytes": 660746,
+      "sha256": "b822b7b771478e1e94298bc01e87354706bcb691195df9b5fec0767e9a7cc20a",
+      "width": 750,
+      "height": 1000
+    },
+    {
+      "path": "Attachment/p178-patron-z-v2.png",
+      "bytes": 636997,
+      "sha256": "1f7495a2506620e8e91aa7f647a96269d028e75143bfc5de2982250fbdd356c8",
+      "width": 750,
+      "height": 1000
+    },
+    {
+      "path": "Attachment/p178-patron-o-v2.png",
+      "bytes": 634333,
+      "sha256": "3bffbc4da41308461931840d5b7305306e512729491baaa62211adc8ca126d54",
+      "width": 760,
+      "height": 1000
+    },
+    {
+      "path": "Attachment/p179-seleccion-del-chorro-v2.png",
+      "bytes": 1004969,
+      "sha256": "9d9338ee476838fc5c103c35e2250623a95c0c8cd16597b536b63145e032b7d3",
+      "width": 2200,
+      "height": 1150
+    },
+    {
+      "path": "Attachment/p180-tipos-de-ventilacion-v2.png",
+      "bytes": 1654825,
+      "sha256": "b3a0efdc526575c51ec809b4c8735680b701e3d8aa1979b7b4b763983b559cac",
+      "width": 2100,
+      "height": 1030
+    },
+    {
+      "path": "Attachment/p181-abastecimiento-para-control-v2.png",
+      "bytes": 1883301,
+      "sha256": "007e6068a4cfaaae60b8e3482d28469bf5817676e033aa466c0fdc02d028d77f",
+      "width": 1150,
+      "height": 1125
+    },
+    {
+      "path": "Attachment/p218-puntos-de-aproximacion-vehiculo-v2.png",
+      "bytes": 1255586,
+      "sha256": "310fc3e31f8782bdae3b20b030a5fb92653454125ec39ab4b92f72a1997e3b26",
+      "width": 2160,
+      "height": 1400
+    },
+    {
+      "path": "Attachment/p224-flujo-ventilacion-estructura-v2.png",
+      "bytes": 1842122,
+      "sha256": "b4948dd18e4d23a225659c1826e16c4dd5c46e39d8a62089d223c06fef45be62",
+      "width": 1900,
+      "height": 900
+    },
+    {
+      "path": "Attachment/p226-patrones-humo-a-v2.png",
+      "bytes": 1146550,
+      "sha256": "7ee2f4439f4d8b12430a3d912109879d34969691a060ceb2bd870e4021295606",
+      "width": 1000,
+      "height": 1050
+    },
+    {
+      "path": "Attachment/p226-patrones-humo-b-v2.png",
+      "bytes": 871063,
+      "sha256": "ea7d85457192582420ddd2d68840bea67dd22f51f26e82763bc71e35e247b1c0",
+      "width": 1000,
+      "height": 1050
+    },
+    {
+      "path": "Attachment/p229-efectos-de-ventilacion-v2.png",
+      "bytes": 3794532,
+      "sha256": "9360d87fd4757946a9873b56a0a6c8a0dbcc98ac278e55bad4cd3589a9dbffd8",
+      "width": 2180,
+      "height": 1320
+    },
+    {
+      "path": "Attachment/p231-ventilacion-horizontal-v2.png",
+      "bytes": 612659,
+      "sha256": "ff85de33a7e1888d673fdec4a7aba719a9fd380039e563181d99a2b79ed61b9d",
+      "width": 1900,
+      "height": 430
+    },
+    {
+      "path": "Attachment/p232-viento-barlovento-sotavento-v2.png",
+      "bytes": 3196094,
+      "sha256": "0a4d234184f6db0a2ae09cc93a0aa13e0873d54a300a3a019dc40343477daa9f",
+      "width": 2300,
+      "height": 1040
+    },
+    {
+      "path": "Attachment/p233-ventilacion-vertical-v2.png",
+      "bytes": 742780,
+      "sha256": "308012821a2502c5565aad013a436dfd8b9002b4d15d3b87590602bf35ed64dc",
+      "width": 1935,
+      "height": 640
+    },
+    {
+      "path": "Attachment/p234-apertura-ventilacion-vertical-v2.png",
+      "bytes": 2638376,
+      "sha256": "ab2374eec9c8c69130f0cc56c849cc41b29165b215ca7c55dfc7068a4b6d83f4",
+      "width": 1510,
+      "height": 1030
+    },
+    {
+      "path": "Attachment/p235-ventilacion-mecanica-v2.png",
+      "bytes": 791119,
+      "sha256": "913e8d615550675187d22d11690bf260410201117952aca7a723f4051efce299",
+      "width": 1640,
+      "height": 800
+    },
+    {
+      "path": "Attachment/p236-ventilacion-mecanica-v2.png",
+      "bytes": 1048916,
+      "sha256": "0598efe9f8c1dfe995c881c9af900f772267430625d37447ec00a6ba18ffaf52",
+      "width": 680,
+      "height": 1000
+    },
+    {
+      "path": "Attachment/p236-ventilacion-hidraulica-v2.png",
+      "bytes": 1904617,
+      "sha256": "1712d97cf1476691c4709d6acc22455b24bfa4c9ae374a21776f952245d210f4",
+      "width": 1370,
+      "height": 1010
+    },
+    {
+      "path": "Attachment/p238-aplicacion-correcta-e-incorrecta-v2.png",
+      "bytes": 2788711,
+      "sha256": "8560e8c1f334e8413a2df3c4bac279ea3745c38fd682e99e5d8f3acc39ed7166",
+      "width": 1650,
+      "height": 1128
+    },
+    {
+      "path": "Attachment/p242-busqueda-equipo-a.png",
+      "bytes": 629317,
+      "sha256": "ac5c850e81fa852d9eff6d7c4f08db7ec5e35c2c33c3d25683113d684ff38072",
+      "width": 919,
+      "height": 716
+    },
+    {
+      "path": "Attachment/p242-busqueda-equipo-b.png",
+      "bytes": 654057,
+      "sha256": "c327bf1924f9809ee5123f7b5a1253143c90ff4b3c1ef20346185c391dfb692d",
+      "width": 909,
+      "height": 717
+    },
+    {
+      "path": "Attachment/p248-siguiendo-una-pared.png",
+      "bytes": 386445,
+      "sha256": "0cd1c239c19f3d321230cb02e7cfeca8f478522a06562d15f85ef357224a7c9d",
+      "width": 770,
+      "height": 548
+    },
+    {
+      "path": "Attachment/p248-gatear-escaleras.png",
+      "bytes": 421836,
+      "sha256": "e502909891409941a54a567cfa1e704e6aa6869d66de823af58f0258957628b1",
+      "width": 835,
+      "height": 565
+    },
+    {
+      "path": "Attachment/p248-barrido-pierna.png",
+      "bytes": 381390,
+      "sha256": "744b069d5f842c326d5f56f6a49ca3f28db8b7d90c6f71aaa3d7fcc687636f89",
+      "width": 590,
+      "height": 700
+    },
+    {
+      "path": "Attachment/p249-guia-busqueda-edificio.png",
+      "bytes": 2166116,
+      "sha256": "8e4af86691d6a2dced129b8a8a65916c10865aaa5e0b0b738517b61295638eb4",
+      "width": 2280,
+      "height": 1410
+    },
+    {
+      "path": "Attachment/p252-prioridad-edificio-pisos.png",
+      "bytes": 1099432,
+      "sha256": "71cd42e81be1c617b315c534b5daf009806168ce21aaaf9ba594bc1d16eca08f",
+      "width": 895,
+      "height": 1150
+    },
+    {
+      "path": "Attachment/p252-patron-busqueda-habitacion.png",
+      "bytes": 931358,
+      "sha256": "34cd447c5d2bad507e857a04d00c2773ed0d0dc9c69a3e2599f8a6371fab667a",
+      "width": 990,
+      "height": 1020
+    },
+    {
+      "path": "Attachment/p254-banda-cerradura-vertical.png",
+      "bytes": 219752,
+      "sha256": "df4ce43c62f6c4e9a318b5f33646d47fccd1969cbb0685b8ba152c18ec8cb803",
+      "width": 320,
+      "height": 600
+    },
+    {
+      "path": "Attachment/p254-banda-cerradura-horizontal.png",
+      "bytes": 199428,
+      "sha256": "9efe02bd62942a5811895266fd85a891c1fc007479a59797003324d7a41ada63",
+      "width": 320,
+      "height": 570
+    },
+    {
+      "path": "Attachment/p254-banda-cerradura-pasador.png",
+      "bytes": 98874,
+      "sha256": "0517c00fbbdba1023120c2ee021c58219c2ed16e01d15503bbce23cf2d84b09b",
+      "width": 215,
+      "height": 600
+    },
+    {
+      "path": "Attachment/p254-marcado-puertas.png",
+      "bytes": 654515,
+      "sha256": "94bf2a942e5a23f12746f2407a4fa74338e100631d721ba3e8b03c55112e8b75",
+      "width": 895,
+      "height": 760
+    },
+    {
+      "path": "Reference/Manual - Bomberos I.pdf",
+      "bytes": 74395514,
+      "sha256": "95cc74de65b3d06ad299f0cbeed0eec095e666b0acde1a9e53fcce51fe216bb3"
+    }
+  ]
+}

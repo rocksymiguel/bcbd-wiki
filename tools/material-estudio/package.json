@@ -1,0 +1,6 @@
+{
+  "name": "bcbd-study-export",
+  "private": true,
+  "scripts": { "build": "node build.cjs" },
+  "dependencies": { "marked": "17.0.5" }
+}

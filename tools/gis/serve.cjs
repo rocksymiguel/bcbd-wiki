@@ -5,7 +5,7 @@ const path = require('node:path');
 const root = path.resolve(__dirname, '../..');
 const mime = {'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8',
   '.js':'text/javascript; charset=utf-8','.json':'application/json',
-  '.geojson':'application/geo+json','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.glb':'model/gltf-binary'};
+  '.geojson':'application/geo+json','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.glb':'model/gltf-binary','.pdf':'application/pdf','.md':'text/plain; charset=utf-8'};
 function handler(req,res) {
   let pathname;
   try {pathname=decodeURIComponent(new URL(req.url,'http://localhost').pathname).replace(/^\/bcbd-wiki(?=\/)/,'');}
