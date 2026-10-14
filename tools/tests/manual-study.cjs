@@ -22,6 +22,8 @@ const out=path.join(root,'.local/manual-study-test');fs.mkdirSync(out,{recursive
   const browser=await chromium.launch({channel:'msedge',headless:true});
   try{
     const checked=await browser.newContext();
+    const originalMD=await checked.request.get(base+'material-de-estudio/bomberos-i/manual.md');
+    assert.equal(originalMD.status(),200);assert.equal(hash(await originalMD.body()),manifest.source.sha256);
     // Read all shipped assets and verify exact bytes, not only HTTP status.
     for(const asset of manifest.assets){
       const res=await checked.request.get(base+'material-de-estudio/bomberos-i/'+asset.path.split('/').map(encodeURIComponent).join('/'),{timeout:60000});
