@@ -107,7 +107,7 @@ const html=`<!DOCTYPE html>
     </header>
     <div class="manual-layout">
       <aside class="manual-sidebar" aria-label="Índice del manual">
-        <details id="manual-toc" open><summary><h2 id="${headings.find(h=>h.text==='Índice').manualId}">Índice</h2></summary><nav aria-label="Capítulos y subtemas">${toc}</nav></details>
+        <details id="manual-toc"><summary><h2 id="${headings.find(h=>h.text==='Índice').manualId}">Índice</h2></summary><nav aria-label="Capítulos y subtemas">${toc}</nav></details>
         <a class="manual-back-top" href="#${headings[0].manualId}">Volver al inicio ↑</a>
       </aside>
       <article id="manual-content" class="manual-content" aria-label="Contenido completo del Manual Bomberos I">${article}</article>

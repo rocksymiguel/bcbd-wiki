@@ -8,8 +8,7 @@
   if(!observeHeader()&&header){const observer=new MutationObserver(()=>{if(observeHeader())observer.disconnect();});observer.observe(header,{childList:true});}
   const toc=document.getElementById('manual-toc');
   const mobile=matchMedia('(max-width: 1000px)');
-  function fitIndex(){if(toc)toc.open=!mobile.matches;}
-  fitIndex();mobile.addEventListener('change',fitIndex);
+  if(toc)toc.open=false;
   toc?.querySelectorAll('a[href^="#"]').forEach(link=>link.addEventListener('click',()=>{if(mobile.matches)toc.open=false;}));
   const dialog=document.getElementById('manual-image-dialog');
   if(!dialog)return;

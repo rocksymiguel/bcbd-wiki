@@ -60,7 +60,10 @@ const out=path.join(root,'.local/manual-study-test');fs.mkdirSync(out,{recursive
       assert(!audit.overflow,config.name+' must not overflow');assert.match(audit.font,/JetBrains Mono/);
       await page.screenshot({path:path.join(out,config.name+'.png')});
       const toc=page.locator('#manual-toc');
-      if(config.isMobile){assert.equal(await toc.getAttribute('open'),null);await page.locator('#manual-toc summary').click();}
+      assert.equal(await toc.getAttribute('open'),null,'Index starts collapsed on every viewport');
+      await page.locator('#manual-toc summary').click();assert(await toc.evaluate(el=>el.open));
+      await page.locator('#manual-toc summary').click();assert(!(await toc.evaluate(el=>el.open)));
+      await page.locator('#manual-toc summary').click();
       const target=manifest.chapters[1];await page.locator('#manual-toc a[href="#'+target.id+'"]').click();
       assert.equal(new URL(page.url()).hash,'#'+target.id);
       if(config.isMobile)assert.equal(await toc.getAttribute('open'),null);
