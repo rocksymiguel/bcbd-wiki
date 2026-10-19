@@ -3,11 +3,6 @@
 **Fuente:** [[Reference/Manual - Bomberos I.pdf|Manual - Bomberos I.pdf]]
 ## Índice
 
-- [[#Herramientas y equipos|Herramientas y equipos]]
-  - [[#Herramientas y equipos#Herramientas, equipos y accesorios|Herramientas, equipos y accesorios]]
-  - [[#Herramientas y equipos#Herramientas de entrada forzada|Herramientas de entrada forzada]]
-  - [[#Herramientas y equipos#Seguridad en el uso de herramientas y equipos|Seguridad en el uso de herramientas y equipos]]
-  - [[#Herramientas y equipos#Transporte de herramientas y equipos|Transporte de herramientas y equipos]]
 - [[#Teoría del fuego|Teoría del fuego]]
   - [[#Teoría del fuego#Definiciones|Definiciones]]
   - [[#Teoría del fuego#Componentes del fuego|Componentes del fuego]]
@@ -16,6 +11,23 @@
   - [[#Teoría del fuego#Etapas del fuego|Etapas del fuego]]
   - [[#Teoría del fuego#Fenómenos térmicos|Fenómenos térmicos]]
   - [[#Teoría del fuego#Condiciones especiales de la combustión|Condiciones especiales de la combustión]]
+- [[#Teoría del fuego#Guía didáctica complementaria|Guía didáctica complementaria]]
+    - [[#Teoría del fuego#Guía didáctica complementaria#Combustión: de los reactivos a la llama|Combustión: de los reactivos a la llama]]
+    - [[#Teoría del fuego#Guía didáctica complementaria#Los componentes y cómo se relacionan|Los componentes y cómo se relacionan]]
+    - [[#Teoría del fuego#Guía didáctica complementaria#Combustibles: estado, vapores y energía|Combustibles: estado, vapores y energía]]
+    - [[#Teoría del fuego#Guía didáctica complementaria#Fuentes de energía para la ignición|Fuentes de energía para la ignición]]
+    - [[#Teoría del fuego#Guía didáctica complementaria#Cómo crece un incendio en un recinto|Cómo crece un incendio en un recinto]]
+    - [[#Teoría del fuego#Guía didáctica complementaria#Transferencia de calor: ejemplos|Transferencia de calor: ejemplos]]
+    - [[#Teoría del fuego#Guía didáctica complementaria#Fenómenos: qué los distingue|Fenómenos: qué los distingue]]
+    - [[#Teoría del fuego#Guía didáctica complementaria#Ejemplos guiados|Ejemplos guiados]]
+    - [[#Teoría del fuego#Guía didáctica complementaria#Autoevaluación|Autoevaluación]]
+    - [[#Teoría del fuego#Guía didáctica complementaria#Glosario breve|Glosario breve]]
+    - [[#Teoría del fuego#Guía didáctica complementaria#Fuentes técnicas para la ampliación|Fuentes técnicas para la ampliación]]
+- [[#Herramientas y equipos|Herramientas y equipos]]
+  - [[#Herramientas y equipos#Herramientas, equipos y accesorios|Herramientas, equipos y accesorios]]
+  - [[#Herramientas y equipos#Herramientas de entrada forzada|Herramientas de entrada forzada]]
+  - [[#Herramientas y equipos#Seguridad en el uso de herramientas y equipos|Seguridad en el uso de herramientas y equipos]]
+  - [[#Herramientas y equipos#Transporte de herramientas y equipos|Transporte de herramientas y equipos]]
 - [[#Abastecimiento de agua|Abastecimiento de agua]]
   - [[#Abastecimiento de agua#Maniobras de abastecimiento|Maniobras de abastecimiento]]
   - [[#Abastecimiento de agua#Fuentes dinámicas|Fuentes dinámicas]]
@@ -74,171 +86,6 @@
   - [[#Búsqueda y rescate#Sistemas de marcado|Sistemas de marcado]]
   - [[#Búsqueda y rescate#Patrones de una búsqueda|Patrones de una búsqueda]]
   - [[#Búsqueda y rescate#Directivas de seguridad|Directivas de seguridad]]
-
-## Herramientas y equipos
-
-### Herramientas, equipos y accesorios
-
-#### Herramienta
-
-Objeto manual que sirve para realizar una tarea con la energía que proviene directamente del operador
-
-- Cizalla 
-- Mandarria
-- Llave francesa
-
-#### Equipo
-
-Máquina o aparato de cierta complejidad que sirve para realizar una tarea y cuyo principio de acción consiste en la transformación de la energía para aumentar la capacidad de trabajo
-
-- Generador
-- Taladro
-- Mototrozadora
-
-#### Accesorio
-
-Objeto que individualmente complementa y en conjunto con otros puede conformar un equipo o herramienta permitiendo ampliar o mejorar las capacidades operativas o realizar una tarea.
-
-- Clavos 
-- Broca
-- Polea
-
-### Herramientas de entrada forzada
-
-Existen cuatro categorías:
-- Herramientas para cortar.
-- Herramientas para hacer palanca.
-- Herramientas para empujar / tirar.
-- Herramientas para golpear.
-
-#### Herramientas para cortar
-
-- Hacha de Bombero
-- Hacha de Leñador
-- Serrucho de Carpintero
-- Segueta para Metales
-
-![[Attachment/p06-hacha-bombero.png|360]]
-
-![[Attachment/p06-hacha-lenador.png|360]]
-
-![[Attachment/p06-serrucho-carpintero.png|360]]
-
-![[Attachment/p06-segueta-metales.png|360]]
-
-#### Equipos para cortar
-
-- Sierra Circular (Mototrozadora)
-- Sierra de Cadena (Motosierra)
-- Sierra Sable (Caladora)
-
-![[Attachment/p07-sierra-circular.png|420]]
-
-![[Attachment/p07-motosierra.png|420]]
-
-![[Attachment/p07-sierra-sable-caladora.png|420]]
-
-#### Herramientas para cortar metales
-
-- Cizallas / Cortafríos
-- Soplete de Corte (Oxi-Corte)
-
-![[Attachment/p08-cizallas-cortafrios.png|420]]
-
-![[Attachment/p08-soplete-oxicorte.png|420]]
-
-#### Palancas manuales
-
-La lámina ilustra varios tipos de herramientas de palanca manual:
-
-- Barra de palanca.
-- Barra Halligan.
-- Barra universal.
-- Barreta de gancho.
-- Barra de pata de cabra.
-- Herramienta Kelly.
-- Hacha de palanca.
-- Barra plana.
-
-![[Attachment/p09-palancas-manuales.png|650]]
-
-#### Palancas hidráulicas
-
-##### Cortador y expansor
-
-- Cortador hidráulico
-![[Attachment/p10-cortador-hidraulico.png|420]]
-
-- Expansor hidráulico
-![[Attachment/p10-expansor-hidraulico.png|420]]
-
-##### Ariete y abrepuertas
-
-- Ariete hidráulico
-![[Attachment/p11-ariete-hidraulico.png|420]]
-
-- Abre puertas hidráulico
-![[Attachment/p11-abre-puertas-hidraulico.png|420]]
-
-#### Empujar y tirar
-
-La lámina presenta cuatro tipos de arpón para empujar o tirar:
-
-- Arpón con gancho.
-- Arpón Clemens.
-- Arpón compuesto.
-- Arpón de San Francisco.
-
-![[Attachment/p12-arpones.png|620]]
-
-#### Golpear
-
-La lámina reúne distintas herramientas para golpear:
-
-- Hacha de leñador.
-- Ariete.
-- Cinceles.
-- Martillo de dos caras.
-- Martillo.
-- Martillo con punta.
-- Mandarria o mazo.
-- Pico.
-
-En la columna izquierda también aparecen ilustraciones adicionales sin rótulo legible en la copia.
-
-![[Attachment/p13-herramientas-golpeo.png|620]]
-
-#### Combinación de herramientas
-
-Los tipos de herramientas varían según la construcción del edificio y el tipo de entrada forzada que se vaya a realizar, pero la más usada por todo bombero es ésta combinación: Barra Halligan y Hacha de Leñador.
-
-![[Attachment/p14-combinacion-herramientas.png|360]]
-
-#### Forzar candados
-
-- Cizallas / Cortafríos
-- Pico con cabeza de martillo
-- Alicate de presión y cadena
-- Llave inglesa / francesa
-
-![[Attachment/p15-forzar-candados.png|620]]
-
-### Seguridad en el uso de herramientas y equipos
-
-- Seleccione la herramienta o equipo en función de la tarea.
-- Lleve puesto siempre el equipo de protección adecuado.
-- No utilice una sierra en atmósferas inflamables.
-- Mantenga fuera del área de trabajo a las personas sin EPP.
-- Siga las instrucciones del fabricante para la utilización de los equipos.
-- Tenga cuidado con los peligros que no se ven, cables eléctricos y tuberías.
-
-### Transporte de herramientas y equipos
-
-- Hachas
-- Herramientas de palanca
-- Combinaciones de herramientas
-- Arpón y ganchos
-- Herramientas mecanizadas
 
 ## Teoría del fuego
 
@@ -561,6 +408,348 @@ La secuencia ilustrada muestra cuatro momentos:
 El rebosamiento por ebullición (en inglés, *boiling over*) es el rebosamiento de un líquido combustible incendiado, generalmente petróleo crudo, cuya densidad y punto de ebullición son, respectivamente, inferior y superior a las del agua. Esto produce la ebullición brusca del agua situada bajo el líquido combustible.
 
 ![[Attachment/p51-boilover.png|650]]
+
+### Guía didáctica complementaria
+
+> [!info] Alcance de esta ampliación
+> Las secciones anteriores conservan la transcripción y las imágenes del folleto. Esta guía añade explicaciones para estudiar los conceptos y relacionarlos entre sí; no forma parte del texto original. Es material educativo general, no un protocolo de intervención ni una sustitución de la formación práctica, la normativa aplicable o los procedimientos de la institución.
+
+#### Combustión: de los reactivos a la llama
+
+La **combustión** es una reacción química de oxidación que libera energía. En un incendio común, un combustible reacciona con un agente oxidante —por lo general, el oxígeno del aire— después de recibir energía suficiente para iniciar la reacción. Parte de la energía liberada vuelve al combustible y al entorno: puede calentar materiales, producir vapores combustibles y favorecer que la reacción continúe.
+
+Una forma útil de seguir el proceso es esta:
+
+1. **Hay una fuente de combustible.** Puede estar ya en forma gaseosa o producir vapores al calentarse.
+2. **El combustible y el oxidante se aproximan y mezclan.** La proporción importa: una mezcla demasiado pobre o demasiado rica puede no arder en ese momento.
+3. **Una fuente de energía inicia la reacción.** Puede ser una llama, una chispa, una superficie caliente u otra fuente capaz de aportar energía suficiente.
+4. **La reacción libera calor.** Si el calor transferido mantiene la generación de vapores y la reacción química, la combustión continúa.
+
+La llama visible no es todo el incendio. También hay materiales calentándose, gases y vapores, humo, superficies que reciben calor y zonas donde la mezcla todavía no ha ardido. Esta mirada ayuda a entender por qué un incendio puede propagarse más allá del punto donde comenzó.
+
+La combustión **completa** y la **incompleta** describen cuánto logra oxidarse el combustible bajo ciertas condiciones. La combustión incompleta puede generar productos peligrosos, entre ellos monóxido de carbono y partículas de humo. El humo no es un único gas ni permite deducir su composición con solo mirar el color; la composición depende de los materiales y de las condiciones de combustión.
+
+#### Los componentes y cómo se relacionan
+
+El **triángulo del fuego** es un modelo didáctico de tres elementos: combustible, oxidante y calor. El **tetraedro** agrega la reacción química en cadena para representar por qué, una vez iniciada, la combustión puede sostenerse. Son modelos para ordenar ideas; no son una descripción completa de todos los detalles de la química del fuego. [NIST describe el fuego mediante los elementos del tetraedro y define la dinámica del fuego como la interacción de química, materiales, flujo y transferencia de calor.](https://www.nist.gov/el/fire-research-division-73300/firegov-fire-service/fire-dynamics)
+
+| Elemento | Qué aporta | Pregunta para analizar un caso |
+|---|---|---|
+| Combustible | Material que puede oxidarse y liberar energía al reaccionar | ¿Qué sustancia arde o qué material está generando vapores combustibles? |
+| Oxidante | Hace posible la oxidación; normalmente es el oxígeno del aire | ¿Qué agente oxidante está presente y cómo varía su disponibilidad? |
+| Calor | Eleva la temperatura y puede producir vapores o iniciar la reacción | ¿De dónde viene la energía inicial y cómo se transfiere? |
+| Reacción en cadena | Permite que las reacciones de combustión continúen | ¿La reacción sigue liberando suficiente energía para sostenerse? |
+
+La lámina original compara concentraciones de oxígeno de **21 %, 12 % y 9 %**. Consérvalas como los valores que presenta ese material, no como límites universales para la combustión o la respiración: el comportamiento depende de la mezcla, la temperatura, el combustible y otras condiciones. La concentración de oxígeno por sí sola tampoco permite declarar seguro un ambiente.
+
+Los métodos de extinción suelen explicarse relacionándolos con estos componentes: enfriar reduce el calor disponible; separar o retirar combustible limita lo que puede arder; controlar el oxidante reduce su disponibilidad; y algunos agentes interfieren con la reacción química. Es una clasificación conceptual. La selección y aplicación real dependen del tipo de fuego, del agente extintor, del riesgo eléctrico o químico y de los procedimientos vigentes; no debe inferirse una acción operativa solo a partir del modelo.
+
+#### Combustibles: estado, vapores y energía
+
+En muchos incendios con llama, lo que reacciona directamente es el combustible en fase gaseosa. Esto permite conectar las tres categorías del folleto:
+
+- **Gases:** ya se encuentran en fase gaseosa; al mezclarse con oxidante dentro de un intervalo inflamable pueden arder si hay una fuente de ignición.
+- **Líquidos:** normalmente la llama se alimenta de los vapores que se desprenden de su superficie, no de la masa líquida como si esta ardiera por dentro. La superficie expuesta, la temperatura, la ventilación y las propiedades del producto influyen en la generación y mezcla de vapores.
+- **Sólidos:** el calentamiento puede descomponer el material y producir gases combustibles mediante pirólisis. La forma, el tamaño, la composición, la humedad y la exposición al calor modifican el proceso.
+
+Conviene distinguir tres términos que suelen confundirse:
+
+- **Temperatura de ignición:** expresión general para la temperatura asociada con el inicio de la combustión en determinadas condiciones.
+- **Punto de inflamación:** temperatura mínima de un líquido a la que desprende vapor suficiente para formar momentáneamente una mezcla inflamable cerca de su superficie, bajo un método de ensayo definido.
+- **Temperatura de autoignición:** temperatura a la que una mezcla puede iniciar la combustión sin una llama o chispa externa, bajo condiciones determinadas.
+
+Los valores de estas propiedades cambian según la sustancia y el método de ensayo. No deben tratarse como una única temperatura universal ni como umbrales prácticos para decidir si un entorno es seguro.
+
+En un diagrama de inflamabilidad, el **límite inferior** separa mezclas demasiado pobres en combustible de una zona que puede arder; el **límite superior** separa esa zona de mezclas demasiado ricas. Dentro del intervalo, la posibilidad de ignición depende también de la temperatura, presión, oxidante y fuente de energía. Los límites publicados se determinan bajo condiciones de ensayo específicas. Una mezcla fuera del intervalo en un punto puede mezclarse con aire y entrar en él en otra zona.
+
+La **pirólisis** y la **evaporación** describen procesos distintos. La evaporación es el paso de un líquido a vapor; la pirólisis es la descomposición química de un material por calor. Un líquido puede evaporarse sin descomponerse y un sólido puede pirolizarse y liberar gases combustibles.
+
+#### Fuentes de energía para la ignición
+
+Las fuentes del folleto se pueden entender preguntando **cómo se transforma la energía en calor**:
+
+- **Química:** una reacción puede liberar calor. El calor de combustión aparece cuando ocurre una combustión; la disolución de ciertas sustancias y algunas descomposiciones químicas también pueden liberar energía. El efecto depende de los productos y de las condiciones de la reacción.
+- **Eléctrica:** la corriente puede calentar un conductor por su resistencia; una sobrecarga puede elevar el calentamiento; un arco eléctrico concentra energía en una descarga y un cortocircuito puede producir corriente elevada, calentamiento o chispas. Son mecanismos distintos, aunque una falla puede combinar varios.
+- **Mecánica:** la fricción transforma movimiento en calor en las superficies que rozan. La compresión de un gas puede aumentar su temperatura; por eso, al comprimir un gas se transfiere trabajo al sistema y aumenta su energía interna.
+
+En cualquier caso, la energía solo inicia un incendio si llega al combustible en condiciones que permitan la ignición. La presencia de electricidad, fricción o una reacción química no significa por sí sola que haya combustión.
+
+#### Cómo crece un incendio en un recinto
+
+El desarrollo de un incendio depende de la interacción entre el combustible disponible, el oxígeno, el calor liberado, la ventilación y las características del recinto. Por eso las etapas del gráfico del folleto sirven para estudiar una secuencia posible, pero un incendio real no siempre recorre todas las etapas de manera ordenada ni al mismo ritmo. La investigación del NIST y los materiales educativos del FSRI distinguen incendios limitados por combustible de aquellos cuyo desarrollo está limitado por la ventilación. [NIST, dinámica del fuego](https://www.nist.gov/el/fire-research-division-73300/firegov-fire-service/fire-dynamics) · [FSRI, dinámica del fuego en estructuras](https://training.fsri.org/course/125/fire-dynamics-in-structures)
+
+**Limitado por combustible** significa que la cantidad o disposición del material combustible condiciona cuánto puede crecer el fuego, mientras hay oxidante disponible para la combustión. **Limitado por ventilación** describe una situación en que el suministro de aire condiciona la combustión. Si cambian las aberturas, también puede cambiar el flujo de aire y de gases calientes; por ello, el comportamiento del fuego puede cambiar rápidamente. Esta explicación describe una relación física, no indica cuándo ni cómo ventilar.
+
+Para leer la curva de etapas:
+
+1. **Ignición:** comienza la reacción de combustión en un combustible.
+2. **Crecimiento:** el fuego involucra más combustible y eleva la temperatura de gases y superficies cercanas.
+3. **Transición rápida:** si las condiciones lo permiten, puede ocurrir un flashover; no es una etapa inevitable.
+4. **Desarrollo completo:** una gran parte de los combustibles disponibles en el recinto está involucrada.
+5. **Disminución:** al reducirse el combustible disponible o cambiar otras condiciones, desciende la liberación de energía; pueden permanecer brasas, gases calientes y peligros residuales.
+
+Esta secuencia es un esquema explicativo. La ventilación, la geometría, la ubicación del combustible y la transferencia de calor pueden alterar el desarrollo y las transiciones.
+
+La **temperatura** describe el estado térmico de un material o gas; la **tasa de liberación de calor** expresa cuánta energía se libera por unidad de tiempo. No son intercambiables: dos llamas pueden tener temperaturas parecidas y liberar cantidades de energía muy diferentes si sus tamaños son distintos. El NIST utiliza precisamente la comparación de una y varias velas para explicar esta diferencia. [NIST — Fire Dynamics](https://www.nist.gov/el/fire-research-division-73300/firegov-fire-service/fire-dynamics)
+
+Las **capas térmicas** son una forma de describir la distribución de gases a distintas temperaturas en un espacio. Los gases calientes tienden a subir y acumularse en la zona superior, mientras que el aire más frío puede ocupar zonas inferiores. La posición y estabilidad de esas capas cambian con las aberturas, el movimiento de gases, el fuego y la geometría. Los términos “plano positivo”, “neutro” y “negativo” de la lámina deben leerse como un esquema simplificado, no como fronteras fijas.
+
+**Conexiones con otros temas:** [[#Ventilación|Ventilación]] estudia cómo las aberturas y el movimiento del aire modifican el entorno del incendio; [[#Técnicas y tácticas de control de incendios|Técnicas y tácticas de control de incendios]] relaciona los principios de combustión con los tipos de fuego y su control.
+
+#### Transferencia de calor: ejemplos
+
+El calor se transfiere desde zonas de mayor temperatura hacia zonas de menor temperatura. En un incendio pueden actuar simultáneamente varias formas de transferencia:
+
+- **Conducción:** pasa a través de un material o entre materiales en contacto. Ejemplo de estudio: una pieza metálica calentada en un extremo transmite energía hacia otra zona de la misma pieza.
+- **Convección:** se transporta mediante el movimiento de un fluido, como el aire y los gases calientes. Ejemplo: los gases calientes que se desplazan por un recinto transportan energía y pueden calentar superficies alejadas del foco.
+- **Radiación:** se transmite mediante ondas electromagnéticas y no requiere contacto directo. Ejemplo: una superficie puede calentarse por radiación de una llama cercana aunque no la toque.
+
+En un mismo escenario, la radiación puede calentar otro combustible, ese material puede pirolizarse y liberar gases, y la convección puede mover energía y productos calientes. La conducción puede propagar calor a través de elementos sólidos. Separar cada mecanismo sirve para estudiarlos; al analizar un incendio conviene considerar que pueden actuar juntos. [NIST presenta conducción, convección y radiación como mecanismos de transferencia relevantes para la ignición, crecimiento, propagación, disminución y extinción.](https://www.nist.gov/el/fire-research-division-73300/firegov-fire-service/fire-dynamics)
+
+#### Fenómenos: qué los distingue
+
+Los nombres se parecen, pero describen fenómenos distintos. Las definiciones siguientes son conceptuales y no permiten confirmar un fenómeno en una escena real solo con una descripción breve.
+
+| Término | Idea central |
+|---|---|
+| **Flameover / rollover** | Llamas que se desplazan por gases combustibles acumulados en la capa superior; el combustible de esa capa se enciende. [NIST, término *flameover*.](https://www.nist.gov/glossary-term/24011) |
+| **Flashover** | Transición rápida en un incendio de recinto, cuando la radiación calienta diversos combustibles hasta que se involucran de manera casi simultánea. Depende de las condiciones del recinto y del incendio; no existe un número único que por sí solo lo prediga. [NIST, definición de *flashover*.](https://www.nist.gov/glossary/osac-lexicon?page=27) |
+| **Backdraft** | Combustión súbita asociada con la entrada de aire en un recinto caliente con combustión incompleta y acumulación de productos combustibles. Es distinto de un flashover; ambos presentan dinámicas y condiciones diferentes. [FSRI incluye backdraft, flashover y explosión de humo como fenómenos de aprendizaje diferenciados.](https://training.fsri.org/course/125/fire-dynamics-in-structures) |
+| **BLEVE** | Ruptura violenta de un recipiente que contiene líquido sobrecalentado o presurizado, con expansión rápida del vapor. Puede ocurrir con líquidos que no son combustibles; si el contenido es inflamable, puede añadirse un incendio. [USFA, material formativo sobre BLEVE.](https://apps.usfa.fema.gov/ax/sm/sm_0780.pdf) |
+| **Boilover** | Expulsión violenta de combustible en un incendio de ciertos depósitos de líquidos, relacionada con el calentamiento y ebullición del agua bajo el combustible. No es sinónimo de BLEVE ni de un simple derrame de líquido hirviendo. [NIST, estudio sobre efectos del agua y *boilover* en combustibles incendiados.](https://www.nist.gov/document/r0200516pdf) |
+
+Los intervalos de temperatura y las señales que aparecen en las diapositivas corresponden a esa fuente y a su contexto didáctico. No los tomes como fronteras universales, mediciones disponibles en una escena ni reglas autónomas de seguridad. Los fenómenos dependen de varias condiciones que pueden evolucionar y requieren formación especializada para su reconocimiento y manejo.
+
+#### Ejemplos guiados
+
+**Ejemplo 1: combustión de un material sólido**
+
+Una fuente de calor incide sobre un sólido. El material se calienta y puede descomponerse por pirólisis, generando vapores. Si estos se mezclan con oxidante dentro de condiciones inflamables y reciben energía de ignición, pueden arder. La combustión libera calor, que puede calentar más material. En el ejemplo aparecen el combustible, el oxidante, el calor y la reacción que se sostiene.
+
+**Ejemplo 2: calor que se transmite sin contacto con la llama**
+
+Una llama calienta una superficie próxima por radiación. La superficie aumenta su temperatura y podría transmitir calor por conducción a otro objeto en contacto. Al mismo tiempo, los gases calientes pueden transportar energía por convección. La pregunta correcta no es “¿cuál es el único mecanismo?”, sino “¿qué mecanismos pueden actuar a la vez?”.
+
+**Ejemplo 3: incendio dentro de una habitación**
+
+El combustible se calienta, libera gases y estos arden. La combustión consume oxidante y produce calor y gases. La cantidad de combustible, el intercambio de aire y el tamaño del recinto influyen en la evolución. Si el suministro de aire limita el proceso, una modificación del flujo puede cambiar el comportamiento; por eso el esquema de etapas no basta para decidir acciones operativas.
+
+#### Autoevaluación
+
+Responde primero sin consultar la clave.
+
+1. ¿Qué diferencia hay entre calor y temperatura?
+2. ¿Qué elemento incorpora el tetraedro que no aparece en el triángulo del fuego?
+3. ¿Qué fase del combustible suele arder en un incendio con llama alimentado por un líquido?
+4. ¿En qué se diferencian evaporación y pirólisis?
+5. Nombra las tres formas de transferencia de calor y da un ejemplo de cada una.
+6. ¿Por qué las etapas de desarrollo no deben interpretarse como una secuencia idéntica para todos los incendios?
+7. Explica con una frase la diferencia conceptual entre flashover y backdraft.
+8. ¿Qué factores, además del combustible, influyen en el desarrollo de un incendio dentro de una estructura?
+9. ¿Por qué un valor de temperatura leído en una diapositiva no basta para predecir un fenómeno?
+10. En el ejemplo de la habitación, identifica combustible, oxidante, calor y reacción en cadena.
+11. ¿Qué diferencia existe entre temperatura y tasa de liberación de calor?
+12. ¿Cómo se transforma energía eléctrica en calor en los ejemplos del folleto?
+13. ¿Qué significa que una mezcla sea demasiado pobre o demasiado rica para arder?
+
+**Clave de revisión**
+
+1. El calor es energía que se transfiere por una diferencia de temperatura; la temperatura describe el estado térmico de un cuerpo.
+2. La reacción química en cadena.
+3. En general, los vapores del líquido mezclados con oxidante.
+4. La evaporación cambia el estado físico de un líquido; la pirólisis descompone químicamente un material por calentamiento.
+5. Conducción: por un sólido; convección: por movimiento de gases o líquidos; radiación: por ondas electromagnéticas.
+6. Cambian la ventilación, los combustibles, la geometría, la ubicación del fuego y otras condiciones.
+7. El flashover es una transición rápida de involucramiento de combustibles calentados en un recinto; el backdraft implica una combustión súbita asociada a la entrada de aire en un recinto caliente con productos combustibles acumulados.
+8. Oxidante y ventilación, liberación de energía, geometría, distribución de combustible y transferencia de calor, entre otros.
+9. Porque los fenómenos dependen de múltiples condiciones, y los valores de una lámina no son límites universales ni mediciones del escenario.
+10. Combustible: material que genera vapores; oxidante: agente que permite la oxidación; calor: fuente que inicia y mantiene el proceso; reacción: combustión que libera energía.
+11. La temperatura describe el estado térmico; la tasa de liberación indica la energía liberada por unidad de tiempo.
+12. La corriente puede producir calentamiento resistivo; las fallas eléctricas pueden generar sobrecalentamiento o arco y chispas.
+13. “Pobre” significa que hay poco combustible en relación con el oxidante; “rica”, que hay demasiado combustible. La mezcla puede arder dentro del intervalo inflamable bajo condiciones adecuadas.
+
+#### Glosario breve
+
+- **Agente oxidante:** sustancia que participa en la oxidación; en incendios comunes suele ser el oxígeno del aire.
+- **Combustión autosostenida:** reacción que continúa porque la energía liberada mantiene las condiciones necesarias para seguir reaccionando.
+- **Dinámica del fuego:** estudio de cómo interactúan química, materiales, flujo de gases y transferencia de calor durante el inicio y desarrollo del fuego.
+- **Límite inferior / superior de inflamabilidad (LII / LSI):** concentraciones que delimitan el intervalo en que una mezcla combustible-aire puede arder bajo condiciones específicas.
+- **Pirólisis:** descomposición química causada por calentamiento.
+- **Tasa de liberación de calor:** energía que un fuego libera por unidad de tiempo; no equivale a la temperatura de la llama.
+- **Ventilación limitada:** condición en que el intercambio de aire restringe la combustión y afecta el desarrollo del incendio.
+
+#### Fuentes técnicas para la ampliación
+
+- [NIST — Fire Dynamics](https://www.nist.gov/el/fire-research-division-73300/firegov-fire-service/fire-dynamics): combustión, tetraedro, transferencia de calor y desarrollo del fuego.
+- [NIST — Flameover](https://www.nist.gov/glossary-term/24011) y [OSAC Lexicon — Flashover](https://www.nist.gov/glossary/osac-lexicon?page=27): términos de fenómenos térmicos.
+- [UL Research Institutes, Fire Safety Research Institute — Structural Fire Dynamics](https://training.fsri.org/course/125/fire-dynamics-in-structures): incendios limitados por combustible o ventilación y fenómenos de incendios estructurales.
+- [U.S. Fire Administration — Fire Investigation: Forensic Evidence and Interviewing, manual del estudiante](https://apps.usfa.fema.gov/ax/sm/sm_0780.pdf): explicación formativa de BLEVE.
+- [NIST — Anomalous Effects of Water in Firefighting](https://www.nist.gov/document/r0200516pdf): descripción técnica del *boilover* en mezclas de combustible flotando sobre agua.
+
+## Herramientas y equipos
+
+### Herramientas, equipos y accesorios
+
+#### Herramienta
+
+Objeto manual que sirve para realizar una tarea con la energía que proviene directamente del operador
+
+- Cizalla 
+- Mandarria
+- Llave francesa
+
+#### Equipo
+
+Máquina o aparato de cierta complejidad que sirve para realizar una tarea y cuyo principio de acción consiste en la transformación de la energía para aumentar la capacidad de trabajo
+
+- Generador
+- Taladro
+- Mototrozadora
+
+#### Accesorio
+
+Objeto que individualmente complementa y en conjunto con otros puede conformar un equipo o herramienta permitiendo ampliar o mejorar las capacidades operativas o realizar una tarea.
+
+- Clavos 
+- Broca
+- Polea
+
+### Herramientas de entrada forzada
+
+Existen cuatro categorías:
+- Herramientas para cortar.
+- Herramientas para hacer palanca.
+- Herramientas para empujar / tirar.
+- Herramientas para golpear.
+
+#### Herramientas para cortar
+
+- Hacha de Bombero
+- Hacha de Leñador
+- Serrucho de Carpintero
+- Segueta para Metales
+
+![[Attachment/p06-hacha-bombero.png|360]]
+
+![[Attachment/p06-hacha-lenador.png|360]]
+
+![[Attachment/p06-serrucho-carpintero.png|360]]
+
+![[Attachment/p06-segueta-metales.png|360]]
+
+#### Equipos para cortar
+
+- Sierra Circular (Mototrozadora)
+- Sierra de Cadena (Motosierra)
+- Sierra Sable (Caladora)
+
+![[Attachment/p07-sierra-circular.png|420]]
+
+![[Attachment/p07-motosierra.png|420]]
+
+![[Attachment/p07-sierra-sable-caladora.png|420]]
+
+#### Herramientas para cortar metales
+
+- Cizallas / Cortafríos
+- Soplete de Corte (Oxi-Corte)
+
+![[Attachment/p08-cizallas-cortafrios.png|420]]
+
+![[Attachment/p08-soplete-oxicorte.png|420]]
+
+#### Palancas manuales
+
+La lámina ilustra varios tipos de herramientas de palanca manual:
+
+- Barra de palanca.
+- Barra Halligan.
+- Barra universal.
+- Barreta de gancho.
+- Barra de pata de cabra.
+- Herramienta Kelly.
+- Hacha de palanca.
+- Barra plana.
+
+![[Attachment/p09-palancas-manuales.png|650]]
+
+#### Palancas hidráulicas
+
+##### Cortador y expansor
+
+- Cortador hidráulico
+![[Attachment/p10-cortador-hidraulico.png|420]]
+
+- Expansor hidráulico
+![[Attachment/p10-expansor-hidraulico.png|420]]
+
+##### Ariete y abrepuertas
+
+- Ariete hidráulico
+![[Attachment/p11-ariete-hidraulico.png|420]]
+
+- Abre puertas hidráulico
+![[Attachment/p11-abre-puertas-hidraulico.png|420]]
+
+#### Empujar y tirar
+
+La lámina presenta cuatro tipos de arpón para empujar o tirar:
+
+- Arpón con gancho.
+- Arpón Clemens.
+- Arpón compuesto.
+- Arpón de San Francisco.
+
+![[Attachment/p12-arpones.png|620]]
+
+#### Golpear
+
+La lámina reúne distintas herramientas para golpear:
+
+- Hacha de leñador.
+- Ariete.
+- Cinceles.
+- Martillo de dos caras.
+- Martillo.
+- Martillo con punta.
+- Mandarria o mazo.
+- Pico.
+
+En la columna izquierda también aparecen ilustraciones adicionales sin rótulo legible en la copia.
+
+![[Attachment/p13-herramientas-golpeo.png|620]]
+
+#### Combinación de herramientas
+
+Los tipos de herramientas varían según la construcción del edificio y el tipo de entrada forzada que se vaya a realizar, pero la más usada por todo bombero es ésta combinación: Barra Halligan y Hacha de Leñador.
+
+![[Attachment/p14-combinacion-herramientas.png|360]]
+
+#### Forzar candados
+
+- Cizallas / Cortafríos
+- Pico con cabeza de martillo
+- Alicate de presión y cadena
+- Llave inglesa / francesa
+
+![[Attachment/p15-forzar-candados.png|620]]
+
+### Seguridad en el uso de herramientas y equipos
+
+- Seleccione la herramienta o equipo en función de la tarea.
+- Lleve puesto siempre el equipo de protección adecuado.
+- No utilice una sierra en atmósferas inflamables.
+- Mantenga fuera del área de trabajo a las personas sin EPP.
+- Siga las instrucciones del fabricante para la utilización de los equipos.
+- Tenga cuidado con los peligros que no se ven, cables eléctricos y tuberías.
+
+### Transporte de herramientas y equipos
+
+- Hachas
+- Herramientas de palanca
+- Combinaciones de herramientas
+- Arpón y ganchos
+- Herramientas mecanizadas
 
 ## Abastecimiento de agua
 

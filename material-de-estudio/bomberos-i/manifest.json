@@ -1,17 +1,17 @@
 {
   "source": {
     "file": "Manual Bomberos I.md",
-    "sha256": "9054c98ea136f720db7253a2698126c23804fd0672f5eea3ff4e06cf4a04c68f",
-    "bytes": 73779
+    "sha256": "9b33021ecc9e58f3932e822ce2d018f1726faac2a3280da67d437fd4f3702c07",
+    "bytes": 97110
   },
   "chapters": [
     {
-      "title": "Herramientas y equipos",
-      "id": "herramientas-y-equipos"
-    },
-    {
       "title": "Teoría del fuego",
       "id": "teoria-del-fuego"
+    },
+    {
+      "title": "Herramientas y equipos",
+      "id": "herramientas-y-equipos"
     },
     {
       "title": "Abastecimiento de agua",
@@ -42,135 +42,9 @@
       "id": "busqueda-y-rescate"
     }
   ],
-  "headings": 270,
+  "headings": 282,
   "imageCount": 189,
   "assets": [
-    {
-      "path": "Attachment/p06-hacha-bombero.png",
-      "bytes": 155302,
-      "sha256": "6ca7966b84eba8ecfab41562d630aa39e54e415652ccd26e090520b20afab71e",
-      "width": 690,
-      "height": 360
-    },
-    {
-      "path": "Attachment/p06-hacha-lenador.png",
-      "bytes": 170406,
-      "sha256": "c4edd2dc0eb930c096f8f3526853c5f374780ae730bbe3ef93ff3d88566e74dd",
-      "width": 750,
-      "height": 360
-    },
-    {
-      "path": "Attachment/p06-serrucho-carpintero.png",
-      "bytes": 204126,
-      "sha256": "025ba5a1d214b3b2639af63667cba26aa3b2b42bda724726a745cc617a0ea3fd",
-      "width": 690,
-      "height": 440
-    },
-    {
-      "path": "Attachment/p06-segueta-metales.png",
-      "bytes": 219164,
-      "sha256": "61634800a4020310fbceacb56239d298f6f3997a838e866d2dc5971e2811cdcc",
-      "width": 750,
-      "height": 440
-    },
-    {
-      "path": "Attachment/p07-sierra-circular.png",
-      "bytes": 266216,
-      "sha256": "7fb06835c162bdc699d522abcf92b04df5c354057c251e3f1b22201c03b0a5f9",
-      "width": 730,
-      "height": 420
-    },
-    {
-      "path": "Attachment/p07-motosierra.png",
-      "bytes": 244267,
-      "sha256": "5cc871e645e4465a3eb9bcebc28869498e52171d0f9d14363bb9b959c41545d3",
-      "width": 720,
-      "height": 420
-    },
-    {
-      "path": "Attachment/p07-sierra-sable-caladora.png",
-      "bytes": 251793,
-      "sha256": "33345031c14c462874960cdb381aaa795f1aa964088e35837eac10746d8da624",
-      "width": 880,
-      "height": 410
-    },
-    {
-      "path": "Attachment/p08-cizallas-cortafrios.png",
-      "bytes": 355235,
-      "sha256": "feee15296bc40f0271964acf3b4941a551653e0e7050b4f195176d2e046f2ea9",
-      "width": 730,
-      "height": 720
-    },
-    {
-      "path": "Attachment/p08-soplete-oxicorte.png",
-      "bytes": 339673,
-      "sha256": "30033055b45c39383c823d8b7e64b8b74b698a6db3145cb934e6e905b15d2350",
-      "width": 680,
-      "height": 730
-    },
-    {
-      "path": "Attachment/p09-palancas-manuales.png",
-      "bytes": 1009501,
-      "sha256": "a32587204aa2e18e6db3ba97d416d8471b251424bd69aa8539088dfe9d6f7729",
-      "width": 1410,
-      "height": 800
-    },
-    {
-      "path": "Attachment/p10-cortador-hidraulico.png",
-      "bytes": 269613,
-      "sha256": "1720daa1a92f33b56d9596cd3de41d7fdc21d311e7b29c33e399704604696f4d",
-      "width": 735,
-      "height": 580
-    },
-    {
-      "path": "Attachment/p10-expansor-hidraulico.png",
-      "bytes": 234882,
-      "sha256": "040652f726c89c3ee2bff8b6a12d9ec4a0bc01c31e856044e7e2ecca7c91dc1c",
-      "width": 750,
-      "height": 475
-    },
-    {
-      "path": "Attachment/p11-ariete-hidraulico.png",
-      "bytes": 400952,
-      "sha256": "9d4e2b6003349b17472ec1b2a9bfa41b0d0b191117b1a8feaef22652139bb82e",
-      "width": 720,
-      "height": 700
-    },
-    {
-      "path": "Attachment/p11-abre-puertas-hidraulico.png",
-      "bytes": 361765,
-      "sha256": "51cc08258e1d9b25ea4763a7f1cf99c66309bf3c5fe8ff56504e9828ffb3fae6",
-      "width": 690,
-      "height": 700
-    },
-    {
-      "path": "Attachment/p12-arpones.png",
-      "bytes": 680738,
-      "sha256": "a9ea84241226d82c9658ff12f246c665014a676d82b543bba4394ca88adcc8e1",
-      "width": 1570,
-      "height": 630
-    },
-    {
-      "path": "Attachment/p13-herramientas-golpeo.png",
-      "bytes": 869124,
-      "sha256": "39d5c4fb0d5c1f1984280c162c48d2f9f678804947e21208a2d514e348fd656d",
-      "width": 1270,
-      "height": 790
-    },
-    {
-      "path": "Attachment/p14-combinacion-herramientas.png",
-      "bytes": 221852,
-      "sha256": "ec630722adda39f6d7f83dbdbcaf965230f8e98e9b8b98f2868b900eee7ce36d",
-      "width": 480,
-      "height": 830
-    },
-    {
-      "path": "Attachment/p15-forzar-candados.png",
-      "bytes": 1002446,
-      "sha256": "cc8edcba088af60be2ba77b327b104e27f6403816a5675b2b6c1d73565c0f5e5",
-      "width": 1570,
-      "height": 830
-    },
     {
       "path": "Attachment/p20-calor-temperatura.png",
       "bytes": 428677,
@@ -450,6 +324,132 @@
       "sha256": "bc80d19375544599a8c92e7c4e719393ac1edb2fa5c4a1c9c9bf671173353068",
       "width": 890,
       "height": 810
+    },
+    {
+      "path": "Attachment/p06-hacha-bombero.png",
+      "bytes": 155302,
+      "sha256": "6ca7966b84eba8ecfab41562d630aa39e54e415652ccd26e090520b20afab71e",
+      "width": 690,
+      "height": 360
+    },
+    {
+      "path": "Attachment/p06-hacha-lenador.png",
+      "bytes": 170406,
+      "sha256": "c4edd2dc0eb930c096f8f3526853c5f374780ae730bbe3ef93ff3d88566e74dd",
+      "width": 750,
+      "height": 360
+    },
+    {
+      "path": "Attachment/p06-serrucho-carpintero.png",
+      "bytes": 204126,
+      "sha256": "025ba5a1d214b3b2639af63667cba26aa3b2b42bda724726a745cc617a0ea3fd",
+      "width": 690,
+      "height": 440
+    },
+    {
+      "path": "Attachment/p06-segueta-metales.png",
+      "bytes": 219164,
+      "sha256": "61634800a4020310fbceacb56239d298f6f3997a838e866d2dc5971e2811cdcc",
+      "width": 750,
+      "height": 440
+    },
+    {
+      "path": "Attachment/p07-sierra-circular.png",
+      "bytes": 266216,
+      "sha256": "7fb06835c162bdc699d522abcf92b04df5c354057c251e3f1b22201c03b0a5f9",
+      "width": 730,
+      "height": 420
+    },
+    {
+      "path": "Attachment/p07-motosierra.png",
+      "bytes": 244267,
+      "sha256": "5cc871e645e4465a3eb9bcebc28869498e52171d0f9d14363bb9b959c41545d3",
+      "width": 720,
+      "height": 420
+    },
+    {
+      "path": "Attachment/p07-sierra-sable-caladora.png",
+      "bytes": 251793,
+      "sha256": "33345031c14c462874960cdb381aaa795f1aa964088e35837eac10746d8da624",
+      "width": 880,
+      "height": 410
+    },
+    {
+      "path": "Attachment/p08-cizallas-cortafrios.png",
+      "bytes": 355235,
+      "sha256": "feee15296bc40f0271964acf3b4941a551653e0e7050b4f195176d2e046f2ea9",
+      "width": 730,
+      "height": 720
+    },
+    {
+      "path": "Attachment/p08-soplete-oxicorte.png",
+      "bytes": 339673,
+      "sha256": "30033055b45c39383c823d8b7e64b8b74b698a6db3145cb934e6e905b15d2350",
+      "width": 680,
+      "height": 730
+    },
+    {
+      "path": "Attachment/p09-palancas-manuales.png",
+      "bytes": 1009501,
+      "sha256": "a32587204aa2e18e6db3ba97d416d8471b251424bd69aa8539088dfe9d6f7729",
+      "width": 1410,
+      "height": 800
+    },
+    {
+      "path": "Attachment/p10-cortador-hidraulico.png",
+      "bytes": 269613,
+      "sha256": "1720daa1a92f33b56d9596cd3de41d7fdc21d311e7b29c33e399704604696f4d",
+      "width": 735,
+      "height": 580
+    },
+    {
+      "path": "Attachment/p10-expansor-hidraulico.png",
+      "bytes": 234882,
+      "sha256": "040652f726c89c3ee2bff8b6a12d9ec4a0bc01c31e856044e7e2ecca7c91dc1c",
+      "width": 750,
+      "height": 475
+    },
+    {
+      "path": "Attachment/p11-ariete-hidraulico.png",
+      "bytes": 400952,
+      "sha256": "9d4e2b6003349b17472ec1b2a9bfa41b0d0b191117b1a8feaef22652139bb82e",
+      "width": 720,
+      "height": 700
+    },
+    {
+      "path": "Attachment/p11-abre-puertas-hidraulico.png",
+      "bytes": 361765,
+      "sha256": "51cc08258e1d9b25ea4763a7f1cf99c66309bf3c5fe8ff56504e9828ffb3fae6",
+      "width": 690,
+      "height": 700
+    },
+    {
+      "path": "Attachment/p12-arpones.png",
+      "bytes": 680738,
+      "sha256": "a9ea84241226d82c9658ff12f246c665014a676d82b543bba4394ca88adcc8e1",
+      "width": 1570,
+      "height": 630
+    },
+    {
+      "path": "Attachment/p13-herramientas-golpeo.png",
+      "bytes": 869124,
+      "sha256": "39d5c4fb0d5c1f1984280c162c48d2f9f678804947e21208a2d514e348fd656d",
+      "width": 1270,
+      "height": 790
+    },
+    {
+      "path": "Attachment/p14-combinacion-herramientas.png",
+      "bytes": 221852,
+      "sha256": "ec630722adda39f6d7f83dbdbcaf965230f8e98e9b8b98f2868b900eee7ce36d",
+      "width": 480,
+      "height": 830
+    },
+    {
+      "path": "Attachment/p15-forzar-candados.png",
+      "bytes": 1002446,
+      "sha256": "cc8edcba088af60be2ba77b327b104e27f6403816a5675b2b6c1d73565c0f5e5",
+      "width": 1570,
+      "height": 830
     },
     {
       "path": "Attachment/p53-fuego-industrial.png",
