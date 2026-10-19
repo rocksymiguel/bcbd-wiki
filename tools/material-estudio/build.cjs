@@ -1,4 +1,5 @@
-// Export an unchanged Obsidian manual to static HTML. The vault is read-only.
+// Export the Obsidian source to a static manual page. The vault is read-only;
+// the fire-theory chapter is presented as a structured lesson, not as a raw MD.
 // Requires marked 17.x at build time only (NODE_PATH can locate bundled packages).
 const fs=require('node:fs');
 const path=require('node:path');
@@ -77,16 +78,53 @@ const firstChapter=tokens.findIndex((t,i)=>i>indexStart&&t.type==='heading'&&t.d
 assert(indexStart>0&&firstChapter>indexStart);
 const title=tokens[0].text;
 const intro=marked.parser(tokens.slice(1,indexStart));
-const toc=marked.parser(tokens.slice(indexStart+1,firstChapter));
-const article=marked.parser(tokens.slice(firstChapter));
 const chapters=headings.filter(h=>h.depth===2&&h.text!=='Índice');
 assert.equal(chapters.length,9);
+const secondChapter=tokens.findIndex((t,i)=>i>firstChapter&&t.type==='heading'&&t.depth===2);
+assert(secondChapter>firstChapter);
+const sourceSections=new Map();
+for(let i=firstChapter+1;i<secondChapter;){
+  if(tokens[i].type!=='heading'||tokens[i].depth!==3){i++;continue;}
+  const start=i,name=tokens[i].text;
+  let end=i+1;
+  while(end<secondChapter&&!(tokens[end].type==='heading'&&tokens[end].depth<=3))end++;
+  sourceSections.set(name,marked.parser(tokens.slice(start,end)));
+  i=end;
+}
+const theoryTemplate=fs.readFileSync(path.join(__dirname,'teoria-del-fuego.html'),'utf8');
+const theoryHtml=theoryTemplate.replace(/\{\{SOURCE:([^}]+)\}\}/g,(_,name)=>{
+  assert(sourceSections.has(name),'Missing theory source section: '+name);
+  return sourceSections.get(name);
+});
+assert(!/\{\{SOURCE:/.test(theoryHtml),'Unexpanded theory source placeholder');
+const theoryToc=`<ul>
+<li><a href="#teoria-del-fuego">Teoría del fuego</a><ul>
+<li><a href="#energia-calor-combustion">Energía, calor y temperatura</a></li>
+<li><a href="#combustion-y-componentes">Combustión y componentes</a></li>
+<li><a href="#combustibles-mezclas-fuentes">Combustibles, mezclas y fuentes de energía</a></li>
+<li><a href="#transferencia-de-calor">Transferencia de calor</a></li>
+<li><a href="#incendio-en-recinto">Desarrollo, humo, capas y presión</a></li>
+<li><a href="#fenomenos-y-condiciones-especiales">Transiciones y condiciones especiales</a></li>
+<li><a href="#repaso-teoria-fuego">Repaso rápido</a></li>
+</ul></li></ul>`;
+const remainingItems=[];
+const tocStack=[{depth:1,children:remainingItems}];
+for(const heading of headings.slice(headings.indexOf(chapters[1]))){
+  if(heading.depth<2||heading.depth>6)continue;
+  while(tocStack.at(-1).depth>=heading.depth)tocStack.pop();
+  const item={text:heading.text,id:heading.manualId,children:[]};
+  tocStack.at(-1).children.push(item);
+  tocStack.push({depth:heading.depth,children:item.children});
+}
+const renderToc=items=>`<ul>${items.map(item=>`<li><a href="#${escape(item.id)}">${escape(item.text)}</a>${item.children.length?renderToc(item.children):''}</li>`).join('')}</ul>`;
+const remainingToc=renderToc(remainingItems);
+const courseToc=theoryToc+remainingToc;
+const article=theoryHtml+marked.parser(tokens.slice(secondChapter));
 const pdf=importFile('Reference/Manual - Bomberos I.pdf');
 const pdfURL=encode(pdf.path);
 const pdfSize=(pdf.bytes/1024/1024).toFixed(1).replace('.',',');
 fs.mkdirSync(output,{recursive:true});
-fs.copyFileSync(sourceFile,path.join(output,'manual.md'));
-assert.equal(hash(fs.readFileSync(path.join(output,'manual.md'))),hash(bytes));
+fs.rmSync(path.join(output,'manual.md'),{force:true});
 const html=`<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -107,7 +145,7 @@ const html=`<!DOCTYPE html>
     </header>
     <div class="manual-layout">
       <aside class="manual-sidebar" aria-label="Índice del manual">
-        <details id="manual-toc"><summary><h2 id="${headings.find(h=>h.text==='Índice').manualId}">Índice</h2></summary><nav aria-label="Capítulos y subtemas">${toc}</nav></details>
+        <details id="manual-toc"><summary><h2 id="${headings.find(h=>h.text==='Índice').manualId}">Índice</h2></summary><nav aria-label="Capítulos y subtemas">${courseToc}</nav></details>
         <a class="manual-back-top" href="#${headings[0].manualId}">Volver al inicio ↑</a>
       </aside>
       <article id="manual-content" class="manual-content" aria-label="Contenido completo del Manual Bomberos I">${article}</article>
@@ -125,7 +163,7 @@ const html=`<!DOCTYPE html>
 </html>
 `;
 fs.writeFileSync(path.join(output,'index.html'),html);
-const manifest={source:{file:'Manual Bomberos I.md',sha256:hash(bytes),bytes:bytes.length},chapters:chapters.map(h=>({title:h.text,id:h.manualId})),headings:headings.length,imageCount,assets:[...imports.values()]};
+const manifest={chapters:chapters.map(h=>({title:h.text,id:h.manualId})),headings:headings.length,imageCount,assets:[...imports.values()]};
 fs.writeFileSync(path.join(output,'manifest.json'),JSON.stringify(manifest,null,2)+'\n');
 assert.equal(hash(fs.readFileSync(sourceFile)),hash(bytes),'The source vault must remain unchanged');
-console.log(`Exported ${chapters.length} chapters, ${imageCount} images, ${headings.length} headings; all internal references resolved; exact Markdown/PDF/image copies verified. The vault was not modified.`);
+console.log(`Exported ${chapters.length} chapters, ${imageCount} images, ${headings.length} source headings; all internal references resolved. The fire-theory chapter is integrated into a guided lesson, no Markdown file is published, and the vault was not modified.`);
