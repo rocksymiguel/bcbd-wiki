@@ -6,7 +6,7 @@ de `BCBD Wiki/Material de estudio/Bomberos I`. El exportador no modifica el vaul
 `build.cjs` usa Marked 17.0.5 solamente al generar HTML. La página publicada
 no requiere ese paquete, Obsidian, una API ni acceso al vault. La lección web de
 Teoría del fuego se presenta como una ruta didáctica integrada; las transcripciones
-del folleto y sus imágenes siguen disponibles dentro de cada módulo. El maestro
+del folleto se reúnen en un único anexo opcional al final del capítulo. El maestro
 Markdown en el vault no se modifica ni se publica como archivo descargable.
 
 Con Node.js y Marked disponibles:
@@ -26,10 +26,11 @@ recursos exportados. Los enlaces internos de Obsidian de los capítulos que cons
 la estructura original se convierten en anclas HTML únicas.
 
 La estructura web de Teoría del fuego ordena los conceptos en módulos didácticos,
-con explicaciones, preguntas de repaso y referencias técnicas. El texto fuente del
-folleto se conserva desplegable por tema. Los otros capítulos mantienen su
-transcripción. El índice parte cerrado y enlaza a módulos y capítulos; las imágenes
-permiten abrir el original desde un diálogo. El PDF se descarga desde el mismo origen.
+con explicaciones, preguntas de repaso con respuestas que se revelan al pulsar
+«Mostrar» y referencias técnicas. El texto fuente del folleto se conserva en un
+único anexo al final. Los otros capítulos mantienen su transcripción. El índice
+parte cerrado y enlaza a módulos y capítulos; las imágenes permiten abrir el
+original desde un diálogo. El PDF se descarga desde el mismo origen.
 
 ```powershell
 node tools/tests/manual-study.cjs

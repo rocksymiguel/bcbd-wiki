@@ -102,6 +102,16 @@
 .fire-source-content h4 { font-size:17px; }
 .fire-source-content .manual-image { width:min(var(--image-width,700px),100%); }
 .fire-source-content img { max-width:100%; height:auto; }
+.fire-question-list { display:grid; gap:12px; margin-top:22px; }
+.fire-question { margin:22px 0 0; padding:18px 20px; border:1px solid var(--theme-border); border-radius:12px; background:var(--theme-bg); }
+.fire-question-list .fire-question { margin:0; }
+.fire-question > p { margin:0 0 12px; }
+.fire-question button { min-width:96px; padding:9px 16px; border:1px solid #b91c1c; border-radius:8px; background:#b91c1c; color:#fff; font:inherit; font-size:14px; font-weight:750; cursor:pointer; }
+.fire-question button:hover { background:#991b1b; }
+.fire-answer { margin-top:14px; padding:13px 16px; border-left:3px solid #2563eb; border-radius:0 8px 8px 0; background:var(--theme-surface); }
+.fire-answer p { margin:0; }
+.fire-answer[hidden] { display:none !important; }
+.fire-appendix { margin:42px 0 18px; }
 .fire-review { margin:44px 0; padding:clamp(22px,3vw,36px); border:1px solid var(--theme-border); border-radius:16px; background:var(--theme-surface); }
 .fire-review > h3, .fire-resources h3 { margin:0 0 16px; font-size:28px; }
 .fire-review > ol { padding-left:24px; }

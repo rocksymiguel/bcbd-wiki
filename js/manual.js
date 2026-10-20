@@ -10,6 +10,14 @@
   const mobile=matchMedia('(max-width: 1000px)');
   if(toc)toc.open=false;
   toc?.querySelectorAll('a[href^="#"]').forEach(link=>link.addEventListener('click',()=>{if(mobile.matches)toc.open=false;}));
+  document.querySelectorAll('[data-answer-toggle]').forEach(button=>button.addEventListener('click',()=>{
+    const answer=document.getElementById(button.getAttribute('aria-controls'));
+    if(!answer)return;
+    const show=answer.hidden;
+    answer.hidden=!show;
+    button.setAttribute('aria-expanded',String(show));
+    button.textContent=show?'Ocultar':'Mostrar';
+  }));
   const dialog=document.getElementById('manual-image-dialog');
   if(!dialog)return;
   const full=document.getElementById('manual-image-full');

@@ -83,16 +83,18 @@ assert.equal(chapters.length,9);
 const secondChapter=tokens.findIndex((t,i)=>i>firstChapter&&t.type==='heading'&&t.depth===2);
 assert(secondChapter>firstChapter);
 const sourceSections=new Map();
+const brochureSections=new Set(['Objetivos','Definiciones','Componentes del fuego','Fuentes de energía calórica','Transferencia de calor','Etapas del fuego','Fenómenos térmicos','Condiciones especiales de la combustión']);
 for(let i=firstChapter+1;i<secondChapter;){
   if(tokens[i].type!=='heading'||tokens[i].depth!==3){i++;continue;}
   const start=i,name=tokens[i].text;
   let end=i+1;
   while(end<secondChapter&&!(tokens[end].type==='heading'&&tokens[end].depth<=3))end++;
-  sourceSections.set(name,marked.parser(tokens.slice(start,end)));
+  if(brochureSections.has(name))sourceSections.set(name,marked.parser(tokens.slice(start,end)));
   i=end;
 }
 const theoryTemplate=fs.readFileSync(path.join(__dirname,'teoria-del-fuego.html'),'utf8');
 const theoryHtml=theoryTemplate.replace(/\{\{SOURCE:([^}]+)\}\}/g,(_,name)=>{
+  if(name==='ALL')return [...sourceSections.values()].join('\n');
   assert(sourceSections.has(name),'Missing theory source section: '+name);
   return sourceSections.get(name);
 });
