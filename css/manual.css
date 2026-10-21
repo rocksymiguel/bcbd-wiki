@@ -94,6 +94,18 @@
 .manual-expansion { margin:28px 0 0; padding:22px 24px; border-radius:16px; background:var(--theme-surface-muted); border:1px solid var(--theme-border); }
 .manual-expansion-label { color:var(--accent-text); }
 .manual-expansion > :last-child { margin-bottom:0; }
+/* Margen de estudio: la pregunta y las referencias de cada sección, solo donde existen. */
+.manual-margin { display:flex; flex-direction:column; gap:16px; margin-top:20px; }
+.manual-margin-label { margin:0 0 8px; font-size:14px; font-weight:700; color:var(--theme-muted); }
+.manual-margin .fire-question, .manual-margin .fire-question-list .fire-question { margin:0 0 12px; }
+.manual-refs ul { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px; }
+.manual-refs li { margin:0; font-size:15px; line-height:1.45; }
+.manual-refs a { color:var(--accent-text); }
+@media (min-width:1400px) {
+  .manual-study { display:grid; grid-template-columns:minmax(0, calc(60ch + 50px)) minmax(260px, 420px); gap:0 36px; align-items:start; margin-top:28px; }
+  .manual-study > .manual-expansion { margin:0; }
+  .manual-margin { margin:0; position:sticky; top:24px; font-size:16px; }
+}
 .manual-content h2, .manual-content h3, .manual-content h4, .manual-content h5, .manual-content h6, .manual-hero h1 { scroll-margin-top:var(--manual-header-offset,130px); }
 .manual-content h2 { font-size:clamp(25px,2.1vw,35px); line-height:1.3; margin:60px 0 22px; border-top:2px solid var(--theme-border); padding-top:26px; color:var(--theme-heading); }
 .manual-content > h2:first-child { margin-top:0; }
