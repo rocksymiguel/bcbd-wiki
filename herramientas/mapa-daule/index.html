@@ -11,90 +11,117 @@
   <link rel="stylesheet" href="../../css/daule-map.css">
 </head>
 <body class="map-page">
+  <svg class="gis-icons" aria-hidden="true" focusable="false">
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 13 9 5 9-5"/></symbol>
+    <symbol id="i-weather" viewBox="0 0 24 24"><path d="M7 15a4 4 0 1 1 .9-7.9A5 5 0 0 1 17.5 8 3.5 3.5 0 0 1 17 15H7Z"/><path d="m9 18-1 2m5-2-1 2m5-2-1 2"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
+    <symbol id="i-records" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 9h6M9 13h6M9 17h4"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></symbol>
+  </svg>
   <div id="header"></div>
-  <main class="map-content">
-    <a class="map-back" href="../index.html">← Herramientas</a>
-    <div class="map-heading">
-      <div><h1>GIS Daule</h1><p>Mapa operativo · Territorio, accesos y observaciones de campo.</p></div>
-      <span class="map-stage">Cartografía · Ambiente · Observaciones</span>
-    </div>
-    <div class="map-workspace">
-      <aside class="map-sidebar" aria-label="Explorar el mapa">
-        <form id="map-search-form" role="search">
-          <label for="map-search">Buscar un sector, río o vía</label>
-          <div class="map-search-row"><input id="map-search" type="search" placeholder="Daule, Banife, La Aurora…" autocomplete="off" disabled><button type="submit" disabled>Buscar</button></div>
-        </form>
-        <div id="map-results" class="map-results" aria-live="polite"></div>
-        <label for="map-sector">Ir a un sector</label>
-        <select id="map-sector" disabled><option value="">Todo el cantón</option></select>
-        <fieldset class="map-layers"><legend>Capas del mapa</legend>
-          <div class="map-boundary-layer"><label><input type="checkbox" data-layer="canton" checked disabled><span class="map-swatch boundary"></span>Límite cantonal <small>CONALI</small></label>
-            <div id="map-canton-controls" class="map-boundary-controls" hidden><label for="map-canton-color">Color de la línea <input id="map-canton-color" type="color" value="#7c3aed" disabled></label><label for="map-canton-width">Grosor <output id="map-canton-width-value" for="map-canton-width">2,5 px</output></label><input id="map-canton-width" type="range" min="0.5" max="10" step="0.1" value="2.5" disabled></div>
-          </div>
-          <div class="map-boundary-layer"><label><input type="checkbox" data-layer="parishes" checked disabled><span class="map-swatch parish"></span>Parroquias <small>CONALI</small></label>
-            <div id="map-parishes-controls" class="map-boundary-controls" hidden><label for="map-parishes-color">Color de la línea <input id="map-parishes-color" type="color" value="#64748b" disabled></label><label for="map-parishes-width">Grosor <output id="map-parishes-width-value" for="map-parishes-width">1,2 px</output></label><input id="map-parishes-width" type="range" min="0.5" max="10" step="0.1" value="1.2" disabled></div>
-          </div>
-          <label><input type="checkbox" data-layer="waterways" checked disabled><span class="map-swatch river"></span>Ríos, esteros y canales</label>
-          <label><input type="checkbox" data-layer="roads" checked disabled><span class="map-swatch road"></span>Vías de referencia</label>
-          <label><input type="checkbox" data-layer="places" checked disabled><span class="map-swatch place"></span>Poblados y sectores</label>
-          <label><input type="checkbox" data-layer="facilities" disabled><span class="map-swatch facility"></span>Servicios cartografiados</label>
-          <label><input type="checkbox" data-layer="susceptibility" disabled><span class="map-swatch susceptibility"></span>Susceptibilidad a inundación</label>
-          <label><input type="checkbox" data-layer="reports" checked disabled><span class="map-swatch report"></span>Observaciones de campo</label>
-        </fieldset>
-        <div id="map-hazard-legend" hidden>
-          <p class="map-caption">Susceptibilidad territorial · Fuente SGR</p>
-          <div class="map-risk-key"><span><i class="risk-high"></i>Alta</span><span><i class="risk-medium"></i>Media</span><span><i class="risk-low"></i>Baja</span><span><i class="risk-na"></i>No aplicable / sin</span></div>
-          <p class="map-caption">No indica inundación actual, profundidad ni probabilidad para una fecha.</p>
-          <p class="map-caption">La capa SGR incluye morfología del terreno, pendiente y textura del suelo. Al seleccionar una zona se muestran esos atributos. La clasificación oficial se conserva; su servicio no documenta los pesos ni umbrales usados. La lluvia y las mareas del panel no recalculan esta capa.</p>
+  <main class="map-content gis" data-panel="">
+    <h1 class="sr-only">GIS Daule</h1>
+    <div class="gis-shell">
+      <div class="gis-side">
+        <div class="gis-search">
+          <form id="map-search-form" role="search">
+            <label for="map-search" class="sr-only">Buscar un sector, río o vía</label>
+            <div class="gis-search-row"><svg class="gis-icon" aria-hidden="true"><use href="#i-search"/></svg><input id="map-search" type="search" placeholder="Buscar sector, río o vía" autocomplete="off" disabled><button type="submit" disabled>Buscar</button></div>
+          </form>
+          <div class="gis-search-tools"><label for="map-sector" class="sr-only">Ir a un sector</label><select id="map-sector" disabled><option value="">Todo el cantón</option></select><button id="map-fit" type="button" disabled>Ver todo Daule</button></div>
+          <div id="map-results" class="map-results" aria-live="polite"></div>
         </div>
-        <fieldset class="map-backgrounds"><legend>Fondo del mapa</legend>
-          <label><input id="map-basemap" data-basemap="streets" type="checkbox" checked>Calles en línea <small>OpenFreeMap / OSM · Sin paradas de buses</small></label>
-          <label><input data-basemap="satellite" type="checkbox">Vista satelital <small>Esri World Imagery · No es una imagen en vivo</small></label>
-          <label><input data-basemap="relief" type="checkbox">Relieve sombreado <small>Esri World Hillshade · No mide altitud en un punto</small></label>
-          <div id="map-relief-controls" class="map-relief-controls" hidden><label for="map-relief-brightness">Brillo del relieve <output id="map-relief-value" for="map-relief-brightness">75 %</output></label><input id="map-relief-brightness" type="range" min="30" max="100" step="5" value="75" aria-valuetext="75 por ciento"><div><span>Más oscuro</span><span>Más claro</span></div></div>
-          <label><input data-basemap="elevation" type="checkbox">Altitud por colores <small>Copernicus DEM · Datos locales · ~30 m</small></label>
-          <div id="map-elevation-controls" class="map-relief-controls" hidden><label for="map-elevation-opacity">Intensidad de los colores <output id="map-elevation-value" for="map-elevation-opacity">85 %</output></label><input id="map-elevation-opacity" type="range" min="20" max="100" step="5" value="85" aria-valuetext="85 por ciento"><div><span>Más transparente</span><span>Más intenso</span></div><p class="map-caption">Alturas aproximadas de la superficie, incluyendo vegetación y construcciones. Acercar el mapa no aumenta la resolución de los datos.</p></div>
-          <label><input data-basemap="none" type="checkbox">Nada · Sin fondo <small>Solo las capas y observaciones</small></label>
-        </fieldset>
-        <div class="map-actions"><button id="map-fit" type="button" disabled>Ver todo Daule</button><button id="map-add" type="button" disabled aria-pressed="false">Añadir observación</button></div>
-        <p id="map-report-hint" class="map-caption" hidden>Selecciona un punto del mapa. La observación se compartirá en la Wiki de la VM.</p>
-        <section id="map-detail" class="map-detail" aria-labelledby="map-detail-title" aria-live="polite"><h2 id="map-detail-title">Explora el territorio</h2><p>Selecciona un elemento para consultar su fuente y características.</p></section>
-      </aside>
-      <section class="map-canvas-column" aria-label="Cartografía">
-        <section class="map-environment" aria-label="Clima, mareas y luna">
-          <div class="env-heading"><h2>Ambiente y mareas</h2><button id="env-refresh" type="button">Actualizar</button></div>
-          <details class="env-station" open><summary>Datos de Daule · HM002 / INAMHI · Respaldo Open-Meteo</summary><div id="env-station-values" class="env-metrics"><p>Cargando registros…</p></div><p id="env-station-status" class="map-caption" role="status"></p><p id="env-backup-status" class="map-caption" role="status">Open-Meteo · Modelo meteorológico para Daule. Respaldo por variable solo después de 5 h sin actualización de HM002. Cada cuadro identifica su fuente.</p></details>
-          <details class="env-model"><summary>Referencia meteorológica de modelo · Open-Meteo</summary><label for="env-point">Punto de referencia</label> <select id="env-point"><option value="-1.861,-79.977">Daule</option></select><div id="env-weather-values" class="env-metrics"></div><p id="env-weather-status" class="map-caption" role="status">Consultando el modelo…</p></details>
-          <div class="env-tide-heading"><h3>Marea prevista · Guayaquil–Río Guayas</h3><div><label for="env-day">Fecha</label> <input id="env-day" type="date" min="2003-01-01"><button id="env-today" type="button">Hoy</button></div></div>
-          <div id="env-tides" class="env-tides" aria-live="polite"><p>Consultando INOCAR…</p></div><p id="env-tide-status" class="map-caption" role="status"></p>
-          <div id="env-moon" class="env-moon" aria-live="polite"></div>
-          <p class="map-caption env-notice">Horas de Ecuador continental (UTC−5). Las mareas son predicciones de INOCAR respecto a MLWS; no son niveles medidos en Daule. La fase lunar se calcula para la fecha seleccionada. Cada sensor muestra su propia hora; una lectura antigua no describe las condiciones actuales.</p>
-        </section>
-        <div id="daule-map" role="region" aria-label="Mapa interactivo de Daule" aria-busy="true"></div>
+        <nav class="gis-rail" aria-label="Paneles del mapa">
+          <button type="button" data-open="layers" aria-controls="panel-layers" aria-expanded="false"><svg class="gis-icon" aria-hidden="true"><use href="#i-layers"/></svg><span>Capas</span></button>
+          <button type="button" data-open="environment" aria-controls="panel-environment" aria-expanded="false"><svg class="gis-icon" aria-hidden="true"><use href="#i-weather"/></svg><span>Ambiente</span></button>
+          <button type="button" data-open="detail" aria-controls="panel-detail" aria-expanded="false"><svg class="gis-icon" aria-hidden="true"><use href="#i-pin"/></svg><span>Selección</span></button>
+          <button type="button" data-open="records" aria-controls="panel-records" aria-expanded="false"><svg class="gis-icon" aria-hidden="true"><use href="#i-records"/></svg><span>Registro</span></button>
+          <button type="button" data-open="sources" aria-controls="panel-sources" aria-expanded="false"><svg class="gis-icon" aria-hidden="true"><use href="#i-info"/></svg><span>Fuentes</span></button>
+        </nav>
+        <div class="gis-drawer">
+          <section id="panel-layers" class="gis-panel" data-panel="layers" aria-labelledby="panel-layers-title">
+            <header class="gis-panel-head"><h2 id="panel-layers-title">Capas y fondo</h2><button type="button" class="gis-close" aria-label="Cerrar panel">×</button></header>
+            <fieldset class="map-layers"><legend>Capas del mapa</legend>
+              <div class="map-boundary-layer"><label><input type="checkbox" data-layer="canton" checked disabled><span class="map-swatch boundary"></span>Límite cantonal <small>CONALI</small></label>
+                <div id="map-canton-controls" class="map-boundary-controls" hidden><label for="map-canton-color">Color de la línea <input id="map-canton-color" type="color" value="#7c3aed" disabled></label><label for="map-canton-width">Grosor <output id="map-canton-width-value" for="map-canton-width">2,5 px</output></label><input id="map-canton-width" type="range" min="0.5" max="10" step="0.1" value="2.5" disabled></div>
+              </div>
+              <div class="map-boundary-layer"><label><input type="checkbox" data-layer="parishes" checked disabled><span class="map-swatch parish"></span>Parroquias <small>CONALI</small></label>
+                <div id="map-parishes-controls" class="map-boundary-controls" hidden><label for="map-parishes-color">Color de la línea <input id="map-parishes-color" type="color" value="#64748b" disabled></label><label for="map-parishes-width">Grosor <output id="map-parishes-width-value" for="map-parishes-width">1,2 px</output></label><input id="map-parishes-width" type="range" min="0.5" max="10" step="0.1" value="1.2" disabled></div>
+              </div>
+              <label><input type="checkbox" data-layer="waterways" checked disabled><span class="map-swatch river"></span>Ríos, esteros y canales</label>
+              <label><input type="checkbox" data-layer="roads" checked disabled><span class="map-swatch road"></span>Vías de referencia</label>
+              <label><input type="checkbox" data-layer="places" checked disabled><span class="map-swatch place"></span>Poblados y sectores</label>
+              <label><input type="checkbox" data-layer="facilities" disabled><span class="map-swatch facility"></span>Servicios cartografiados</label>
+              <label><input type="checkbox" data-layer="susceptibility" disabled><span class="map-swatch susceptibility"></span>Susceptibilidad a inundación</label>
+              <label><input type="checkbox" data-layer="reports" checked disabled><span class="map-swatch report"></span>Observaciones de campo</label>
+            </fieldset>
+            <div id="map-hazard-legend" hidden>
+              <p class="map-caption">Susceptibilidad territorial · Fuente SGR</p>
+              <div class="map-risk-key"><span><i class="risk-high"></i>Alta</span><span><i class="risk-medium"></i>Media</span><span><i class="risk-low"></i>Baja</span><span><i class="risk-na"></i>No aplicable / sin</span></div>
+              <p class="map-caption">No indica inundación actual, profundidad ni probabilidad para una fecha. La capa SGR incluye morfología del terreno, pendiente y textura del suelo; la lluvia y las mareas no la recalculan.</p>
+            </div>
+            <fieldset class="map-backgrounds gis-basemaps"><legend>Fondo del mapa</legend>
+              <label class="gis-basemap" data-thumb="streets"><input id="map-basemap" data-basemap="streets" type="checkbox" checked>Calles <small>OpenFreeMap / OSM</small></label>
+              <label class="gis-basemap" data-thumb="satellite"><input data-basemap="satellite" type="checkbox">Satélite <small>Esri · no es en vivo</small></label>
+              <label class="gis-basemap" data-thumb="relief"><input data-basemap="relief" type="checkbox">Relieve <small>Esri Hillshade</small></label>
+              <label class="gis-basemap" data-thumb="elevation"><input data-basemap="elevation" type="checkbox">Altitud <small>Copernicus · ~30 m</small></label>
+              <label class="gis-basemap" data-thumb="none"><input data-basemap="none" type="checkbox">Sin fondo <small>Solo capas</small></label>
+              <div id="map-relief-controls" class="map-relief-controls" hidden><label for="map-relief-brightness">Brillo del relieve <output id="map-relief-value" for="map-relief-brightness">75 %</output></label><input id="map-relief-brightness" type="range" min="30" max="100" step="5" value="75" aria-valuetext="75 por ciento"><div><span>Más oscuro</span><span>Más claro</span></div></div>
+              <div id="map-elevation-controls" class="map-relief-controls" hidden><label for="map-elevation-opacity">Intensidad de los colores <output id="map-elevation-value" for="map-elevation-opacity">85 %</output></label><input id="map-elevation-opacity" type="range" min="20" max="100" step="5" value="85" aria-valuetext="85 por ciento"><div><span>Más transparente</span><span>Más intenso</span></div><p class="map-caption">Alturas aproximadas de la superficie, incluyendo vegetación y construcciones.</p></div>
+            </fieldset>
+          </section>
+
+          <section id="panel-environment" class="gis-panel map-environment" data-panel="environment" aria-labelledby="panel-environment-title">
+            <header class="gis-panel-head"><h2 id="panel-environment-title">Ambiente y mareas</h2><button id="env-refresh" type="button">Actualizar</button><button type="button" class="gis-close" aria-label="Cerrar panel">×</button></header>
+            <details class="env-station" open><summary>Datos de Daule · HM002 / INAMHI</summary><div id="env-station-values" class="env-metrics"><p>Cargando registros…</p></div><p id="env-station-status" class="map-caption" role="status"></p><p id="env-backup-status" class="map-caption" role="status">Open-Meteo · Respaldo por variable solo después de 5 h sin actualización de HM002.</p></details>
+            <details class="env-model"><summary>Referencia de modelo · Open-Meteo</summary><label for="env-point">Punto de referencia</label> <select id="env-point"><option value="-1.861,-79.977">Daule</option></select><div id="env-weather-values" class="env-metrics"></div><p id="env-weather-status" class="map-caption" role="status">Consultando el modelo…</p></details>
+            <div class="env-tide-heading"><h3>Marea prevista · Guayaquil–Río Guayas</h3><div><label for="env-day">Fecha</label> <input id="env-day" type="date" min="2003-01-01"><button id="env-today" type="button">Hoy</button></div></div>
+            <div id="env-tides" class="env-tides" aria-live="polite"><p>Consultando INOCAR…</p></div><p id="env-tide-status" class="map-caption" role="status"></p>
+            <div id="env-moon" class="env-moon" aria-live="polite"></div>
+            <p class="map-caption env-notice">Horas de Ecuador continental (UTC−5). Las mareas son predicciones de INOCAR respecto a MLWS; no son niveles medidos en Daule. Una lectura antigua no describe las condiciones actuales.</p>
+          </section>
+
+          <section id="panel-detail" class="gis-panel" data-panel="detail" aria-labelledby="panel-detail-title">
+            <header class="gis-panel-head"><h2 id="panel-detail-title" class="sr-only">Selección</h2><span class="gis-panel-kicker" aria-hidden="true">Selección</span><button type="button" class="gis-close" aria-label="Cerrar panel">×</button></header>
+            <section id="map-detail" class="map-detail" aria-labelledby="map-detail-title" aria-live="polite"><h2 id="map-detail-title">Explora el territorio</h2><p>Selecciona un elemento del mapa para consultar su fuente y características.</p></section>
+          </section>
+
+          <section id="panel-records" class="gis-panel map-records" data-panel="records" aria-labelledby="map-records-title">
+            <header class="gis-panel-head"><h2 id="map-records-title">Observaciones de campo</h2><button type="button" class="gis-close" aria-label="Cerrar panel">×</button></header>
+            <p>Registro compartido en la VM. Los aportes quedan pendientes de verificación.</p>
+            <div class="map-actions"><button id="map-export" type="button" disabled>Exportar</button><label class="map-import" for="map-import">Importar<input id="map-import" type="file" accept=".geojson,.json,application/geo+json,application/json" disabled></label></div>
+            <p id="map-storage-status" role="status">Conectando con el registro de la VM…</p><button id="map-migrate" type="button" hidden>Compartir registros anteriores de este navegador</button>
+            <ul id="map-report-list" class="map-report-list"><li>No hay observaciones guardadas.</li></ul>
+          </section>
+
+          <section id="panel-sources" class="gis-panel map-sources" data-panel="sources" aria-labelledby="panel-sources-title">
+            <header class="gis-panel-head"><h2 id="panel-sources-title">Fuentes y cobertura</h2><button type="button" class="gis-close" aria-label="Cerrar panel">×</button></header>
+            <p id="map-source-date"></p><ul id="map-source-list"></ul>
+            <p>La capa territorial de CONALI incluye Daule, Juan Bautista Aguirre, Laurel, Limonal y Los Lojas. La Aurora se incorpora como referencia de sector, sin inventar un límite parroquial separado. Guarumal y Palo Alto son puntos de referencia de recintos, sin polígonos oficiales.</p>
+            <p>Los datos externos al cantón son contexto geográfico. La ausencia de un elemento o de una zona coloreada no confirma ausencia de amenaza. Las vías y servicios requieren comprobación de campo.</p>
+            <p>Clima: registros de EMAPAG publicados en el <a href="https://inamhi.gob.ec/info/visor/" target="_blank" rel="noopener">visor INAMHI</a> y estimaciones de <a href="https://open-meteo.com/en/docs" target="_blank" rel="noopener">Open-Meteo</a>. Mareas: <a href="https://www.inocar.mil.ec/mareas/form_mareas.php" target="_blank" rel="noopener">tabla INOCAR</a> Guayaquil–Río Guayas. Luna: <a href="https://github.com/cosinekitty/astronomy" target="_blank" rel="noopener">Astronomy Engine</a>. Aún no hay simulación hidrológica.</p>
+            <p>Fondos: <a href="https://openfreemap.org/quick_start/" target="_blank" rel="noopener">OpenFreeMap</a>, <a href="https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer" target="_blank" rel="noopener">Esri World Imagery</a> y <a href="https://services.arcgisonline.com/ArcGIS/rest/services/Elevation/World_Hillshade/MapServer" target="_blank" rel="noopener">Esri World Hillshade</a>.</p>
+            <p id="map-elevation-source">Altitud: <a href="https://copernicus-dem-30m.s3.amazonaws.com/readme.html" target="_blank" rel="noopener">Copernicus DEM GLO-30</a>, ~30 m, respecto a EGM2008. Modelo de superficie con errores de varios metros; no permite calcular niveles de inundación. <a href="../../assets/gis/daule/elevation/metadata.json" download>Inventario y comprobantes</a>.</p>
+            <p class="map-caption">produced using Copernicus WorldDEM-30 © DLR e.V. 2010-2014 and © Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved.</p>
+            <p><a href="../../assets/gis/daule/manifest.json" download>Descargar inventario de fuentes</a> · <a href="https://www.openstreetmap.org/fixthemap" target="_blank" rel="noopener noreferrer">Informar un problema en OpenStreetMap</a></p>
+          </section>
+        </div>
         <div id="map-elevation-panel" class="map-elevation-panel" hidden><p id="map-elevation-readout" role="status">Selecciona un punto para consultar su altura aproximada.</p><button id="map-elevation-retry" type="button" hidden>Reintentar alturas</button></div>
-        <div class="map-status-row"><p id="map-status" role="status">Cargando cartografía local…</p><span id="map-coordinate"></span></div>
-        <p id="map-tile-status" class="map-caption" role="status" hidden></p>
-        <button id="map-retry" type="button" hidden>Reintentar carga</button>
-      </section>
+      </div>
+
+      <div class="gis-stage">
+        <div id="daule-map" role="region" aria-label="Mapa interactivo de Daule" aria-busy="true"></div>
+        <div class="map-heading gis-notice"></div>
+        <div id="gis-env-strip" class="gis-env-strip" role="group" aria-label="Resumen de ambiente"></div>
+        <div class="gis-add"><p id="map-report-hint" class="map-caption" hidden>Toca un punto del mapa para ubicar la observación.</p><button id="map-add" type="button" disabled aria-pressed="false">Añadir observación</button></div>
+        <div class="gis-status">
+          <div class="map-status-row"><p id="map-status" role="status">Cargando cartografía local…</p><span id="map-coordinate"></span></div>
+          <p id="map-tile-status" class="map-caption" role="status" hidden></p>
+          <button id="map-retry" type="button" hidden>Reintentar carga</button>
+        </div>
+      </div>
     </div>
-    <section class="map-records" aria-labelledby="map-records-title">
-      <div><h2 id="map-records-title">Observaciones de campo</h2><p>Registro compartido en la VM. Los aportes quedan pendientes de verificación.</p></div>
-      <div class="map-actions"><button id="map-export" type="button" disabled>Exportar observaciones</button><label class="map-import" for="map-import">Importar observaciones<input id="map-import" type="file" accept=".geojson,.json,application/geo+json,application/json" disabled></label></div>
-      <p id="map-storage-status" role="status">Conectando con el registro de la VM…</p><button id="map-migrate" type="button" hidden>Compartir registros anteriores de este navegador</button>
-      <ul id="map-report-list" class="map-report-list"><li>No hay observaciones guardadas.</li></ul>
-    </section>
-    <details class="map-sources"><summary>Fuentes, fecha y cobertura de los datos</summary>
-      <p id="map-source-date"></p><ul id="map-source-list"></ul>
-      <p>La capa territorial publicada por CONALI incluye Daule, Juan Bautista Aguirre, Laurel, Limonal y Los Lojas. La Aurora se incorpora como referencia de sector donde existe en la cartografía, sin inventar un límite parroquial separado.</p>
-      <p>Guarumal y Palo Alto son puntos de referencia de recintos. No se dispone aquí de polígonos oficiales que delimiten su extensión; el contorno de una parroquia no es el límite de un recinto. Los polígonos de agua representan la huella cartografiada en OpenStreetMap, no la orilla actual; donde no hay un polígono se conserva la línea del cauce.</p>
-      <p>Los datos externos al cantón son contexto geográfico. La ausencia de un elemento o de una zona coloreada no confirma ausencia de amenaza. Las vías y servicios requieren comprobación de campo; no hay información de transitabilidad ni disponibilidad de recursos.</p>
-      <p>Las capas cartográficas son descargas fechadas. El panel consulta registros de EMAPAG publicados en el <a href="https://inamhi.gob.ec/info/visor/" target="_blank" rel="noopener">visor INAMHI</a> y estimaciones de <a href="https://open-meteo.com/en/docs" target="_blank" rel="noopener">Open-Meteo</a> cada 15 minutos mientras está visible. Cada variable usa HM002 hasta que su última medición supera 5 horas; entonces puede usar una estimación reciente de Open-Meteo para Daule, identificada como respaldo. Se vuelve automáticamente a HM002 cuando publica una lectura dentro del límite. Sin una lectura con fecha válida no se puede comprobar el umbral; no se activa el respaldo por una consulta fallida. Si tampoco hay un modelo reciente, se conserva la medición antigua con aviso. La precipitación de estación es acumulada horaria; el respaldo muestra su intervalo de 15 minutos cuando así lo entrega el modelo, sin equiparar las acumulaciones. El nivel del río no tiene respaldo meteorológico. Los relojes se presentan tal como los entrega cada fuente. El datum del sensor de nivel no está documentado: no se compara con MLWS ni se infiere desbordamiento.</p>
-      <p>El calendario usa la <a href="https://www.inocar.mil.ec/mareas/form_mareas.php" target="_blank" rel="noopener">tabla de mareas INOCAR</a> de Guayaquil–Río Guayas (estación 374), referencia aguas abajo. MLWS es el promedio de bajamares de sicigia. No se traslada su altura al río Daule. Luna: cálculo local con <a href="https://github.com/cosinekitty/astronomy" target="_blank" rel="noopener">Astronomy Engine</a>; no es una lectura de sensor ni un predictor de inundación. Las observaciones compartidas se consultan cada 30 segundos. Aún no hay simulación hidrológica.</p>
-      <p>Fondos en línea: <a href="https://openfreemap.org/quick_start/" target="_blank" rel="noopener">OpenFreeMap</a> con estilo local sin puntos de transporte, <a href="https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer" target="_blank" rel="noopener">Esri World Imagery</a> y <a href="https://services.arcgisonline.com/ArcGIS/rest/services/Elevation/World_Hillshade/MapServer" target="_blank" rel="noopener">Esri World Hillshade</a>. La imagen satelital y el relieve sombreado no muestran condiciones en vivo ni permiten medir alturas.</p>
-      <p id="map-elevation-source">Altitud por colores: datos numéricos de <a href="https://copernicus-dem-30m.s3.amazonaws.com/readme.html" target="_blank" rel="noopener">Copernicus DEM GLO-30, edición 2021 en AWS</a>, recortados a Daule y alrededores sin interpolar. La VM sirve las alturas y el navegador dibuja la paleta. Separación de muestras: 1 segundo de arco (~30 m); altura en metros respecto a EGM2008. Es un modelo de superficie, con vegetación y construcciones, con errores de varios metros: no permite calcular por sí solo niveles de inundación. El agua representa la superficie modelada, sin profundidad ni batimetría. Las bandas de color representan alturas, no susceptibilidad; diferencias pequeñas en zonas planas requieren mediciones de campo. <a href="../../assets/gis/daule/elevation/metadata.json" download>Inventario, cobertura, fechas y comprobantes de descarga</a>.</p>
-      <p class="map-caption">produced using Copernicus WorldDEM-30 © DLR e.V. 2010-2014 and © Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved. Las organizaciones encargadas del programa Copernicus por ley o delegación no asumen responsabilidad por el uso de Copernicus WorldDEM-30.</p>
-      <p><a href="../../assets/gis/daule/manifest.json" download>Descargar inventario de fuentes</a> · <a href="https://www.openstreetmap.org/fixthemap" target="_blank" rel="noopener noreferrer">Informar un problema cartográfico en OpenStreetMap</a></p>
-    </details>
   </main>
   <dialog id="map-report-dialog" class="map-report-dialog" aria-labelledby="map-report-title">
     <form id="map-report-form">
@@ -105,7 +132,7 @@
       <label for="map-report-time">Fecha y hora de la observación (Ecuador)</label><input id="map-report-time" type="datetime-local" required>
       <label for="map-report-note">Detalle</label><textarea id="map-report-note" rows="3" maxlength="1000" placeholder="Qué observaste, alcance y fuente de la información"></textarea>
       <label for="map-report-media">Fotos o videos (opcional)</label><input id="map-report-media" type="file" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm,video/quicktime" multiple>
-      <p class="map-caption">Hasta 3 adjuntos: 50 MB por imagen, 100 MB por video y 200 MB por envío. Videos de hasta 10 minutos. La VM guarda una copia preparada para visualizarla, sin metadatos de cámara; los originales no se conservan. Usa referencias operativas sin datos personales.</p>
+      <p class="map-caption">Hasta 3 adjuntos: 50 MB por imagen, 100 MB por video y 200 MB por envío. La VM guarda una copia sin metadatos de cámara. Usa referencias operativas sin datos personales.</p>
       <p id="map-report-error" role="alert"></p><button class="map-primary" type="submit">Compartir en la VM</button>
     </form>
   </dialog>
@@ -118,5 +145,6 @@
   <script src="../../js/daule-elevation.js"></script>
   <script src="../../js/daule-map.js"></script>
   <script src="../../js/daule-environment.js"></script>
+  <script src="../../js/daule-map-panels.js"></script>
 </body>
 </html>

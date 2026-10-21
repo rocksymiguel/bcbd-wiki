@@ -35,11 +35,14 @@ const server=http.createServer(handler);
       });
       const url=base+(config.prefix||'')+'/herramientas/mapa-daule/?v=elevation-test';
       await page.goto(url);await page.locator('#daule-map[data-ready="true"]').waitFor();
+      // Controls live in floating panels; open the one a step needs.
+      const openPanel=async name=>{if(await page.locator('.gis').getAttribute('data-panel')!==name)await page.locator(`.gis-rail [data-open="${name}"]`).click();};
+      const closePanel=async()=>{if(await page.locator('.gis').getAttribute('data-panel'))await page.locator('.gis-panel.is-open .gis-close').click();};
       assert(await page.locator('[data-basemap="streets"]').isChecked(),'preserve default streets');
       assert(!(await page.locator('#map-elevation-controls').isVisible()));
       let fail=!process.env.BCBD_ELEVATION_VM_URL;
       await page.route('**/heights.f32.gz',r=>fail?r.abort():r.continue());
-      await page.locator('[data-basemap="elevation"]').check();
+      await openPanel('layers');await page.locator('[data-basemap="elevation"]').check();
       if(fail){await page.locator('#map-elevation-controls[data-state="error"]').waitFor();assert(await page.locator('#map-elevation-retry').isVisible());fail=false;await page.locator('#map-elevation-retry').click();}
       await page.locator('#map-elevation-controls[data-state="ready"]').waitFor({timeout:30000});
       assert(!(await page.locator('[data-basemap="streets"]').isChecked()));
@@ -70,7 +73,7 @@ const server=http.createServer(handler);
       assert.equal(await slider.inputValue(),'35');assert.equal(await page.locator('#map-elevation-value').innerText(),'35 %');
       assert(await page.evaluate(()=>{let opacity;window.__terrainTestMap.eachLayer(l=>{if(l.options.attribution?.startsWith('Altitud:'))opacity=l.getContainer().style.opacity;});return opacity==='0.35';}));
       await page.locator('#map-fit').click();
-      await page.locator('#daule-map').click({position:{x:100,y:100}});
+      await closePanel();await page.locator('#daule-map').click();
       assert.match(await page.locator('#map-elevation-readout').innerText(),/Altitud aproximada|Sin dato/);
       const layout=await page.evaluate(()=>({width:innerWidth,doc:document.documentElement.scrollWidth}));assert(layout.doc<=layout.width+1);
       if(process.env.BCBD_MAP_TEST_OUTPUT){fs.mkdirSync(process.env.BCBD_MAP_TEST_OUTPUT,{recursive:true});
@@ -79,10 +82,10 @@ const server=http.createServer(handler);
         await slider.evaluate(e=>{e.value='85';e.dispatchEvent(new Event('input'));});
         await page.locator('#daule-map').scrollIntoViewIfNeeded();await page.screenshot({path:path.join(process.env.BCBD_MAP_TEST_OUTPUT,'elevation-'+config.name+'.png'),fullPage:true});
         await slider.evaluate(e=>{e.value='35';e.dispatchEvent(new Event('input'));});}
-      await page.locator('[data-basemap="elevation"]').uncheck();assert(await page.locator('[data-basemap="none"]').isChecked());
+      await openPanel('layers');await page.locator('[data-basemap="elevation"]').uncheck();assert(await page.locator('[data-basemap="none"]').isChecked());
       assert.equal(await page.locator('.map-elevation-legend').count(),0);assert(!(await page.locator('#map-elevation-panel').isVisible()));
       await page.reload();await page.locator('#daule-map[data-ready="true"]').waitFor();
-      await page.locator('[data-basemap="elevation"]').check();await page.locator('#map-elevation-controls[data-state="ready"]').waitFor();
+      await openPanel('layers');await page.locator('[data-basemap="elevation"]').check();await page.locator('#map-elevation-controls[data-state="ready"]').waitFor();
       assert.equal(await slider.inputValue(),'35');assert.deepEqual(errors,[]);
       console.log('PASS',config.name,'source samples, canvas projection/colors, no extrapolation, retry, opacity, mobile layout, persistence');
       await context.close();

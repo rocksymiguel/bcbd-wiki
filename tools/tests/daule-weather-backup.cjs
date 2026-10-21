@@ -41,7 +41,9 @@ const server=http.createServer(async(req,res)=>{
       await page.goto(base+(config.prefix||'')+'/herramientas/mapa-daule/');
       const card=key=>page.locator(`#env-station-values [data-variable="${key}"]`);
       const source=async(key,expected)=>assert.equal(await card(key).getAttribute('data-source'),expected,key+' source');
-      const refresh=async()=>{await page.locator('#env-refresh').click();await page.waitForFunction(()=>!document.querySelector('#env-refresh').disabled);};
+      const refresh=async()=>{ // The refresh button sits in the Ambiente panel header.
+        if(await page.locator('.gis').getAttribute('data-panel')!=='environment')await page.locator('.gis-rail [data-open="environment"]').click();
+        await page.locator('#env-refresh').click();await page.waitForFunction(()=>!document.querySelector('#env-refresh').disabled);};
       await page.waitForFunction(()=>document.querySelector('#env-backup-status').textContent.includes('Respaldo activo'));
       await source('temperature','hm002');assert.match(await card('temperature').innerText(),/Dentro del límite de 5 h/);
       await source('wind_speed','open-meteo');assert.match(await card('wind_speed').locator('strong').innerText(),/7[,.]4 km\/h/);

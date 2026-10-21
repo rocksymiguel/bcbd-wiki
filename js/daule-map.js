@@ -497,7 +497,7 @@
       map.fitBounds(layers.canton.getBounds(),{padding:[25,25]});
       updateLabels();
       showSources();
-      document.querySelectorAll('.map-sidebar input,.map-sidebar select,.map-sidebar button,#map-import').forEach(control => control.disabled=false);
+      document.querySelectorAll('.gis-side input,.gis-side select,.gis-side button,#map-import').forEach(control => control.disabled=false);
       el('map-add').disabled=!serverReady;el('map-import').disabled=!serverReady;
       if(publicReadOnly)document.querySelector('[data-layer="reports"]').disabled=true;
       el('daule-map').setAttribute('data-ready','true');

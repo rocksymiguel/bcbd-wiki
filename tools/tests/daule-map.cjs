@@ -75,6 +75,9 @@ const server=http.createServer(async (req,res) => {
       page.on('request',request => {if(!request.url().startsWith(base))external.push(request.url());});
       await page.route('https://tiles.openfreemap.org/**',route => route.abort());
       await page.goto(base+(config.prefix||'')+'/herramientas/mapa-daule/');
+      // Controls live in floating panels; open the one a step needs.
+      const openPanel=async name=>{if(await page.locator('.gis').getAttribute('data-panel')!==name)await page.locator(`.gis-rail [data-open="${name}"]`).click();};
+      const closePanel=async()=>{if(await page.locator('.gis').getAttribute('data-panel'))await page.locator('.gis-panel.is-open .gis-close').click();};
       await page.locator('#daule-map[data-ready="true"]').waitFor({timeout:30000});
       await page.waitForFunction(()=>document.querySelector('#env-tides').textContent.includes('Pleamar'));
       assert(external.every(url=>url.startsWith('https://tiles.openfreemap.org/')),'only vector street provider may be requested externally by default');
@@ -88,7 +91,7 @@ const server=http.createServer(async (req,res) => {
       assert.match(await page.locator('#env-backup-status').innerText(),/Respaldo activo: Temperatura/);
       assert.equal(await page.locator('[data-variable="precipitation_hour"]').getAttribute('data-source'),'hm002');
       assert.match(await page.locator('#env-moon').innerText(),/iluminada/);
-      await page.locator('#env-day').fill('2026-10-03');await page.locator('#env-day').dispatchEvent('change');
+      await openPanel('environment');await page.locator('#env-day').fill('2026-10-03');await page.locator('#env-day').dispatchEvent('change');
       await page.waitForFunction(()=>document.querySelector('#env-tide-status').textContent.includes('2026-10-03'));
       assert.match(await page.locator('#env-tides').innerText(),/MLWS/);
       const layout=await page.evaluate(() => ({width:innerWidth,doc:document.documentElement.scrollWidth,
@@ -103,7 +106,7 @@ const server=http.createServer(async (req,res) => {
       assert.match(await page.locator('#map-detail').innerText(),/No delimita/);
       await page.locator('#map-sector').selectOption({label:'Palo Alto'});
       assert.match(await page.locator('#map-detail').innerText(),/Palo Alto/);
-      await page.locator('[data-layer="susceptibility"]').check();
+      await openPanel('layers');await page.locator('[data-layer="susceptibility"]').check();
       assert(await page.locator('#map-hazard-legend').isVisible());
       await page.locator('[data-layer="susceptibility"]').uncheck();
       assert(!(await page.locator('#map-hazard-legend').isVisible()));
@@ -123,8 +126,8 @@ const server=http.createServer(async (req,res) => {
         await page.mouse.move(10,200);await page.mouse.wheel(0,600);await page.waitForFunction(y=>scrollY>y,before);
       }
       await page.locator('#map-fit').click();
-      await page.locator('#map-add').click();
-      await page.locator('#daule-map').click({position:{x:90,y:90}});
+      await closePanel();await page.locator('#map-add').click();
+      await page.locator('#daule-map').click();
       assert(await page.locator('#map-report-dialog').evaluate(d => d.open));
       await page.locator('#map-report-name').fill('Prueba de campo <img src=x onerror=alert(1)>');
       await page.locator('#map-report-type').selectOption('closure');
@@ -142,7 +145,7 @@ const server=http.createServer(async (req,res) => {
       await guestPage.goto(base+(config.prefix||'')+'/herramientas/mapa-daule/');
       await guestPage.waitForFunction(()=>document.querySelector('#map-report-list').textContent.includes('Prueba de campo'));
       assert.equal(await guestPage.getByRole('button',{name:'Eliminar observación',exact:false}).count(),0);await guest.close();
-      const downloadWait=page.waitForEvent('download');await page.locator('#map-export').click();
+      await openPanel('records');const downloadWait=page.waitForEvent('download');await page.locator('#map-export').click();
       const download=await downloadWait;
       const exported=JSON.parse(fs.readFileSync(await download.path(),'utf8'));
       assert.equal(exported.features.length,1);
@@ -175,7 +178,7 @@ const server=http.createServer(async (req,res) => {
     await page.waitForFunction(()=>!document.querySelector('#map-add').disabled);
     await page.locator('#map-tile-status').waitFor();
     assert(await page.locator('#map-add').isEnabled(),'tile failure cannot disable local layers');
-    await page.locator('#map-basemap').uncheck();
+    await page.locator('.gis-rail [data-open="layers"]').click();await page.locator('#map-basemap').uncheck();
     assert(!(await page.locator('#map-tile-status').isVisible()));
     console.log('PASS missing source retry + unavailable external tiles');
     await context.close();
