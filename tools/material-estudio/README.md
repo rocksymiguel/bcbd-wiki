@@ -41,8 +41,8 @@ con el repaso del capítulo y las fuentes de la ampliación.
 Cualquier capítulo puede tener plantilla: un archivo `<id-del-capítulo>.html` en este
 directorio y su entrada en `templates` de `build.cjs`. El exportador exige que la
 plantilla coloque cada sección `###` del folleto una sola vez y en su orden (salvo
-las de `omit`). `herramientas-y-equipos.html` tiene solo el esqueleto de secciones,
-sin ampliación ni repaso porque aún no hay contenido verificado. Los demás capítulos
+las de `omit`). Los capítulos 1 a 5 tienen plantilla, con ampliación, repaso, datos
+(«¿Sabías que…?») y referencias de fuentes oficiales al margen; los capítulos 6 a 9
 conservan su transcripción.
 
 `tools/tests/manual-study.cjs` corresponde a la versión de una sola página (busca

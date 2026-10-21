@@ -97,7 +97,7 @@ assert.deepEqual(chapters.map(c=>c.title),headings.filter(h=>h.depth===2&&h.text
 // Chapters with a template (<chapter-id>.html here) follow the brochure's sections (###) as their backbone,
 // each one placed once and in order; the template adds the expansion around them. `omit` lists brochure
 // sections a template replaces with its own material. The rest stay as a direct transcription.
-const templates={'teoria-del-fuego':{omit:['Guía didáctica complementaria']},'herramientas-y-equipos':{}};
+const templates={'teoria-del-fuego':{omit:['Guía didáctica complementaria']},'herramientas-y-equipos':{},'abastecimiento-de-agua':{},'escaleras-portatiles':{},'equipo-de-respiracion-autonoma':{}};
 const templated=[];
 depthShift=1;
 for(const c of chapters){
