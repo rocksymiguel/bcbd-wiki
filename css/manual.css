@@ -1,8 +1,8 @@
 .manual-page *, .study-page * { box-sizing:border-box; }
 .manual-page main#main-content, .study-page main#main-content { margin-top:18px; }
 .manual-breadcrumb { display:flex; flex-wrap:wrap; gap:12px; font-size:13px; color:var(--theme-muted); margin:12px 0 26px; }
-.manual-breadcrumb a, .manual-hero a:not(.manual-download), .manual-content a:not(.manual-image) { color:#2563eb; }
-:root[data-theme="dark"] .manual-breadcrumb a, :root[data-theme="dark"] .manual-hero a:not(.manual-download), :root[data-theme="dark"] .manual-content a:not(.manual-image) { color:#93c5fd; }
+.manual-breadcrumb a, .manual-hero a:not(.manual-download), .manual-content a:not(.manual-image) { color:var(--accent-text); }
+:root[data-theme="dark"] .manual-breadcrumb a, :root[data-theme="dark"] .manual-hero a:not(.manual-download), :root[data-theme="dark"] .manual-content a:not(.manual-image) { color:var(--accent-text); }
 .manual-hero { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:24px; padding:30px 34px; border:1px solid var(--theme-border); border-radius:16px; background:var(--theme-surface); }
 .manual-eyebrow { margin:0 0 12px; font-size:12px; text-transform:uppercase; letter-spacing:.12em; color:var(--theme-muted); }
 .manual-hero h1 { font-size:clamp(30px,3.5vw,56px); letter-spacing:-.04em; margin:0 0 16px; color:var(--theme-heading); }
@@ -36,10 +36,10 @@
 .manual-content ul ul { list-style-type:circle; }
 .manual-content ol { list-style-type:decimal; }
 .manual-content li { margin:6px 0; }
-.manual-content blockquote { margin:22px 0; padding:12px 20px; background:var(--theme-surface); border-left:4px solid #2563eb; border-radius:0 8px 8px 0; }
+.manual-content blockquote { margin:22px 0; padding:12px 20px; background:var(--theme-surface); border-left:4px solid var(--icon); border-radius:0 8px 8px 0; }
 .manual-image { display:block; width:var(--image-width,700px); max-width:100%; margin:26px auto; background:#fff; border:1px solid var(--theme-border); border-radius:8px; overflow:hidden; cursor:zoom-in; }
 .manual-image img { display:block; width:100%; height:auto; }
-.manual-page a:focus-visible, .manual-page button:focus-visible { outline:3px solid #60a5fa; outline-offset:4px; }
+.manual-page a:focus-visible, .manual-page button:focus-visible { outline:3px solid var(--accent); outline-offset:4px; }
 .manual-skip { position:fixed; left:20px; top:-100px; z-index:100; background:var(--theme-surface); color:var(--theme-text); padding:12px; }
 .manual-skip:focus { top:12px; }
 .manual-lightbox { width:min(1100px,calc(100vw - 28px)); max-height:calc(100dvh - 28px); padding:0; border:1px solid var(--theme-border); border-radius:12px; background:var(--theme-surface); color:var(--theme-text); }
@@ -54,7 +54,7 @@
 .study-card { display:block; margin:30px 0; padding:30px; border:1px solid var(--theme-border); background:var(--theme-surface); border-radius:12px; color:var(--theme-text); text-decoration:none; }
 .study-card h2 { margin:0 0 14px; color:var(--theme-heading); }
 .study-card p { max-width:75ch; line-height:1.8; }
-.study-card strong { color:#2563eb; }
+.study-card strong { color:var(--accent-text); }
 .fire-course { --fire-accent:#d62828; --fire-accent-soft:rgba(214,40,40,.09); }
 .fire-course-intro { padding:4px 0 20px; }
 .fire-course-kicker, .fire-module-label { margin:0 0 6px; color:#b91c1c; font-size:12px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
@@ -108,7 +108,7 @@
 .fire-question > p { margin:0 0 12px; }
 .fire-question button { min-width:96px; padding:9px 16px; border:1px solid #b91c1c; border-radius:8px; background:#b91c1c; color:#fff; font:inherit; font-size:14px; font-weight:750; cursor:pointer; }
 .fire-question button:hover { background:#991b1b; }
-.fire-answer { margin-top:14px; padding:13px 16px; border-left:3px solid #2563eb; border-radius:0 8px 8px 0; background:var(--theme-surface); }
+.fire-answer { margin-top:14px; padding:13px 16px; border-left:3px solid var(--icon); border-radius:0 8px 8px 0; background:var(--theme-surface); }
 .fire-answer p { margin:0; }
 .fire-answer[hidden] { display:none !important; }
 .fire-appendix { margin:42px 0 18px; }

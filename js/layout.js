@@ -11,52 +11,71 @@ var basePath = isGitHub
   ? "/bcbd-wiki/"
   : "/";
 
-// Theme: follow the operating system by default. A manual choice made from
-// the header takes priority and is remembered in this browser.
+// Theme: "auto" (default) is light by day and dark by night, following the sun
+// in Daule. A manual light/dark choice is remembered in this browser.
 var themeStorageKey = 'bcbd-wiki-theme';
-var systemThemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
-var themePreference = null;
+var themePreference = 'auto';
+var DAULE = { lat: -1.8622, lng: -79.9775 };
 
 function readThemePreference() {
   try {
     var value = window.localStorage.getItem(themeStorageKey);
-    return value === 'light' || value === 'dark' ? value : null;
+    return value === 'light' || value === 'dark' ? value : 'auto';
   } catch (error) {
-    return null;
+    return 'auto';
   }
 }
 
-function activeTheme() {
-  return themePreference || (systemThemeQuery.matches ? 'dark' : 'light');
+// NOAA approximation; minutes are UTC. Accurate to a few minutes, enough for a theme.
+function sunTimesUtcMinutes(date, lat, lng) {
+  var start = Date.UTC(date.getUTCFullYear(), 0, 0);
+  var dayOfYear = Math.floor((date.getTime() - start) / 86400000);
+  var g = 2 * Math.PI / 365 * (dayOfYear - 1);
+  var eqTime = 229.18 * (0.000075 + 0.001868 * Math.cos(g) - 0.032077 * Math.sin(g) - 0.014615 * Math.cos(2 * g) - 0.040849 * Math.sin(2 * g));
+  var decl = 0.006918 - 0.399912 * Math.cos(g) + 0.070257 * Math.sin(g) - 0.006758 * Math.cos(2 * g) + 0.000907 * Math.sin(2 * g) - 0.002697 * Math.cos(3 * g) + 0.00148 * Math.sin(3 * g);
+  var rad = Math.PI / 180;
+  var hourAngle = Math.acos(Math.cos(90.833 * rad) / (Math.cos(lat * rad) * Math.cos(decl)) - Math.tan(lat * rad) * Math.tan(decl)) / rad;
+  return { sunrise: 720 - 4 * (lng + hourAngle) - eqTime, sunset: 720 - 4 * (lng - hourAngle) - eqTime };
 }
 
-function updateThemeToggle() {
-  var toggle = document.querySelector('.theme-toggle');
-  if (!toggle) return;
+function isDaylightInDaule(now) {
+  var times = sunTimesUtcMinutes(now, DAULE.lat, DAULE.lng);
+  var minutes = now.getUTCHours() * 60 + now.getUTCMinutes();
+  var rise = (times.sunrise + 1440) % 1440;
+  var set = (times.sunset + 1440) % 1440;
+  return rise < set ? minutes >= rise && minutes < set : minutes >= rise || minutes < set;
+}
 
-  var isDark = activeTheme() === 'dark';
-  toggle.setAttribute('aria-pressed', String(isDark));
-  toggle.setAttribute('aria-label', isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
-  toggle.setAttribute('title', isDark ? 'Usar modo claro' : 'Usar modo oscuro');
-  var icon = toggle.querySelector('.theme-toggle-icon');
-  if (icon) icon.textContent = isDark ? '☀' : '☾';
+function activeTheme() {
+  if (themePreference === 'light' || themePreference === 'dark') return themePreference;
+  return isDaylightInDaule(new Date()) ? 'light' : 'dark';
+}
+
+function updateThemeSwitch() {
+  document.querySelectorAll('[data-theme-choice]').forEach(function (button) {
+    button.setAttribute('aria-pressed', String(button.dataset.themeChoice === themePreference));
+  });
 }
 
 function applyTheme() {
   document.documentElement.dataset.theme = activeTheme();
-  updateThemeToggle();
+  updateThemeSwitch();
+}
+
+function setThemePreference(choice) {
+  themePreference = choice;
+  try {
+    if (choice === 'auto') window.localStorage.removeItem(themeStorageKey);
+    else window.localStorage.setItem(themeStorageKey, choice);
+  } catch (error) { /* Storage can be unavailable. */ }
+  applyTheme();
 }
 
 function initializeTheme() {
   themePreference = readThemePreference();
   applyTheme();
-
-  var onSystemThemeChange = function () {
-    if (!themePreference) applyTheme();
-  };
-
-  if (systemThemeQuery.addEventListener) systemThemeQuery.addEventListener('change', onSystemThemeChange);
-  else if (systemThemeQuery.addListener) systemThemeQuery.addListener(onSystemThemeChange);
+  // Sunrise and sunset happen while a page stays open.
+  window.setInterval(function () { if (themePreference === 'auto') applyTheme(); }, 5 * 60 * 1000);
 }
 
 initializeTheme();
@@ -181,23 +200,48 @@ tryFetchPartial('partials/header.html', (err, html, usedPath) => {
   const headerEl = document.getElementById("header");
   if (headerEl) headerEl.innerHTML = html;
 
-  var themeToggle = document.querySelector('.theme-toggle');
-  if (themeToggle) {
-    themeToggle.addEventListener('click', function () {
-      themePreference = activeTheme() === 'dark' ? 'light' : 'dark';
-      try { window.localStorage.setItem(themeStorageKey, themePreference); } catch (error) { /* Storage can be unavailable. */ }
-      applyTheme();
-    });
-  }
-  updateThemeToggle();
+  document.querySelectorAll('[data-theme-choice]').forEach(function (button) {
+    button.addEventListener('click', function () { setThemePreference(button.dataset.themeChoice); });
+  });
+  updateThemeSwitch();
 
-  // Ajustar enlaces dentro del header
-  const links = document.querySelectorAll("#header a");
+  // The tab bar is fixed to the viewport; a transformed #header would carry it away.
+  const tabbar = headerEl ? headerEl.querySelector('.tabbar') : null;
+  if (tabbar) document.body.appendChild(tabbar);
+
+  // Ajustar enlaces dentro del header y la barra de pestañas
+  const links = document.querySelectorAll("#header a, .tabbar a");
   links.forEach(link => {
     const originalHref = link.getAttribute("href");
     const newHref = safePrefixHref(originalHref);
     if (newHref !== originalHref) link.setAttribute("href", newHref);
   });
+
+  // Mark the section being viewed: the longest matching link path wins.
+  const here = window.location.pathname.replace(/index\.html$/, '');
+  const sectionOf = link => new URL(link.href, window.location.href).pathname.replace(/index\.html$/, '');
+  [document.querySelectorAll('#header .site-nav a'), document.querySelectorAll('.tabbar a')].forEach(group => {
+    let best = null;
+    group.forEach(link => {
+      const path = sectionOf(link);
+      const isHome = path === basePath;
+      if ((isHome ? here === path : here.startsWith(path)) && (!best || path.length > sectionOf(best).length)) best = link;
+    });
+    if (best) best.setAttribute('aria-current', 'page');
+  });
+
+  // Mobile menu: the header button and the tab bar "Menú" open the same panel.
+  const toggles = document.querySelectorAll('.nav-toggle, .nav-toggle-tab');
+  const setMenu = open => {
+    headerEl.classList.toggle('nav-open', open);
+    if (open) headerEl.classList.remove('site-header-hidden');
+    toggles.forEach(t => {
+      t.setAttribute('aria-expanded', String(open));
+      if (t.classList.contains('nav-toggle')) t.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+    });
+  };
+  toggles.forEach(t => t.addEventListener('click', () => setMenu(!headerEl.classList.contains('nav-open'))));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && headerEl.classList.contains('nav-open')) setMenu(false); });
 
   // The page-level host owns sticky positioning; an inner sticky header would
   // otherwise stop at the bottom of its own short placeholder.
@@ -208,7 +252,7 @@ tryFetchPartial('partials/header.html', (err, html, usedPath) => {
       const current = Math.max(0, window.scrollY);
       const delta = current - lastScrollY;
       headerNode.classList.toggle('site-header--scrolled', current > 8);
-      if (current <= headerEl.offsetHeight || headerEl.contains(document.activeElement)) {
+      if (current <= headerEl.offsetHeight || headerEl.contains(document.activeElement) || headerEl.classList.contains('nav-open')) {
         headerEl.classList.remove('site-header-hidden');
         lastScrollY = current;
       } else if (Math.abs(delta) >= 6) {

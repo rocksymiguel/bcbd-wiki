@@ -1,30 +1,39 @@
 <header class="site-header">
   <div class="site-header-inner">
-    <a class="brand" href="index.html">BCBD</a>
-    <nav class="site-nav" aria-label="Principal">
+    <a class="brand" href="index.html">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c2.5 3.5 6 6 6 11a6 6 0 0 1-12 0c0-2.5 1.2-4 2.5-5 0 2.2 1.2 3.5 2.5 3.5 0-3.5-1.5-6 1-9.5z"/></svg>
+      </span>
+      <span class="brand-text"><span class="brand-name">BCBD Wiki</span><span class="brand-sub">Guía educativa no oficial</span></span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Abrir menú">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Principal">
       <ul>
-        <li><a href="index.html">Inicio</a></li>
-        <li><a href="brigadas/index.html">Áreas</a></li>
-        <li><a href="recursos-operativos/index.html">Recursos</a></li>
-        <li><a href="material-de-estudio/index.html"><span class="nav-study-star" aria-hidden="true">★</span>Material de estudio</a></li>
-        <li><a href="recursos-operativos/unidades/index.html">Unidades</a></li>
-        <li><a href="herramientas/mapa-daule/index.html">GIS Daule</a></li>
-        <li><a href="historia/index.html">Historia</a></li>
+        <li><a href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 11l9-7 9 7v9H3z"/></svg>Inicio</a></li>
+        <li><a href="brigadas/index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>Áreas operativas</a></li>
+        <li><a href="recursos-operativos/index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4l6 6-9 9H5v-6z"/></svg>Recursos</a></li>
+        <li><a href="material-de-estudio/index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 5h6a2 2 0 0 1 2 2v13a2 2 0 0 0-2-2H4zM20 5h-6a2 2 0 0 0-2 2v13a2 2 0 0 1 2-2h6z"/></svg>Material de estudio</a></li>
+        <li><a href="recursos-operativos/unidades/index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="8" width="13" height="8" rx="1.5"/><path d="M15 11h4l3 3v2h-7"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg>Unidades</a></li>
+        <li><a href="herramientas/mapa-daule/index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 4l-6 3v13l6-3 6 3 6-3V4l-6 3z"/><path d="M9 4v13M15 7v13"/></svg>GIS Daule</a></li>
+        <li><a href="historia/index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg>Historia</a></li>
       </ul>
     </nav>
     <div class="header-actions">
-      <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Cambiar a modo oscuro" title="Cambiar tema">
-        <span class="theme-toggle-icon" aria-hidden="true">◐</span>
-        <span class="sr-only">Cambiar tema</span>
-      </button>
-      <a class="comp-announcement" href="competencias-preparacion/index.html" title="Preparación competencias bomberiles" aria-label="Ir a Preparación Competencias">
-        <!-- simple trophy icon -->
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M8 3h8v2a3 3 0 0 1-3 3H11A3 3 0 0 1 8 5V3z" fill="#F59E0B"/>
-          <path d="M6 7a2 2 0 0 1-2-2V5H2v2a4 4 0 0 0 4 4h1v3a3 3 0 0 0 3 3h2a3 3 0 0 0 3-3v-3h1a4 4 0 0 0 4-4V5h-2v0a2 2 0 0 1-2 2H6z" fill="#FDE68A"/>
-        </svg>
-        <span class="announce-text">Preparación competencias</span>
-      </a>
+      <a class="comp-announcement" href="competencias-preparacion/index.html">Preparar competencias</a>
+      <div class="theme-switch" role="group" aria-label="Tema de color">
+        <button type="button" data-theme-choice="light" aria-pressed="false">Claro</button>
+        <button type="button" data-theme-choice="dark" aria-pressed="false">Oscuro</button>
+        <button type="button" data-theme-choice="auto" aria-pressed="false" title="Claro de día y oscuro de noche, según el sol en Daule">Auto</button>
+      </div>
     </div>
   </div>
 </header>
+<nav class="tabbar" aria-label="Accesos rápidos">
+  <a href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 11l9-7 9 7v9H3z"/></svg>Inicio</a>
+  <a href="brigadas/index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>Áreas</a>
+  <a href="material-de-estudio/index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 5h6a2 2 0 0 1 2 2v13a2 2 0 0 0-2-2H4zM20 5h-6a2 2 0 0 0-2 2v13a2 2 0 0 1 2-2h6z"/></svg>Estudio</a>
+  <a href="herramientas/mapa-daule/index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 4l-6 3v13l6-3 6 3 6-3V4l-6 3z"/></svg>Mapa</a>
+  <button class="nav-toggle-tab" type="button" aria-controls="site-nav" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>Menú</button>
+</nav>

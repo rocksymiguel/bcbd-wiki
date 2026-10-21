@@ -12,7 +12,7 @@ body.map-page main.map-content { padding: 0 clamp(16px, 3vw, 48px); margin:24px 
 .map-sidebar button, .map-content button, .map-import, .map-report-dialog button { font:inherit; color:var(--theme-text); background:var(--theme-surface); border:1px solid var(--theme-border); border-radius:6px; padding:9px 12px; cursor:pointer; }
 .map-content button:hover, .map-import:hover, .map-report-dialog button:hover { background:var(--theme-hover); }
 .map-content button:disabled, .map-sidebar input:disabled, .map-sidebar select:disabled { opacity:.55; cursor:default; }
-.map-content :focus-visible, .map-report-dialog :focus-visible { outline:3px solid #2563eb; outline-offset:3px; }
+.map-content :focus-visible, .map-report-dialog :focus-visible { outline:3px solid var(--accent); outline-offset:3px; }
 .map-search-row { display:flex; gap:7px; }
 .map-search-row button { font-size:13px; }
 .map-results { margin:10px 0 16px; }
@@ -21,7 +21,7 @@ body.map-page main.map-content { padding: 0 clamp(16px, 3vw, 48px); margin:24px 
 .map-layers { border:0; padding:0; margin:22px 0 12px; }
 .map-layers legend { font-weight:700; margin-bottom:12px; }
 .map-layers label { display:flex; align-items:center; gap:9px; font-weight:400; margin:0; padding:8px 0; flex-wrap:wrap; }
-.map-layers input, .map-background input { width:17px; height:17px; accent-color:#2563eb; }
+.map-layers input, .map-background input { width:17px; height:17px; accent-color:var(--accent); }
 .map-layers small { color:var(--theme-muted); margin-left:auto; font-size:11px; }
 .map-swatch { display:inline-block; width:14px; height:10px; flex:none; }
 .map-swatch.boundary { border:2px dashed #7c3aed; }
@@ -37,11 +37,11 @@ body.map-page main.map-content { padding: 0 clamp(16px, 3vw, 48px); margin:24px 
 .map-backgrounds { border:0; border-top:1px solid var(--theme-border); margin:14px 0; padding:16px 0 0; }
 .map-backgrounds legend { padding-top:10px; font-weight:700; }
 .map-backgrounds label { font-weight:400; padding:7px 0; }
-.map-backgrounds input { width:17px; height:17px; accent-color:#2563eb; vertical-align:middle; margin-right:7px; }
+.map-backgrounds input { width:17px; height:17px; accent-color:var(--accent); vertical-align:middle; margin-right:7px; }
 .map-backgrounds small { display:block; margin:5px 0 0 27px; color:var(--theme-muted); font-size:11px; line-height:1.5; }
 .map-relief-controls { margin:5px 0 12px 27px; padding:10px; border:1px solid var(--theme-border); border-radius:7px; background:var(--theme-surface-muted); }
 .map-relief-controls label,.map-relief-controls>div { display:flex; justify-content:space-between; gap:8px; font-size:12px; }
-.map-relief-controls input[type="range"] { box-sizing:border-box; width:100%; height:28px; margin:0; accent-color:#2563eb; cursor:pointer; }
+.map-relief-controls input[type="range"] { box-sizing:border-box; width:100%; height:28px; margin:0; accent-color:var(--accent); cursor:pointer; }
 .map-relief-controls>div { color:var(--theme-muted); font-size:10px; }.map-relief-controls output { font-variant-numeric:tabular-nums; }
 .map-boundary-layer { min-width:0; }
 .map-boundary-controls { margin:2px 0 10px 27px; padding:10px; border:1px solid var(--theme-border); border-radius:7px; background:var(--theme-surface-muted); }
@@ -57,7 +57,7 @@ body.map-page main.map-content { padding: 0 clamp(16px, 3vw, 48px); margin:24px 
 #daule-map { overscroll-behavior:contain; }
 .map-actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
 .map-actions button { font-size:13px; }
-.map-content button[aria-pressed="true"], .map-report-dialog .map-primary { background:#1d4ed8; color:#fff; }
+.map-content button[aria-pressed="true"], .map-report-dialog .map-primary { background:var(--accent); color:#fff; }
 .map-caption { font-size:12px; line-height:1.6; color:var(--theme-muted); }
 .map-detail { padding-top:16px; margin-top:20px; border-top:1px solid var(--theme-border); overflow-wrap:anywhere; }
 .map-detail h2 { font-size:18px; margin:0 0 10px; }
