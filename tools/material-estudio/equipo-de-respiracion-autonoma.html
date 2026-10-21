@@ -50,6 +50,22 @@
           <li><strong>NFPA 1989</strong> (calidad del aire respirable) sigue como norma propia.</li>
         </ul>
         <p>Los cambios de 2013 que describe el folleto tienen una historia detrás. El NIST, el instituto de normas de EE. UU., estudió visores expuestos a calor radiante y comprobó que se deformaban y llegaban a perforarse. Eligió 15 kW/m² porque representa las condiciones cercanas a un flashover, y la NFPA 1981 incorporó esa prueba: el visor soporta ese calor durante cinco minutos y la máscara debe mantener presión positiva.</p>
+        <figure class="fire-diagram dg-tank" aria-labelledby="aire-title">
+          <div class="fire-diagram-head"><h4 id="aire-title">El aire del cilindro</h4></div>
+          <svg viewBox="0 0 600 80" aria-hidden="true" focusable="false"><rect class="dg-solid" x="4" y="16" width="592" height="48" rx="24"/><rect class="dg-hot-fill" x="10" y="22" width="189" height="36" rx="18"/><rect x="203" y="22" width="387" height="36" rx="18" style="fill:var(--icon);opacity:.3"/><line class="dg-hot" stroke-width="4" x1="201" y1="4" x2="201" y2="76"/></svg>
+          <div class="dg-zones">
+            <button type="button" class="fire-node" data-show="aire-reserva"><span>Reserva</span><small class="dg-sub">Vacío ←</small></button>
+            <button type="button" class="fire-node" data-show="aire-alarma"><span>Alarma al 33 %</span><small class="dg-sub">Bajo aire</small></button>
+            <button type="button" class="fire-node" data-show="aire-trabajo"><span>Trabajo</span><small class="dg-sub">→ Lleno</small></button>
+          </div>
+          <div class="fire-diagram-detail" aria-live="polite">
+            <p class="fire-diagram-hint">Toca cada tramo del cilindro.</p>
+            <div data-detail="aire-trabajo" hidden><h5>Trabajo</h5><p>Mientras el aire está por encima de la alarma, el bombero trabaja. Cuánto dura depende del esfuerzo y de cómo respira cada persona, por eso se vigila el manómetro.</p></div>
+            <div data-detail="aire-alarma" hidden><h5>Alarma de bajo aire</h5><p>Desde la NFPA 1981 de 2013 suena cuando queda un 33 % del cilindro (antes, un 25 %). Indica que se empezó a consumir el aire de reserva.</p></div>
+            <div data-detail="aire-reserva" hidden><h5>Reserva</h5><p>Según la NFPA 1404, el bombero debe salir de la atmósfera IDLH antes de empezar a consumir su reserva. La reserva es para la salida, no para seguir trabajando.</p></div>
+          </div>
+          <figcaption>El 33 % es el valor de la NFPA 1981 (2013) que cita el folleto; la NFPA 1970 la reemplazó y puede fijar otro valor. Sigue siempre las indicaciones de tu equipo y de tu institución.</figcaption>
+        </figure>
       </div>
       </div>
       <aside class="manual-margin" aria-label="Repaso, dato y referencias de Normativa y certificaciones">

@@ -137,6 +137,24 @@
       io.observe(fig);
     }
   });
+  // Ladder: the base distance sets the angle; NIOSH's target is 75.5° within 2°.
+  document.querySelectorAll('[data-ladder]').forEach(fig=>{
+    const input=fig.querySelector('input[type="range"]'),rail=fig.querySelector('.dg-ladder-rail');
+    const wall=+fig.dataset.wall,ground=+fig.dataset.ground,length=+fig.dataset.length;
+    const angleOut=fig.querySelector('[data-out="angle"]'),ratioOut=fig.querySelector('[data-out="ratio"]'),status=fig.querySelector('.dg-status');
+    const update=()=>{
+      const share=input.value/100,base=share*length,angle=Math.acos(share)*180/Math.PI;
+      rail.setAttribute('x1',wall-base);rail.setAttribute('y1',ground);
+      rail.setAttribute('x2',wall);rail.setAttribute('y2',ground-Math.sqrt(length*length-base*base));
+      angleOut.textContent=angle.toFixed(1).replace('.',',')+'°';
+      ratioOut.textContent='largo ÷ '+(1/share).toFixed(1).replace('.',',');
+      const ok=Math.abs(angle-75.5)<=2;
+      status.dataset.ok=String(ok);
+      status.textContent=ok?'Cerca de 75°: ángulo correcto.':angle>75.5?'Demasiado parada: puede caer hacia atrás.':'Demasiado acostada: la base puede resbalar.';
+      input.setAttribute('aria-valuetext',`${angleOut.textContent}, ${status.textContent}`);
+    };
+    input.addEventListener('input',update);update();
+  });
   const dialog=document.getElementById('manual-image-dialog');
   if(!dialog)return;
   const full=document.getElementById('manual-image-full');

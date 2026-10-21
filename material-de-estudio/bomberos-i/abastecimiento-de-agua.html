@@ -16,7 +16,7 @@
       <span class="reflective-stripe" aria-hidden="true"></span>
       <p class="manual-chapter-count">Capítulo 3 de 9</p>
       <h1 id="abastecimiento-de-agua">Abastecimiento de agua</h1>
-      <p class="manual-meta">8 secciones · ≈ 9 min de lectura · <a href="Reference/Manual%20-%20Bomberos%20I.pdf" download="Manual - Bomberos I.pdf">PDF original (70,9 MiB)</a></p>
+      <p class="manual-meta">8 secciones · ≈ 10 min de lectura · <a href="Reference/Manual%20-%20Bomberos%20I.pdf" download="Manual - Bomberos I.pdf">PDF original (70,9 MiB)</a></p>
     </header>
     <div class="manual-layout">
       <article id="manual-content" class="manual-content" aria-labelledby="abastecimiento-de-agua" data-chapter="abastecimiento-de-agua.html" data-chapter-n="3" data-chapter-title="Abastecimiento de agua"><div class="manual-context" aria-hidden="true"><span class="manual-context-num"></span><span class="manual-context-section"></span><span class="manual-context-topic"></span></div><div class="fire-course">
@@ -75,6 +75,19 @@
 </div>
       <div class="manual-topic-more">
         <p>La clave está en distinguir qué suma cada conexión. <strong>En paralelo</strong>, varias autobombas entregan su agua a la vez a una misma unidad, y lo que se suma es el <strong>caudal</strong>: dos aportes de 250 GPM dan 500 GPM. <strong>En serie</strong>, cada autobomba recibe el agua de la anterior y la vuelve a impulsar, y lo que se suma es la <strong>presión</strong>, que se va gastando por la fricción en las mangueras largas y al subir un desnivel.</p>
+        <figure class="fire-diagram" aria-labelledby="bombeo-title">
+          <div class="fire-diagram-head"><h4 id="bombeo-title">¿Qué se suma?</h4></div>
+          <div class="dg-pair">
+            <button type="button" class="fire-node" data-show="bombeo-paralelo"><svg class="dg-art" viewBox="0 0 300 160" aria-hidden="true" focusable="false"><path class="dg-line" d="M100 33 L146 72"/><path class="dg-line" d="M100 127 L146 90"/><path class="dg-hot" stroke-width="11" d="M222 81 L290 81"/><rect class="dg-solid" x="10" y="16" width="90" height="34" rx="6"/><rect class="dg-solid" x="10" y="110" width="90" height="34" rx="6"/><rect class="dg-solid" x="146" y="62" width="76" height="38" rx="6"/><text class="dg-label" x="55" y="33" text-anchor="middle" dominant-baseline="central">250 GPM</text><text class="dg-label" x="55" y="127" text-anchor="middle" dominant-baseline="central">250 GPM</text><text class="dg-label" x="184" y="81" text-anchor="middle" dominant-baseline="central">Bomba</text><text class="dg-label dg-label-hot" x="290" y="58" text-anchor="end" dominant-baseline="central">500 GPM</text></svg><span>Paralelo: suma caudal</span><small class="dg-sub">Más agua</small></button>
+            <button type="button" class="fire-node" data-show="bombeo-serie"><svg class="dg-art" viewBox="0 0 300 160" aria-hidden="true" focusable="false"><path class="dg-line" d="M84 129 L111 129"/><path class="dg-line" d="M189 129 L216 129"/><rect class="dg-hot-fill" x="34" y="80" width="22" height="22" rx="2"/><rect class="dg-hot-fill" x="139" y="56" width="22" height="46" rx="2"/><rect class="dg-hot-fill" x="244" y="32" width="22" height="70" rx="2"/><rect class="dg-solid" x="6" y="112" width="78" height="34" rx="6"/><rect class="dg-solid" x="111" y="112" width="78" height="34" rx="6"/><rect class="dg-solid" x="216" y="112" width="78" height="34" rx="6"/><text class="dg-label" x="45" y="129" text-anchor="middle" dominant-baseline="central">Bomba</text><text class="dg-label" x="150" y="129" text-anchor="middle" dominant-baseline="central">Bomba</text><text class="dg-label" x="255" y="129" text-anchor="middle" dominant-baseline="central">Bomba</text><text class="dg-label dg-label-hot" x="8" y="28" dominant-baseline="central">Presión</text></svg><span>Serie: suma presión</span><small class="dg-sub">Más fuerza</small></button>
+          </div>
+          <div class="fire-diagram-detail" aria-live="polite">
+            <p class="fire-diagram-hint">Toca cada esquema para ver cuándo conviene.</p>
+            <div data-detail="bombeo-paralelo" hidden><h5>En paralelo</h5><p>Dos o más autobombas entregan su agua a la vez a otra unidad: los caudales se suman, como en el ejemplo del folleto (250 + 250 = 500 GPM). Sirve cuando lo que falta es cantidad de agua.</p></div>
+            <div data-detail="bombeo-serie" hidden><h5>En serie</h5><p>Cada autobomba recibe el agua de la anterior y la vuelve a impulsar, así la presión se va reponiendo a lo largo del tendido. Sirve para recorridos largos o con desnivel, donde la fricción y la altura consumen presión.</p></div>
+          </div>
+          <figcaption>Esquema simplificado: las barras indican cómo crece la presión, no valores reales. Los caudales son los del ejemplo del folleto.</figcaption>
+        </figure>
         <p>Por eso se elige una u otra según el problema: si falta agua, paralelo; si el agua no llega con fuerza por la distancia o la altura, serie. El camión cisterna resuelve un tercer problema, la falta de volumen: lleva mucha agua, pero como no tiene bomba propia necesita una autobomba que la tome de su tanque y la envíe a las unidades de combate.</p>
       </div>
       </div>
