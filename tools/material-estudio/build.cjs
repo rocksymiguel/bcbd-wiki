@@ -189,7 +189,8 @@ for(const c of chapters){
       <aside class="manual-sidebar" aria-label="Índice del manual">
         <details id="manual-toc"><summary><span class="manual-toc-title">Índice</span></summary><nav aria-label="Capítulos y secciones">${renderToc(c)}</nav></details>
       </aside>
-    </div>`;
+    </div>
+    <a class="manual-next-float" href="${next?next.page:'index.html'}" aria-hidden="true" tabindex="-1"><span><small>${next?'Siguiente capítulo':'Terminaste el manual'}</small><strong>${escape(next?next.title:'Volver a los capítulos')}</strong></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>`;
   written.set(c.page,page({docTitle:`${c.title} · ${title}`,crumbs:crumbRoot+`<a href="index.html">${escape(title)}</a><span aria-hidden="true">/</span><span>Capítulo ${c.n}</span>`,body}));
 }
 

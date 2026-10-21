@@ -11,9 +11,11 @@
 .manual-download { display:inline-flex; flex-direction:column; align-items:flex-start; gap:8px; max-width:100%; padding:18px 24px; border-radius:10px; background:var(--accent); color:#fff; text-decoration:none; font-weight:700; line-height:1.5; }
 .manual-download:hover { background:var(--accent-hover); }
 .manual-download small { font-size:12px; font-weight:400; }
-/* Lectura: columna de ~72 caracteres; el índice vive a la derecha, del mismo lado que su botón. */
-.manual-layout { display:grid; grid-template-columns:minmax(0,72ch) minmax(250px,300px); justify-content:center; align-items:start; gap:clamp(32px,4vw,64px); margin-top:32px; }
-.manual-layout:has(#manual-toc:not([open])) { grid-template-columns:minmax(0,72ch); }
+/* Índice a la izquierda junto al menú; el contenido sigue a su lado y el espacio libre queda a la derecha. */
+.manual-layout { display:grid; grid-template-columns:minmax(230px,280px) minmax(0,1000px); grid-template-areas:"toc content"; justify-content:start; align-items:start; gap:clamp(28px,3vw,48px); margin-top:32px; }
+.manual-layout > .manual-content { grid-area:content; }
+.manual-layout > .manual-sidebar { grid-area:toc; }
+.manual-layout:has(#manual-toc:not([open])) { grid-template-columns:auto minmax(0,1000px); }
 .manual-sidebar { position:sticky; top:var(--manual-header-offset,24px); min-width:0; }
 .manual-sidebar details { max-height:calc(100vh - 48px); overflow:auto; overscroll-behavior:contain; border:1px solid var(--theme-border); border-radius:16px; background:var(--theme-surface); padding:14px 12px 16px; }
 .manual-sidebar summary { cursor:pointer; list-style:none; display:flex; align-items:center; gap:10px; padding:2px 6px 10px; font-weight:700; }
@@ -21,9 +23,9 @@
 .manual-sidebar summary::before { content:""; flex:none; width:20px; height:20px; background:var(--icon); -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01'/%3E%3C/svg%3E") center/contain no-repeat; mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01'/%3E%3C/svg%3E") center/contain no-repeat; }
 .manual-toc-title { font-stretch:75%; font-weight:800; font-size:20px; color:var(--theme-heading); }
 .manual-sidebar details[open] summary::after { content:"Ocultar"; margin-left:auto; font-size:13px; font-weight:400; color:var(--theme-muted); }
-/* Índice oculto: botón flotante abajo a la derecha. */
-.manual-sidebar:has(#manual-toc:not([open])) { position:fixed; top:auto; right:24px; bottom:24px; z-index:55; }
-.manual-sidebar:has(#manual-toc:not([open])) details { padding:0; border-radius:999px; background:var(--glass); -webkit-backdrop-filter:blur(20px) saturate(160%); backdrop-filter:blur(20px) saturate(160%); border-color:var(--glass-border); box-shadow:inset 0 1px 0 var(--glass-highlight), 0 12px 30px var(--theme-shadow); }
+/* Índice oculto: queda como botón arriba a la izquierda, en su mismo lugar. */
+.manual-sidebar:has(#manual-toc:not([open])) { z-index:55; }
+.manual-sidebar:has(#manual-toc:not([open])) details { width:max-content; padding:0; border-radius:999px; background:var(--glass); -webkit-backdrop-filter:blur(20px) saturate(160%); backdrop-filter:blur(20px) saturate(160%); border-color:var(--glass-border); box-shadow:inset 0 1px 0 var(--glass-highlight), 0 12px 30px var(--theme-shadow); }
 .manual-sidebar:has(#manual-toc:not([open])) summary { padding:12px 20px; }
 .manual-toc-chapters, .manual-toc-sections { list-style:none; margin:0; padding:0; }
 .manual-toc-chapters > li > a { display:flex; gap:10px; align-items:baseline; padding:7px 8px; border-radius:8px; color:var(--theme-muted); text-decoration:none; font-size:14px; line-height:1.35; }
@@ -36,6 +38,8 @@
 .manual-toc-sections a.is-active { color:var(--theme-text); font-weight:650; background:var(--theme-hover); }
 .manual-toc-sections a.is-active::before { content:""; position:absolute; left:-16px; top:5px; bottom:5px; width:6px; border-radius:3px; background:linear-gradient(90deg, var(--accent) 0 33%, var(--silver) 33% 67%, var(--accent) 67%); }
 .manual-content { min-width:0; width:100%; padding:0 0 40px; font-size:17px; line-height:1.75; overflow-wrap:anywhere; }
+.manual-content :is(p, li, h2, h3, h4, h5, h6, blockquote):not(:has(> .manual-image)) { max-width:75ch; }
+.manual-content .fire-concept-grid p, .manual-content .fire-phenomena p { max-width:none; }
 
 /* Portada del capítulo y navegación entre capítulos. */
 .manual-chapter-opener { position:relative; overflow:hidden; padding:40px 34px 30px; border:1px solid var(--theme-border); border-radius:20px; background:var(--theme-surface); }
@@ -49,6 +53,15 @@
 .manual-pager small { font-size:13px; color:var(--theme-muted); }
 .manual-pager strong { font-stretch:75%; font-size:22px; line-height:1.1; }
 .manual-pager-next { text-align:right; }
+.manual-next-float { position:fixed; right:24px; bottom:24px; z-index:56; display:flex; align-items:center; gap:12px; max-width:min(360px, calc(100vw - 48px)); padding:12px 14px 12px 18px; border-radius:16px; background:var(--glass); -webkit-backdrop-filter:blur(20px) saturate(160%); backdrop-filter:blur(20px) saturate(160%); border:1px solid var(--glass-border); box-shadow:inset 0 1px 0 var(--glass-highlight), 0 14px 34px var(--theme-shadow); color:var(--theme-text); text-decoration:none; opacity:0; transform:translateY(12px); pointer-events:none; transition:opacity .2s ease, transform .2s ease; }
+.manual-next-float.is-visible { opacity:1; transform:none; pointer-events:auto; }
+.manual-next-float span { display:flex; flex-direction:column; min-width:0; }
+.manual-next-float small { font-size:12px; color:var(--theme-muted); }
+.manual-next-float strong { font-stretch:75%; font-size:19px; line-height:1.1; }
+.manual-next-float svg { flex:none; width:36px; height:36px; padding:8px; box-sizing:border-box; border-radius:10px; background:var(--accent); color:#fff; }
+.manual-next-float:hover svg { background:var(--accent-hover); }
+@media (prefers-reduced-motion:reduce) { .manual-next-float { transition:none; } }
+@media (max-width:999.98px) { .manual-next-float { right:16px; bottom:88px; max-width:calc(100vw - 190px); } }
 
 /* Página general: los capítulos como entrada. */
 .manual-chapters { margin:40px 0 24px; }
@@ -83,7 +96,7 @@
 .manual-content ol { list-style-type:decimal; }
 .manual-content li { margin:6px 0; }
 .manual-content blockquote { margin:22px 0; padding:12px 20px; background:var(--theme-surface); border-left:4px solid var(--icon); border-radius:0 8px 8px 0; }
-.manual-image { display:block; width:var(--image-width,700px); max-width:100%; margin:26px auto; background:#fff; border:1px solid var(--theme-border); border-radius:8px; overflow:hidden; cursor:zoom-in; }
+.manual-image { display:block; width:var(--image-width,700px); max-width:100%; margin:26px 0; background:#fff; border:1px solid var(--theme-border); border-radius:8px; overflow:hidden; cursor:zoom-in; }
 .manual-image img { display:block; width:100%; height:auto; }
 .manual-page a:focus-visible, .manual-page button:focus-visible { outline:3px solid var(--accent); outline-offset:4px; }
 .manual-skip { position:fixed; left:20px; top:-100px; z-index:100; background:var(--theme-surface); color:var(--theme-text); padding:12px; }
@@ -130,7 +143,7 @@
 .fire-process b { color:#dc2626; }
 .fire-note { margin:22px 0; padding:18px 22px; border:1px solid var(--theme-border); border-radius:12px; background:var(--fire-accent-soft); }
 .fire-note p { margin:5px 0 0; }
-.fire-figure { margin:28px auto; max-width:880px; }
+.fire-figure { margin:28px 0; max-width:960px; }
 .fire-figure .manual-image { margin:0 auto; }
 .fire-figure figcaption { padding:9px 12px; color:var(--theme-muted); font-size:13px; text-align:center; }
 .fire-explainer { margin:28px 0; padding:24px; border:1px solid var(--theme-border); border-radius:12px; }
@@ -166,17 +179,15 @@
 .fire-resources li { margin:8px 0; }
 .fire-objectives { margin:24px 0; }
 .fire-course [id] { scroll-margin-top:var(--manual-header-offset,130px); }
-/* Sin espacio para la columna: el índice es una hoja que se abre desde su botón. */
-@media (max-width:1199.98px) {
-  .manual-layout, .manual-layout:has(#manual-toc:not([open])) { grid-template-columns:minmax(0,72ch); gap:22px; }
-  .manual-sidebar, .manual-sidebar:has(#manual-toc:not([open])) { position:fixed; top:auto; left:auto; right:20px; bottom:20px; z-index:65; }
-  .manual-sidebar:has(#manual-toc[open]) { width:min(380px, calc(100vw - 20px)); }
+/* Celular: el índice es una hoja que se abre desde su botón, abajo a la izquierda. */
+@media (max-width:999.98px) {
+  .manual-layout, .manual-layout:has(#manual-toc:not([open])) { grid-template-columns:minmax(0,1fr); grid-template-areas:"content"; gap:22px; }
+  .manual-sidebar, .manual-sidebar:has(#manual-toc:not([open])) { position:fixed; top:auto; left:16px; right:auto; bottom:88px; z-index:65; }
+  .manual-sidebar:has(#manual-toc:not([open])) details { padding:0; border-radius:999px; background:var(--glass); -webkit-backdrop-filter:blur(20px) saturate(160%); backdrop-filter:blur(20px) saturate(160%); border-color:var(--glass-border); box-shadow:inset 0 1px 0 var(--glass-highlight), 0 12px 30px var(--theme-shadow); }
+  .manual-sidebar:has(#manual-toc:not([open])) summary { padding:12px 20px; }
+  .manual-sidebar:has(#manual-toc[open]) { left:10px; right:10px; }
   /* A long list reads better on a solid sheet than on glass. */
   .manual-sidebar details[open] { max-height:min(72vh,600px); border-radius:18px; box-shadow:0 18px 40px var(--theme-shadow); }
-}
-@media (max-width:1000px) {
-  .manual-sidebar, .manual-sidebar:has(#manual-toc:not([open])) { right:16px; bottom:88px; }
-  .manual-sidebar:has(#manual-toc[open]) { left:10px; right:10px; width:auto; }
   .manual-hero, .manual-chapter-opener { padding:24px; }
   .manual-content { font-size:16px; }
   .fire-concept-grid-four { grid-template-columns:repeat(2,minmax(0,1fr)); }

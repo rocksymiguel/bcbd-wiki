@@ -10,8 +10,8 @@
   }
   if(!observeHeader()&&header){const observer=new MutationObserver(()=>{if(observeHeader())observer.disconnect();});observer.observe(header,{childList:true});}
   const toc=document.getElementById('manual-toc');
-  // Below 1200px the index is a sheet opened from its button; wider screens keep it as a column.
-  const overlay=matchMedia('(max-width: 1199.98px)');
+  // On phones the index is a sheet opened from its button; wider screens keep it as a column.
+  const overlay=matchMedia('(max-width: 999.98px)');
   const tocKey='bcbd-wiki-manual-toc';
   let tocSaved=null;try{tocSaved=localStorage.getItem(tocKey);}catch(e){}
   if(toc){
@@ -35,6 +35,23 @@
       addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(update);}},{passive:true});
       update();
     }
+  }
+  // "Next chapter" floats in during the last stretch of the chapter, and steps aside when the pager itself is on screen.
+  const nextFloat=document.querySelector('.manual-next-float');
+  const pager=document.querySelector('.manual-pager');
+  const article=document.getElementById('manual-content');
+  if(nextFloat&&pager&&article){
+    let pagerVisible=false;
+    const show=()=>{
+      const reached=article.getBoundingClientRect().bottom<innerHeight*3;
+      const visible=reached&&!pagerVisible;
+      nextFloat.classList.toggle('is-visible',visible);
+      nextFloat.setAttribute('aria-hidden',String(!visible));
+      nextFloat.tabIndex=visible?0:-1;
+    };
+    new IntersectionObserver(entries=>{pagerVisible=entries[0].isIntersecting;show();}).observe(pager);
+    addEventListener('scroll',show,{passive:true});
+    show();
   }
   document.querySelectorAll('[data-answer-toggle]').forEach(button=>button.addEventListener('click',()=>{
     const answer=document.getElementById(button.getAttribute('aria-controls'));
