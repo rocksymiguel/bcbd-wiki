@@ -177,7 +177,8 @@ written.set('index.html',page({docTitle:title,crumbs:crumbRoot+`<span>${escape(t
 
 for(const c of chapters){
   const prev=chapters[c.n-2],next=chapters[c.n];
-  const pager=`<nav class="manual-pager" aria-label="Capítulos">${prev?`<a class="manual-pager-prev" href="${prev.page}"><small>Capítulo anterior</small><strong>${escape(prev.title)}</strong></a>`:'<span></span>'}${next?`<a class="manual-pager-next" href="${next.page}"><small>Siguiente capítulo</small><strong>${escape(next.title)}</strong></a>`:'<a class="manual-pager-next" href="index.html"><small>Terminaste el manual</small><strong>Volver a los capítulos</strong></a>'}</nav>`;
+  const arrow=d=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${d}"/></svg>`;
+  const pager=`<nav class="manual-pager" aria-label="Capítulos">${prev?`<a class="manual-pager-prev" href="${prev.page}">${arrow('M19 12H5M11 6l-6 6 6 6')}<span><small>Capítulo anterior</small><strong>${escape(prev.title)}</strong></span></a>`:'<span></span>'}${next?`<a class="manual-pager-next" href="${next.page}"><span><small>Siguiente capítulo</small><strong>${escape(next.title)}</strong></span>${arrow('M5 12h14M13 6l6 6-6 6')}</a>`:`<a class="manual-pager-next" href="index.html"><span><small>Terminaste el manual</small><strong>Volver a los capítulos</strong></span>${arrow('M5 12h14M13 6l6 6-6 6')}</a>`}</nav>`;
   const body=`    <header class="manual-chapter-opener">
       <span class="reflective-stripe" aria-hidden="true"></span>
       <p class="manual-chapter-count">Capítulo ${c.n} de ${chapters.length}</p>
