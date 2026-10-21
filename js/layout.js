@@ -11,74 +11,80 @@ var basePath = isGitHub
   ? "/bcbd-wiki/"
   : "/";
 
-// Theme: "auto" (default) is light by day and dark by night, following the sun
-// in Daule. A manual light/dark choice is remembered in this browser.
+// Theme: follow the device until the visitor picks light or dark; that choice
+// is remembered in this browser.
 var themeStorageKey = 'bcbd-wiki-theme';
-var themePreference = 'auto';
-var DAULE = { lat: -1.8622, lng: -79.9775 };
+var systemThemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+var themePreference = null;
 
-function readThemePreference() {
+function readStored(key, allowed) {
   try {
-    var value = window.localStorage.getItem(themeStorageKey);
-    return value === 'light' || value === 'dark' ? value : 'auto';
+    var value = window.localStorage.getItem(key);
+    return allowed.indexOf(value) !== -1 ? value : null;
   } catch (error) {
-    return 'auto';
+    return null;
   }
 }
 
-// NOAA approximation; minutes are UTC. Accurate to a few minutes, enough for a theme.
-function sunTimesUtcMinutes(date, lat, lng) {
-  var start = Date.UTC(date.getUTCFullYear(), 0, 0);
-  var dayOfYear = Math.floor((date.getTime() - start) / 86400000);
-  var g = 2 * Math.PI / 365 * (dayOfYear - 1);
-  var eqTime = 229.18 * (0.000075 + 0.001868 * Math.cos(g) - 0.032077 * Math.sin(g) - 0.014615 * Math.cos(2 * g) - 0.040849 * Math.sin(2 * g));
-  var decl = 0.006918 - 0.399912 * Math.cos(g) + 0.070257 * Math.sin(g) - 0.006758 * Math.cos(2 * g) + 0.000907 * Math.sin(2 * g) - 0.002697 * Math.cos(3 * g) + 0.00148 * Math.sin(3 * g);
-  var rad = Math.PI / 180;
-  var hourAngle = Math.acos(Math.cos(90.833 * rad) / (Math.cos(lat * rad) * Math.cos(decl)) - Math.tan(lat * rad) * Math.tan(decl)) / rad;
-  return { sunrise: 720 - 4 * (lng + hourAngle) - eqTime, sunset: 720 - 4 * (lng - hourAngle) - eqTime };
-}
-
-function isDaylightInDaule(now) {
-  var times = sunTimesUtcMinutes(now, DAULE.lat, DAULE.lng);
-  var minutes = now.getUTCHours() * 60 + now.getUTCMinutes();
-  var rise = (times.sunrise + 1440) % 1440;
-  var set = (times.sunset + 1440) % 1440;
-  return rise < set ? minutes >= rise && minutes < set : minutes >= rise || minutes < set;
+function writeStored(key, value) {
+  try { window.localStorage.setItem(key, value); } catch (error) { /* Storage can be unavailable. */ }
 }
 
 function activeTheme() {
-  if (themePreference === 'light' || themePreference === 'dark') return themePreference;
-  return isDaylightInDaule(new Date()) ? 'light' : 'dark';
+  return themePreference || (systemThemeQuery.matches ? 'dark' : 'light');
 }
 
-function updateThemeSwitch() {
-  document.querySelectorAll('[data-theme-choice]').forEach(function (button) {
-    button.setAttribute('aria-pressed', String(button.dataset.themeChoice === themePreference));
-  });
+function updateThemeToggle() {
+  var toggle = document.querySelector('.theme-toggle');
+  if (!toggle) return;
+  var isDark = activeTheme() === 'dark';
+  toggle.setAttribute('aria-label', isDark ? 'Usar modo claro' : 'Usar modo oscuro');
+  toggle.setAttribute('title', isDark ? 'Usar modo claro' : 'Usar modo oscuro');
 }
 
 function applyTheme() {
   document.documentElement.dataset.theme = activeTheme();
-  updateThemeSwitch();
-}
-
-function setThemePreference(choice) {
-  themePreference = choice;
-  try {
-    if (choice === 'auto') window.localStorage.removeItem(themeStorageKey);
-    else window.localStorage.setItem(themeStorageKey, choice);
-  } catch (error) { /* Storage can be unavailable. */ }
-  applyTheme();
+  updateThemeToggle();
 }
 
 function initializeTheme() {
-  themePreference = readThemePreference();
+  themePreference = readStored(themeStorageKey, ['light', 'dark']);
   applyTheme();
-  // Sunrise and sunset happen while a page stays open.
-  window.setInterval(function () { if (themePreference === 'auto') applyTheme(); }, 5 * 60 * 1000);
+  var onSystemThemeChange = function () { if (!themePreference) applyTheme(); };
+  if (systemThemeQuery.addEventListener) systemThemeQuery.addEventListener('change', onSystemThemeChange);
+  else if (systemThemeQuery.addListener) systemThemeQuery.addListener(onSystemThemeChange);
 }
 
 initializeTheme();
+
+// Sidebar: compact (icons only) or expanded. Without a saved choice, reading-heavy
+// and map pages start compact so their content gets the width.
+var sidebarStorageKey = 'bcbd-wiki-sidebar';
+
+function sidebarIsCompact() {
+  var saved = readStored(sidebarStorageKey, ['compact', 'expanded']);
+  if (saved) return saved === 'compact';
+  return !!document.body && (document.body.classList.contains('manual-page') || document.body.classList.contains('map-page'));
+}
+
+function applySidebar(compact) {
+  document.documentElement.classList.toggle('sidebar-compact', compact);
+  var button = document.querySelector('.sidebar-collapse');
+  if (button) {
+    button.setAttribute('aria-pressed', String(compact));
+    button.setAttribute('aria-label', compact ? 'Expandir menú' : 'Compactar menú');
+    var label = button.querySelector('.nav-label');
+    if (label) label.textContent = compact ? 'Expandir menú' : 'Compactar menú';
+  }
+  // Labels are hidden in compact mode, so links expose them as tooltips.
+  document.querySelectorAll('#header .site-nav a, .sidebar-collapse').forEach(function (el) {
+    var text = el.querySelector('.nav-label');
+    if (compact && text) el.setAttribute('title', text.textContent);
+    else el.removeAttribute('title');
+  });
+}
+
+applySidebar(sidebarIsCompact());
 
 // If running on GitHub Pages and the site is served at the user root (e.g. https://user.github.io/...),
 // some pages may be accessed without the repo prefix. Fix absolute asset paths dynamically so
@@ -200,10 +206,25 @@ tryFetchPartial('partials/header.html', (err, html, usedPath) => {
   const headerEl = document.getElementById("header");
   if (headerEl) headerEl.innerHTML = html;
 
-  document.querySelectorAll('[data-theme-choice]').forEach(function (button) {
-    button.addEventListener('click', function () { setThemePreference(button.dataset.themeChoice); });
-  });
-  updateThemeSwitch();
+  var themeToggle = document.querySelector('.theme-toggle');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', function () {
+      themePreference = activeTheme() === 'dark' ? 'light' : 'dark';
+      writeStored(themeStorageKey, themePreference);
+      applyTheme();
+    });
+  }
+  updateThemeToggle();
+
+  var collapse = document.querySelector('.sidebar-collapse');
+  if (collapse) {
+    collapse.addEventListener('click', function () {
+      var compact = !document.documentElement.classList.contains('sidebar-compact');
+      writeStored(sidebarStorageKey, compact ? 'compact' : 'expanded');
+      applySidebar(compact);
+    });
+  }
+  applySidebar(sidebarIsCompact());
 
   // The tab bar is fixed to the viewport; a transformed #header would carry it away.
   const tabbar = headerEl ? headerEl.querySelector('.tabbar') : null;
@@ -223,10 +244,14 @@ tryFetchPartial('partials/header.html', (err, html, usedPath) => {
   [document.querySelectorAll('#header .site-nav a'), document.querySelectorAll('.tabbar a')].forEach(group => {
     let best = null;
     group.forEach(link => {
-      const path = sectionOf(link);
-      const isHome = path === basePath;
-      if ((isHome ? here === path : here.startsWith(path)) && (!best || path.length > sectionOf(best).length)) best = link;
+      // data-also lets one entry cover a related section (Institución includes Historia).
+      const paths = [sectionOf(link)].concat((link.dataset.also || '').split(' ').filter(Boolean).map(p => basePath + p));
+      paths.forEach(path => {
+        const isHome = path === basePath;
+        if ((isHome ? here === path : here.startsWith(path)) && (!best || path.length > best.length)) best = { link, length: path.length };
+      });
     });
+    if (best) best = best.link;
     if (best) best.setAttribute('aria-current', 'page');
   });
 

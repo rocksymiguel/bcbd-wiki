@@ -2,13 +2,23 @@
   const header=document.getElementById('header');
   function observeHeader(){
     const nav=header?.querySelector('.site-header');if(!nav)return false;
-    const measure=()=>document.documentElement.style.setProperty('--manual-header-offset',Math.ceil(nav.getBoundingClientRect().height+44)+'px');
+    // On desktop the header is a side rail, so only the mobile top bar needs clearing.
+    const desktop=matchMedia('(min-width: 1000px)');
+    const measure=()=>document.documentElement.style.setProperty('--manual-header-offset',(desktop.matches?24:Math.ceil(nav.getBoundingClientRect().height+30))+'px');
+    desktop.addEventListener('change',measure);
     new ResizeObserver(measure).observe(nav);measure();return true;
   }
   if(!observeHeader()&&header){const observer=new MutationObserver(()=>{if(observeHeader())observer.disconnect();});observer.observe(header,{childList:true});}
   const toc=document.getElementById('manual-toc');
   const mobile=matchMedia('(max-width: 1000px)');
-  if(toc)toc.open=false;
+  // Desktop remembers whether the index column is shown; on mobile it is a sheet that starts closed.
+  const tocKey='bcbd-wiki-manual-toc';
+  let tocSaved=null;try{tocSaved=localStorage.getItem(tocKey);}catch(e){}
+  if(toc){
+    toc.open=!mobile.matches&&tocSaved!=='closed';
+    toc.addEventListener('toggle',()=>{if(!mobile.matches){try{localStorage.setItem(tocKey,toc.open?'open':'closed');}catch(e){}}});
+    document.addEventListener('keydown',event=>{if(event.key==='Escape'&&mobile.matches&&toc.open)toc.open=false;});
+  }
   toc?.querySelectorAll('a[href^="#"]').forEach(link=>link.addEventListener('click',()=>{if(mobile.matches)toc.open=false;}));
   document.querySelectorAll('[data-answer-toggle]').forEach(button=>button.addEventListener('click',()=>{
     const answer=document.getElementById(button.getAttribute('aria-controls'));
