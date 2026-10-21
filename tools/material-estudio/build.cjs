@@ -1,5 +1,5 @@
 // Export the Obsidian source to a static manual page. The vault is read-only;
-// the fire-theory chapter is presented as a structured lesson, not as a raw MD.
+// Chapters with a template are presented as structured lessons; the rest as a direct transcription.
 // Requires marked 17.x at build time only (NODE_PATH can locate bundled packages).
 const fs=require('node:fs');
 const path=require('node:path');
@@ -94,27 +94,33 @@ const chapters=chapterStarts.map((start,n)=>{
 });
 assert.deepEqual(chapters.map(c=>c.title),headings.filter(h=>h.depth===2&&h.text!=='Índice').map(h=>h.text));
 
-// Fire theory: the brochure's sections are the backbone; the template adds the expansion around each one.
-const brochureSections=['Objetivos','Definiciones','Componentes del fuego','Fuentes de energía calórica','Transferencia de calor','Etapas del fuego','Fenómenos térmicos','Condiciones especiales de la combustión'];
-const theory=chapters[0];
-const sourceSections=new Map();
+// Chapters with a template (<chapter-id>.html here) follow the brochure's sections (###) as their backbone,
+// each one placed once and in order; the template adds the expansion around them. `omit` lists brochure
+// sections a template replaces with its own material. The rest stay as a direct transcription.
+const templates={'teoria-del-fuego':{omit:['Guía didáctica complementaria']},'herramientas-y-equipos':{}};
+const templated=[];
 depthShift=1;
-for(let i=theory.start+1;i<theory.end;){
-  if(tokens[i].type!=='heading'||tokens[i].depth!==3){i++;continue;}
-  const start=i,name=tokens[i].text;
-  let end=i+1;
-  while(end<theory.end&&!(tokens[end].type==='heading'&&tokens[end].depth<=3))end++;
-  if(brochureSections.includes(name))sourceSections.set(name,{id:tokens[start].manualId,html:marked.parser(tokens.slice(start+1,end))});
-  i=end;
+for(const c of chapters){
+  const template=templates[c.id];
+  if(!template){c.html=marked.parser(tokens.slice(c.start+1,c.end));continue;}
+  const sections=new Map();
+  for(let i=c.start+1;i<c.end;){
+    if(tokens[i].type!=='heading'||tokens[i].depth!==3){assert(sections.size||tokens[i].type==='space','Content before the first section of '+c.title);i++;continue;}
+    const start=i,name=tokens[i].text;
+    let end=i+1;
+    while(end<c.end&&!(tokens[end].type==='heading'&&tokens[end].depth<=3))end++;
+    if(!(template.omit||[]).includes(name))sections.set(name,{id:tokens[start].manualId,html:marked.parser(tokens.slice(start+1,end))});
+    i=end;
+  }
+  const html=fs.readFileSync(path.join(__dirname,c.id+'.html'),'utf8');
+  const placed=[...html.matchAll(/\{\{SOURCE:([^}]+)\}\}/g)].map(m=>m[1]);
+  assert.deepEqual(placed,[...sections.keys()],`${c.title}: the template must place every brochure section once, in its original order`);
+  c.html=html.replace(/\{\{(SOURCE|ID):([^}]+)\}\}/g,(_,kind,name)=>{
+    assert(sections.has(name),`Missing ${c.title} source section: ${name}`);
+    return kind==='ID'?sections.get(name).id:sections.get(name).html;
+  });
+  templated.push(`${c.title} (${sections.size})`);
 }
-assert.deepEqual([...sourceSections.keys()],brochureSections,'The brochure sections must appear in their original order');
-const theoryTemplate=fs.readFileSync(path.join(__dirname,'teoria-del-fuego.html'),'utf8');
-const theoryHtml=theoryTemplate.replace(/\{\{(SOURCE|ID):([^}]+)\}\}/g,(_,kind,name)=>{
-  assert(sourceSections.has(name),'Missing theory source section: '+name);
-  return kind==='ID'?sourceSections.get(name).id:sourceSections.get(name).html;
-});
-assert(!/\{\{(SOURCE|ID):/.test(theoryHtml),'Unexpanded theory placeholder');
-for(const c of chapters)c.html=c===theory?theoryHtml:marked.parser(tokens.slice(c.start+1,c.end));
 depthShift=0;
 
 const stripTags=s=>s.replace(/<[^>]+>/g,'').replaceAll('&amp;','&').replaceAll('&quot;','"').replaceAll('&lt;','<').replaceAll('&gt;','>');
@@ -212,4 +218,4 @@ for(const [file,html] of written){
 const manifest={chapters:chapters.map(c=>({n:c.n,title:c.title,id:c.id,page:c.page,sections:c.sections.length})),headings:headings.length,imageCount,assets:[...imports.values()]};
 fs.writeFileSync(path.join(output,'manifest.json'),JSON.stringify(manifest,null,2)+'\n');
 assert.equal(hash(fs.readFileSync(sourceFile)),hash(bytes),'The source vault must remain unchanged');
-console.log(`Exported ${chapters.length} chapter pages plus the overview, ${imageCount} images, ${headings.length} source headings; all internal links resolved. Fire theory follows the brochure's ${brochureSections.length} sections, and the vault was not modified.`);
+console.log(`Exported ${chapters.length} chapter pages plus the overview, ${imageCount} images, ${headings.length} source headings; all internal links resolved. Templated chapters follow the brochure's sections: ${templated.join(', ')}; the vault was not modified.`);

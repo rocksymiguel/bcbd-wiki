@@ -36,7 +36,13 @@ interno apunta a un id inexistente.
 Teoría del fuego sigue las 8 secciones del folleto como esqueleto
 (`teoria-del-fuego.html`): en cada una va primero el texto y las láminas del folleto
 (`{{SOURCE:...}}`), después la ampliación didáctica y su pregunta de repaso. Cierra
-con el repaso del capítulo y las fuentes de la ampliación. Los otros capítulos
+con el repaso del capítulo y las fuentes de la ampliación.
+
+Cualquier capítulo puede tener plantilla: un archivo `<id-del-capítulo>.html` en este
+directorio y su entrada en `templates` de `build.cjs`. El exportador exige que la
+plantilla coloque cada sección `###` del folleto una sola vez y en su orden (salvo
+las de `omit`). `herramientas-y-equipos.html` tiene solo el esqueleto de secciones,
+sin ampliación ni repaso porque aún no hay contenido verificado. Los demás capítulos
 conservan su transcripción.
 
 `tools/tests/manual-study.cjs` corresponde a la versión de una sola página (busca
