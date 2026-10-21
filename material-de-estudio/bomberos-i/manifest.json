@@ -1,40 +1,67 @@
 {
   "chapters": [
     {
+      "n": 1,
       "title": "Teoría del fuego",
-      "id": "teoria-del-fuego"
+      "id": "teoria-del-fuego",
+      "page": "teoria-del-fuego.html",
+      "sections": 10
     },
     {
+      "n": 2,
       "title": "Herramientas y equipos",
-      "id": "herramientas-y-equipos"
+      "id": "herramientas-y-equipos",
+      "page": "herramientas-y-equipos.html",
+      "sections": 4
     },
     {
+      "n": 3,
       "title": "Abastecimiento de agua",
-      "id": "abastecimiento-de-agua"
+      "id": "abastecimiento-de-agua",
+      "page": "abastecimiento-de-agua.html",
+      "sections": 6
     },
     {
+      "n": 4,
       "title": "Escaleras portátiles",
-      "id": "escaleras-portatiles"
+      "id": "escaleras-portatiles",
+      "page": "escaleras-portatiles.html",
+      "sections": 12
     },
     {
+      "n": 5,
       "title": "Equipo de respiración autónoma",
-      "id": "equipo-de-respiracion-autonoma"
+      "id": "equipo-de-respiracion-autonoma",
+      "page": "equipo-de-respiracion-autonoma.html",
+      "sections": 6
     },
     {
+      "n": 6,
       "title": "Técnicas de entrada forzada",
-      "id": "tecnicas-de-entrada-forzada"
+      "id": "tecnicas-de-entrada-forzada",
+      "page": "tecnicas-de-entrada-forzada.html",
+      "sections": 11
     },
     {
+      "n": 7,
       "title": "Técnicas y tácticas de control de incendios",
-      "id": "tecnicas-y-tacticas-de-control-de-incendios"
+      "id": "tecnicas-y-tacticas-de-control-de-incendios",
+      "page": "tecnicas-y-tacticas-de-control-de-incendios.html",
+      "sections": 9
     },
     {
+      "n": 8,
       "title": "Ventilación",
-      "id": "ventilacion"
+      "id": "ventilacion",
+      "page": "ventilacion.html",
+      "sections": 3
     },
     {
+      "n": 9,
       "title": "Búsqueda y rescate",
-      "id": "busqueda-y-rescate"
+      "id": "busqueda-y-rescate",
+      "page": "busqueda-y-rescate.html",
+      "sections": 11
     }
   ],
   "headings": 282,

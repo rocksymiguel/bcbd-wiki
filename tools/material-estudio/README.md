@@ -25,12 +25,22 @@ se publican. `manifest.json` registra hashes SHA-256, dimensiones y tamaños de 
 recursos exportados. Los enlaces internos de Obsidian de los capítulos que conservan
 la estructura original se convierten en anclas HTML únicas.
 
-La estructura web de Teoría del fuego ordena los conceptos en módulos didácticos,
-con explicaciones, preguntas de repaso con respuestas que se revelan al pulsar
-«Mostrar» y referencias técnicas. El texto fuente del folleto se conserva en un
-único anexo al final. Los otros capítulos mantienen su transcripción. El índice
-parte cerrado y enlaza a módulos y capítulos; las imágenes permiten abrir el
-original desde un diálogo. El PDF se descarga desde el mismo origen.
+La salida es una página general (`index.html`, con el PDF y la lista de capítulos)
+y una página por capítulo (`<capitulo>.html`). Cada capítulo abre con su portada
+(«Capítulo N de 9»), tiene un índice a la derecha con todos los capítulos y las
+secciones del actual —la sección visible se marca al desplazarse— y termina con
+enlaces al capítulo anterior y siguiente. Los enlaces antiguos a `index.html#ancla`
+redirigen al capítulo que contiene esa ancla, y el exportador falla si algún enlace
+interno apunta a un id inexistente.
+
+Teoría del fuego sigue las 8 secciones del folleto como esqueleto
+(`teoria-del-fuego.html`): en cada una va primero el texto y las láminas del folleto
+(`{{SOURCE:...}}`), después la ampliación didáctica y su pregunta de repaso. Cierra
+con el repaso del capítulo y las fuentes de la ampliación. Los otros capítulos
+conservan su transcripción.
+
+`tools/tests/manual-study.cjs` corresponde a la versión de una sola página (busca
+`manual.md` y la fuente anterior) y debe actualizarse antes de volver a usarse.
 
 ```powershell
 node tools/tests/manual-study.cjs

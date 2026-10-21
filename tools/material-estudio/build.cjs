@@ -30,6 +30,14 @@ for(const heading of headings){
   targets.set(full,heading.manualId);
   if(!targets.has(heading.text))targets.set(heading.text,heading.manualId);
 }
+// Each chapter becomes its own page; its headings link there.
+const pageFile=id=>id+'.html';
+const pageOf=new Map();
+{let current='index.html',seenIndex=false;
+  for(const h of headings){
+    if(h.depth===2){if(h.text==='Índice')seenIndex=true;else if(seenIndex)current=pageFile(h.manualId);}
+    pageOf.set(h.manualId,current);
+  }}
 const imports=new Map();
 function importFile(relative){
   assert(/^(Attachment|Reference)\//.test(relative),'Unexpected vault reference: '+relative);
@@ -58,7 +66,7 @@ const converted=source.replace(/!\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g,(_,relative,
   if(target.startsWith('#')){
     const id=targets.get(target.slice(1));
     assert(id,'Unresolved manual heading: '+target);
-    url='#'+id;
+    url=pageOf.get(id)+'#'+id;
   }else{importFile(target);url=encode(target);}
   return `<a href="${escape(url)}">${escape(label||target.replace(/^#/,''))}</a>`;
 });
@@ -72,86 +80,69 @@ marked.walkTokens(tokens,token=>{
   }
 });
 assert.equal(cursor,headings.length);
-marked.use({renderer:{heading(token){return `<h${token.depth} id="${token.manualId}">${this.parser.parseInline(token.tokens)}</h${token.depth}>\n`;}}});
+// Headings render one level up inside a chapter page, whose title is the page's h1.
+let depthShift=0;
+marked.use({renderer:{heading(token){const d=Math.max(1,token.depth-depthShift);return `<h${d} id="${token.manualId}">${this.parser.parseInline(token.tokens)}</h${d}>\n`;}}});
 const indexStart=tokens.findIndex(t=>t.type==='heading'&&t.depth===2&&t.text==='Índice');
-const firstChapter=tokens.findIndex((t,i)=>i>indexStart&&t.type==='heading'&&t.depth===2);
-assert(indexStart>0&&firstChapter>indexStart);
+const chapterStarts=tokens.map((t,i)=>t.type==='heading'&&t.depth===2&&i>indexStart?i:-1).filter(i=>i>=0);
+assert(indexStart>0&&chapterStarts.length===9);
 const title=tokens[0].text;
 const intro=marked.parser(tokens.slice(1,indexStart));
-const chapters=headings.filter(h=>h.depth===2&&h.text!=='Índice');
-assert.equal(chapters.length,9);
-const secondChapter=tokens.findIndex((t,i)=>i>firstChapter&&t.type==='heading'&&t.depth===2);
-assert(secondChapter>firstChapter);
+const chapters=chapterStarts.map((start,n)=>{
+  const end=chapterStarts[n+1]??tokens.length;
+  return {n:n+1,title:tokens[start].text,id:tokens[start].manualId,page:pageFile(tokens[start].manualId),start,end};
+});
+assert.deepEqual(chapters.map(c=>c.title),headings.filter(h=>h.depth===2&&h.text!=='Índice').map(h=>h.text));
+
+// Fire theory: the brochure's sections are the backbone; the template adds the expansion around each one.
+const brochureSections=['Objetivos','Definiciones','Componentes del fuego','Fuentes de energía calórica','Transferencia de calor','Etapas del fuego','Fenómenos térmicos','Condiciones especiales de la combustión'];
+const theory=chapters[0];
 const sourceSections=new Map();
-const brochureSections=new Set(['Objetivos','Definiciones','Componentes del fuego','Fuentes de energía calórica','Transferencia de calor','Etapas del fuego','Fenómenos térmicos','Condiciones especiales de la combustión']);
-for(let i=firstChapter+1;i<secondChapter;){
+depthShift=1;
+for(let i=theory.start+1;i<theory.end;){
   if(tokens[i].type!=='heading'||tokens[i].depth!==3){i++;continue;}
   const start=i,name=tokens[i].text;
   let end=i+1;
-  while(end<secondChapter&&!(tokens[end].type==='heading'&&tokens[end].depth<=3))end++;
-  if(brochureSections.has(name))sourceSections.set(name,marked.parser(tokens.slice(start,end)));
+  while(end<theory.end&&!(tokens[end].type==='heading'&&tokens[end].depth<=3))end++;
+  if(brochureSections.includes(name))sourceSections.set(name,{id:tokens[start].manualId,html:marked.parser(tokens.slice(start+1,end))});
   i=end;
 }
+assert.deepEqual([...sourceSections.keys()],brochureSections,'The brochure sections must appear in their original order');
 const theoryTemplate=fs.readFileSync(path.join(__dirname,'teoria-del-fuego.html'),'utf8');
-const theoryHtml=theoryTemplate.replace(/\{\{SOURCE:([^}]+)\}\}/g,(_,name)=>{
-  if(name==='ALL')return [...sourceSections.values()].join('\n');
+const theoryHtml=theoryTemplate.replace(/\{\{(SOURCE|ID):([^}]+)\}\}/g,(_,kind,name)=>{
   assert(sourceSections.has(name),'Missing theory source section: '+name);
-  return sourceSections.get(name);
+  return kind==='ID'?sourceSections.get(name).id:sourceSections.get(name).html;
 });
-assert(!/\{\{SOURCE:/.test(theoryHtml),'Unexpanded theory source placeholder');
-const theoryToc=`<ul>
-<li><a href="#teoria-del-fuego">Teoría del fuego</a><ul>
-<li><a href="#energia-calor-combustion">Energía, calor y temperatura</a></li>
-<li><a href="#combustion-y-componentes">Combustión y componentes</a></li>
-<li><a href="#combustibles-mezclas-fuentes">Combustibles, mezclas y fuentes de energía</a></li>
-<li><a href="#transferencia-de-calor">Transferencia de calor</a></li>
-<li><a href="#incendio-en-recinto">Desarrollo, humo, capas y presión</a></li>
-<li><a href="#fenomenos-y-condiciones-especiales">Transiciones y condiciones especiales</a></li>
-<li><a href="#repaso-teoria-fuego">Repaso rápido</a></li>
-</ul></li></ul>`;
-const remainingItems=[];
-const tocStack=[{depth:1,children:remainingItems}];
-for(const heading of headings.slice(headings.indexOf(chapters[1]))){
-  if(heading.depth<2||heading.depth>6)continue;
-  while(tocStack.at(-1).depth>=heading.depth)tocStack.pop();
-  const item={text:heading.text,id:heading.manualId,children:[]};
-  tocStack.at(-1).children.push(item);
-  tocStack.push({depth:heading.depth,children:item.children});
-}
-const renderToc=items=>`<ul>${items.map(item=>`<li><a href="#${escape(item.id)}">${escape(item.text)}</a>${item.children.length?renderToc(item.children):''}</li>`).join('')}</ul>`;
-const remainingToc=renderToc(remainingItems);
-const courseToc=theoryToc+remainingToc;
-const article=theoryHtml+marked.parser(tokens.slice(secondChapter));
+assert(!/\{\{(SOURCE|ID):/.test(theoryHtml),'Unexpanded theory placeholder');
+for(const c of chapters)c.html=c===theory?theoryHtml:marked.parser(tokens.slice(c.start+1,c.end));
+depthShift=0;
+
+const stripTags=s=>s.replace(/<[^>]+>/g,'').replaceAll('&amp;','&').replaceAll('&quot;','"').replaceAll('&lt;','<').replaceAll('&gt;','>');
+for(const c of chapters)c.sections=[...c.html.matchAll(/<h2 id="([^"]+)"[^>]*>([\s\S]*?)<\/h2>/g)].map(m=>({id:m[1],text:stripTags(m[2])}));
+
 const pdf=importFile('Reference/Manual - Bomberos I.pdf');
 const pdfURL=encode(pdf.path);
 const pdfSize=(pdf.bytes/1024/1024).toFixed(1).replace('.',',');
-fs.mkdirSync(output,{recursive:true});
-fs.rmSync(path.join(output,'manual.md'),{force:true});
-const html=`<!DOCTYPE html>
+const num=n=>String(n).padStart(2,'0');
+
+// Right-hand index: every chapter, with the current one expanded to its sections.
+const renderToc=current=>`<ol class="manual-toc-chapters">${chapters.map(c=>`<li${c===current?' class="is-current"':''}><a href="${c.page}"${c===current?' aria-current="page"':''}><span class="manual-toc-num">${num(c.n)}</span><span>${escape(c.title)}</span></a>${c===current&&c.sections.length?`<ol class="manual-toc-sections">${c.sections.map(s=>`<li><a href="#${escape(s.id)}">${escape(s.text)}</a></li>`).join('')}</ol>`:''}</li>`).join('')}</ol>`;
+
+const page=({docTitle,crumbs,body,script=''})=>`<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${escape(title)} | Material de estudio | BCBD Wiki</title>
+  <title>${escape(docTitle)} | Material de estudio | BCBD Wiki</title>
   <link rel="stylesheet" href="../../css/styles.css">
   <link rel="stylesheet" href="../../css/manual.css">
 </head>
 <body class="manual-page">
-  <a class="manual-skip" href="#manual-content">Ir al contenido del manual</a>
+  <a class="manual-skip" href="#manual-content">Ir al contenido</a>
   <div id="header"></div>
   <main id="main-content">
-    <nav class="manual-breadcrumb" aria-label="Ubicación"><a href="../index.html">Material de estudio</a><span aria-hidden="true">/</span><span>${escape(title)}</span></nav>
-    <header class="manual-hero">
-      <div><p class="manual-eyebrow">Material de estudio</p><h1 id="${headings[0].manualId}">${escape(title)}</h1>${intro}<p class="manual-meta">9 capítulos · ${imageCount} ilustraciones · Transcripción con imágenes</p></div>
-      <a class="manual-download" href="${pdfURL}" download="Manual - Bomberos I.pdf">Descargar PDF original <small>${pdfSize} MiB · Documento escaneado</small></a>
-    </header>
-    <div class="manual-layout">
-      <aside class="manual-sidebar" aria-label="Índice del manual">
-        <details id="manual-toc"><summary><h2 id="${headings.find(h=>h.text==='Índice').manualId}">Índice</h2></summary><nav aria-label="Capítulos y subtemas">${courseToc}</nav></details>
-        <a class="manual-back-top" href="#${headings[0].manualId}">Volver al inicio ↑</a>
-      </aside>
-      <article id="manual-content" class="manual-content" aria-label="Contenido completo del Manual Bomberos I">${article}</article>
-    </div>
+    <nav class="manual-breadcrumb" aria-label="Ubicación">${crumbs}</nav>
+${body}
   </main>
   <div id="footer"></div>
   <dialog id="manual-image-dialog" class="manual-lightbox" aria-labelledby="manual-image-title">
@@ -160,12 +151,60 @@ const html=`<!DOCTYPE html>
     <a id="manual-image-original" target="_blank" rel="noopener">Abrir imagen original</a>
   </dialog>
   <script src="../../js/layout.js"></script>
-  <script src="../../js/manual.js"></script>
+  <script src="../../js/manual.js"></script>${script}
 </body>
 </html>
 `;
-fs.writeFileSync(path.join(output,'index.html'),html);
-const manifest={chapters:chapters.map(h=>({title:h.text,id:h.manualId})),headings:headings.length,imageCount,assets:[...imports.values()]};
+
+fs.mkdirSync(output,{recursive:true});
+fs.rmSync(path.join(output,'manual.md'),{force:true});
+const crumbRoot='<a href="../index.html">Material de estudio</a><span aria-hidden="true">/</span>';
+const written=new Map();
+
+// Overview: what the manual is, the PDF, and the chapters as the way in.
+const overview=`    <header class="manual-hero">
+      <div><p class="manual-eyebrow">Material de estudio</p><h1 id="${headings[0].manualId}">${escape(title)}</h1>${intro}<p class="manual-meta">9 capítulos · ${imageCount} ilustraciones · Transcripción con imágenes</p></div>
+      <a class="manual-download" href="${pdfURL}" download="Manual - Bomberos I.pdf">Descargar PDF original <small>${pdfSize} MiB · Documento escaneado</small></a>
+    </header>
+    <section id="manual-content" class="manual-chapters" aria-labelledby="capitulos">
+      <h2 id="capitulos">Capítulos</h2>
+      <ol>${chapters.map(c=>`<li><a href="${c.page}"><span class="manual-chapter-num">${num(c.n)}</span><span class="manual-chapter-body"><strong>${escape(c.title)}</strong><small>${c.sections.length} secciones · ${escape(c.sections.slice(0,3).map(s=>s.text).join(', '))}${c.sections.length>3?'…':''}</small></span></a></li>`).join('')}</ol>
+    </section>`;
+// Links written before the split pointed at #anchors of the single page; send them to their chapter.
+const legacy=Object.fromEntries(headings.filter(h=>pageOf.get(h.manualId)!=='index.html').map(h=>[h.manualId,pageOf.get(h.manualId)]));
+const legacyScript=`\n  <script>(function(){var m=${JSON.stringify(legacy)};var id=decodeURIComponent(location.hash.slice(1));if(m[id])location.replace(m[id]+location.hash);})();</script>`;
+written.set('index.html',page({docTitle:title,crumbs:crumbRoot+`<span>${escape(title)}</span>`,body:overview,script:legacyScript}));
+
+for(const c of chapters){
+  const prev=chapters[c.n-2],next=chapters[c.n];
+  const pager=`<nav class="manual-pager" aria-label="Capítulos">${prev?`<a class="manual-pager-prev" href="${prev.page}"><small>Capítulo anterior</small><strong>${escape(prev.title)}</strong></a>`:'<span></span>'}${next?`<a class="manual-pager-next" href="${next.page}"><small>Siguiente capítulo</small><strong>${escape(next.title)}</strong></a>`:'<a class="manual-pager-next" href="index.html"><small>Terminaste el manual</small><strong>Volver a los capítulos</strong></a>'}</nav>`;
+  const body=`    <header class="manual-chapter-opener">
+      <span class="reflective-stripe" aria-hidden="true"></span>
+      <p class="manual-chapter-count">Capítulo ${c.n} de ${chapters.length}</p>
+      <h1 id="${c.id}">${escape(c.title)}</h1>
+      <p class="manual-meta">${c.sections.length} secciones · <a href="${pdfURL}" download="Manual - Bomberos I.pdf">PDF original (${pdfSize} MiB)</a></p>
+    </header>
+    <div class="manual-layout">
+      <article id="manual-content" class="manual-content" aria-labelledby="${c.id}">${c.html}${pager}</article>
+      <aside class="manual-sidebar" aria-label="Índice del manual">
+        <details id="manual-toc"><summary><span class="manual-toc-title">Índice</span></summary><nav aria-label="Capítulos y secciones">${renderToc(c)}</nav></details>
+      </aside>
+    </div>`;
+  written.set(c.page,page({docTitle:`${c.title} · ${title}`,crumbs:crumbRoot+`<a href="index.html">${escape(title)}</a><span aria-hidden="true">/</span><span>Capítulo ${c.n}</span>`,body}));
+}
+
+// Every in-manual link must land on an id that exists on its target page.
+for(const [file,html] of written){
+  for(const m of html.matchAll(/href="([^"#:]*\.html)?#([^"]+)"/g)){
+    const target=m[1]||file;
+    if(!written.has(target))continue;
+    assert(written.get(target).includes(`id="${m[2]}"`),`Broken link in ${file}: ${m[1]||''}#${m[2]}`);
+  }
+  const ids=[...html.matchAll(/\sid="([^"]+)"/g)].map(m=>m[1]);
+  assert.equal(new Set(ids).size,ids.length,'Duplicate ids in '+file);
+  fs.writeFileSync(path.join(output,file),html);
+}
+const manifest={chapters:chapters.map(c=>({n:c.n,title:c.title,id:c.id,page:c.page,sections:c.sections.length})),headings:headings.length,imageCount,assets:[...imports.values()]};
 fs.writeFileSync(path.join(output,'manifest.json'),JSON.stringify(manifest,null,2)+'\n');
 assert.equal(hash(fs.readFileSync(sourceFile)),hash(bytes),'The source vault must remain unchanged');
-console.log(`Exported ${chapters.length} chapters, ${imageCount} images, ${headings.length} source headings; all internal references resolved. The fire-theory chapter is integrated into a guided lesson, no Markdown file is published, and the vault was not modified.`);
+console.log(`Exported ${chapters.length} chapter pages plus the overview, ${imageCount} images, ${headings.length} source headings; all internal links resolved. Fire theory follows the brochure's ${brochureSections.length} sections, and the vault was not modified.`);

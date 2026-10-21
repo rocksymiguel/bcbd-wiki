@@ -10,16 +10,32 @@
   }
   if(!observeHeader()&&header){const observer=new MutationObserver(()=>{if(observeHeader())observer.disconnect();});observer.observe(header,{childList:true});}
   const toc=document.getElementById('manual-toc');
-  const mobile=matchMedia('(max-width: 1000px)');
-  // Desktop remembers whether the index column is shown; on mobile it is a sheet that starts closed.
+  // Below 1200px the index is a sheet opened from its button; wider screens keep it as a column.
+  const overlay=matchMedia('(max-width: 1199.98px)');
   const tocKey='bcbd-wiki-manual-toc';
   let tocSaved=null;try{tocSaved=localStorage.getItem(tocKey);}catch(e){}
   if(toc){
-    toc.open=!mobile.matches&&tocSaved!=='closed';
-    toc.addEventListener('toggle',()=>{if(!mobile.matches){try{localStorage.setItem(tocKey,toc.open?'open':'closed');}catch(e){}}});
-    document.addEventListener('keydown',event=>{if(event.key==='Escape'&&mobile.matches&&toc.open)toc.open=false;});
+    toc.open=!overlay.matches&&tocSaved!=='closed';
+    toc.addEventListener('toggle',()=>{if(!overlay.matches){try{localStorage.setItem(tocKey,toc.open?'open':'closed');}catch(e){}}});
+    document.addEventListener('keydown',event=>{if(event.key==='Escape'&&overlay.matches&&toc.open)toc.open=false;});
+    document.addEventListener('click',event=>{if(overlay.matches&&toc.open&&!toc.contains(event.target))toc.open=false;});
+    toc.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{if(overlay.matches)toc.open=false;}));
+    // Mark the section being read: the last heading that has passed the top quarter of the screen.
+    const links=[...toc.querySelectorAll('.manual-toc-sections a')];
+    const targets=links.map(link=>document.getElementById(decodeURIComponent(link.hash.slice(1)))).filter(Boolean);
+    if(targets.length){
+      let ticking=false;
+      const update=()=>{
+        ticking=false;
+        const line=innerHeight*0.25;
+        let active=0;
+        targets.forEach((el,i)=>{if(el.getBoundingClientRect().top<=line)active=i;});
+        links.forEach((link,i)=>{link.classList.toggle('is-active',i===active);if(i===active)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current');});
+      };
+      addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(update);}},{passive:true});
+      update();
+    }
   }
-  toc?.querySelectorAll('a[href^="#"]').forEach(link=>link.addEventListener('click',()=>{if(mobile.matches)toc.open=false;}));
   document.querySelectorAll('[data-answer-toggle]').forEach(button=>button.addEventListener('click',()=>{
     const answer=document.getElementById(button.getAttribute('aria-controls'));
     if(!answer)return;
