@@ -12,10 +12,10 @@
 .manual-download:hover { background:var(--accent-hover); }
 .manual-download small { font-size:12px; font-weight:400; }
 /* Índice a la izquierda junto al menú; el contenido sigue a su lado y el espacio libre queda a la derecha. */
-.manual-layout { display:grid; grid-template-columns:minmax(230px,280px) minmax(0,1000px); grid-template-areas:"toc content"; justify-content:start; align-items:start; gap:clamp(28px,3vw,48px); margin-top:32px; }
+.manual-layout { display:grid; grid-template-columns:minmax(230px,280px) minmax(0,1240px); grid-template-areas:"toc content"; justify-content:start; align-items:start; gap:clamp(28px,3vw,48px); margin-top:32px; }
 .manual-layout > .manual-content { grid-area:content; }
 .manual-layout > .manual-sidebar { grid-area:toc; }
-.manual-layout:has(#manual-toc:not([open])) { grid-template-columns:auto minmax(0,1000px); }
+.manual-layout:has(#manual-toc:not([open])) { grid-template-columns:auto minmax(0,1240px); }
 .manual-sidebar { position:sticky; top:var(--manual-header-offset,24px); min-width:0; }
 .manual-sidebar details { max-height:calc(100vh - 48px); overflow:auto; overscroll-behavior:contain; border:1px solid var(--theme-border); border-radius:16px; background:var(--theme-surface); padding:14px 12px 16px; }
 .manual-sidebar summary { cursor:pointer; list-style:none; display:flex; align-items:center; gap:10px; padding:2px 6px 10px; font-weight:700; }
@@ -37,7 +37,18 @@
 .manual-toc-sections a:hover { color:var(--theme-text); background:var(--theme-hover); }
 .manual-toc-sections a.is-active { color:var(--theme-text); font-weight:650; background:var(--theme-hover); }
 .manual-toc-sections a.is-active::before { content:""; position:absolute; left:-16px; top:5px; bottom:5px; width:6px; border-radius:3px; background:linear-gradient(90deg, var(--accent) 0 33%, var(--silver) 33% 67%, var(--accent) 67%); }
-.manual-content { min-width:0; width:100%; padding:0 0 40px; font-size:17px; line-height:1.75; overflow-wrap:anywhere; }
+/* The type grows with the screen, so the same ~75-character line fills more of a wide display. */
+.manual-content { min-width:0; width:100%; padding:0 0 40px; font-size:clamp(17px, calc(0.55vw + 9.5px), 20px); line-height:1.75; overflow-wrap:anywhere; }
+/* Lámina beside its paragraph on wide screens; stacked below otherwise. */
+.manual-pair-media .manual-image { margin:0; }
+@media (min-width:1400px) {
+  .manual-pair { display:grid; grid-template-columns:minmax(0,60ch) minmax(280px,1fr); gap:28px 36px; align-items:start; margin:22px 0; }
+  .manual-pair-text > :first-child { margin-top:0; }
+  .manual-pair-text > :last-child { margin-bottom:0; }
+  .manual-pair-media { position:sticky; top:24px; }
+  .manual-pair-media p { margin:0; }
+  .manual-pair-media .manual-image { width:100%; max-width:var(--image-width,700px); }
+}
 .manual-content :is(p, li, h2, h3, h4, h5, h6, blockquote):not(:has(> .manual-image)) { max-width:75ch; }
 .manual-content .fire-concept-grid p, .manual-content .fire-phenomena p { max-width:none; }
 

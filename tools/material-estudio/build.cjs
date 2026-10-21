@@ -114,7 +114,13 @@ const theoryHtml=theoryTemplate.replace(/\{\{(SOURCE|ID):([^}]+)\}\}/g,(_,kind,n
   return kind==='ID'?sourceSections.get(name).id:sourceSections.get(name).html;
 });
 assert(!/\{\{(SOURCE|ID):/.test(theoryHtml),'Unexpanded theory placeholder');
-for(const c of chapters)c.html=c===theory?theoryHtml:marked.parser(tokens.slice(c.start+1,c.end));
+// On wide screens a lámina sits beside the paragraph or list that introduces it.
+// Only illustrations up to 700px pair; wider diagrams keep the full column.
+const pairFigures=html=>html.replace(/(<(p|ul|ol)>(?:(?!<\/?\2>)[\s\S])*?<\/\2>)(\s*)(<p><a class="manual-image"[^>]*--image-width:(\d+)px[^>]*>[\s\S]*?<\/a><\/p>)/g,(all,text,tag,space,figure,width)=>{
+  if(text.includes('manual-image')||Number(width)>700)return all;
+  return `<div class="manual-pair"><div class="manual-pair-text">${text}</div><div class="manual-pair-media">${figure}</div></div>`;
+});
+for(const c of chapters)c.html=pairFigures(c===theory?theoryHtml:marked.parser(tokens.slice(c.start+1,c.end)));
 depthShift=0;
 
 const stripTags=s=>s.replace(/<[^>]+>/g,'').replaceAll('&amp;','&').replaceAll('&quot;','"').replaceAll('&lt;','<').replaceAll('&gt;','>');
