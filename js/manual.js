@@ -9,6 +9,33 @@
     new ResizeObserver(measure).observe(nav);measure();return true;
   }
   if(!observeHeader()&&header){const observer=new MutationObserver(()=>{if(observeHeader())observer.disconnect();});observer.observe(header,{childList:true});}
+  // Reading progress and the last position live only in this browser.
+  const progressKey='bcbd-wiki-manual-progress',lastKey='bcbd-wiki-manual-last';
+  const load=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(key))||fallback;}catch(e){return fallback;}};
+  const save=(key,value)=>{try{localStorage.setItem(key,JSON.stringify(value));}catch(e){}};
+  const article=document.getElementById('manual-content');
+  const chapterPage=article?.dataset.chapter;
+
+  // Overview: a bar per chapter and a way back to where reading stopped.
+  const chapterLinks=document.querySelectorAll('.manual-chapters a[data-chapter]');
+  if(chapterLinks.length){
+    const progress=load(progressKey,{});
+    chapterLinks.forEach(link=>{
+      const read=(progress[link.dataset.chapter]||[]).length,total=Number(link.dataset.total);
+      if(!read)return;
+      const box=link.querySelector('.manual-chapter-progress');
+      box.hidden=false;
+      box.querySelector('.manual-chapter-bar span').style.width=Math.min(100,Math.round(read/total*100))+'%';
+      box.querySelector('.manual-chapter-progress-text').textContent=read>=total?'Completado':`${read} de ${total} secciones`;
+    });
+    const last=load(lastKey,null),resume=document.querySelector('.manual-continue');
+    if(last&&resume){
+      resume.href=last.page+(last.id?'#'+encodeURIComponent(last.id):'');
+      resume.querySelector('.manual-continue-chapter').textContent=`Capítulo ${last.n}: ${last.chapter}`;
+      resume.querySelector('.manual-continue-section').textContent=last.section||'';
+      resume.hidden=false;
+    }
+  }
   const toc=document.getElementById('manual-toc');
   // On phones the index is a sheet opened from its button; wider screens keep it as a column.
   const overlay=matchMedia('(max-width: 999.98px)');
@@ -25,6 +52,11 @@
     const targets=links.map(link=>document.getElementById(decodeURIComponent(link.hash.slice(1)))).filter(Boolean);
     const context=document.querySelector('.manual-context');
     const subtopics=[...document.querySelectorAll('#manual-content h3')].filter(h=>!h.closest('.manual-margin, .fire-concept-grid, .fire-phenomena, .fire-explainer'));
+    // A section counts as read once the next one is reached, or the chapter's end is on screen.
+    const progress=load(progressKey,{});
+    const read=new Set(chapterPage?progress[chapterPage]||[]:[]);
+    let lastActive=-1;
+    const paint=()=>links.forEach((link,i)=>link.classList.toggle('is-read',read.has(targets[i]?.id)));
     if(targets.length){
       let ticking=false;
       const update=()=>{
@@ -33,6 +65,16 @@
         let active=0;
         targets.forEach((el,i)=>{if(el.getBoundingClientRect().top<=line)active=i;});
         links.forEach((link,i)=>{link.classList.toggle('is-active',i===active);if(i===active)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current');});
+        if(chapterPage){
+          const atEnd=innerHeight+scrollY>=document.documentElement.scrollHeight-80;
+          let changed=false;
+          targets.forEach((el,i)=>{if((i<active||atEnd)&&!read.has(el.id)){read.add(el.id);changed=true;}});
+          if(changed){const all=load(progressKey,{});all[chapterPage]=[...read];save(progressKey,all);paint();}
+          if(active!==lastActive&&targets[0].getBoundingClientRect().top<=line){
+            lastActive=active;
+            save(lastKey,{page:chapterPage,n:article.dataset.chapterN,chapter:article.dataset.chapterTitle,id:targets[active].id,section:links[active].textContent.trim()});
+          }
+        }
         // "Where am I": the section and the subtopic (h3) being read, once reading has started.
         if(context){
           const section=targets[active];
@@ -45,13 +87,12 @@
         }
       };
       addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(update);}},{passive:true});
-      update();
+      paint();update();
     }
   }
   // "Next chapter" floats in during the last stretch of the chapter, and steps aside when the pager itself is on screen.
   const nextFloat=document.querySelector('.manual-next-float');
   const pager=document.querySelector('.manual-pager');
-  const article=document.getElementById('manual-content');
   if(nextFloat&&pager&&article){
     let pagerVisible=false;
     const show=()=>{
@@ -77,14 +118,38 @@
   if(!dialog)return;
   const full=document.getElementById('manual-image-full');
   const original=document.getElementById('manual-image-original');
-  let previousFocus,previousOverflow='';
-  document.querySelectorAll('.manual-image').forEach(link=>link.addEventListener('click',event=>{
+  const images=[...document.querySelectorAll('.manual-image')];
+  const title=document.getElementById('manual-image-title'),count=document.getElementById('manual-image-count');
+  const prevButton=document.getElementById('manual-image-prev'),nextButton=document.getElementById('manual-image-next');
+  let previousFocus,previousOverflow='',current=0;
+  const showImage=i=>{
+    current=Math.max(0,Math.min(images.length-1,i));
+    const link=images[current],img=link.querySelector('img');
+    full.src=link.href;full.alt=img.alt;original.href=link.href;
+    title.textContent=img.alt?img.alt.charAt(0).toUpperCase()+img.alt.slice(1):'Imagen del manual';
+    if(count)count.textContent=`${current+1} / ${images.length}`;
+    if(prevButton)prevButton.disabled=current===0;
+    if(nextButton)nextButton.disabled=current===images.length-1;
+  };
+  images.forEach((link,i)=>link.addEventListener('click',event=>{
     if(event.ctrlKey||event.metaKey||event.shiftKey||event.altKey)return;
     event.preventDefault();previousFocus=link;previousOverflow=document.body.style.overflow;
-    full.src=link.href;full.alt=link.querySelector('img').alt;
-    original.href=link.href;
+    showImage(i);
     dialog.showModal();document.body.style.overflow='hidden';
   }));
+  prevButton?.addEventListener('click',()=>showImage(current-1));
+  nextButton?.addEventListener('click',()=>showImage(current+1));
+  dialog.addEventListener('keydown',event=>{
+    if(event.key==='ArrowLeft'){event.preventDefault();showImage(current-1);}
+    if(event.key==='ArrowRight'){event.preventDefault();showImage(current+1);}
+  });
+  let touchX=null;
+  dialog.addEventListener('touchstart',event=>{touchX=event.touches[0].clientX;},{passive:true});
+  dialog.addEventListener('touchend',event=>{
+    if(touchX===null)return;
+    const dx=event.changedTouches[0].clientX-touchX;touchX=null;
+    if(Math.abs(dx)>50)showImage(current+(dx<0?1:-1));
+  });
   document.getElementById('manual-image-close').addEventListener('click',()=>dialog.close());
   dialog.addEventListener('click',event=>{
     const rect=dialog.getBoundingClientRect();

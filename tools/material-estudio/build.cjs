@@ -118,12 +118,14 @@ for(const c of chapters)c.html=c===theory?theoryHtml:marked.parser(tokens.slice(
 depthShift=0;
 
 const stripTags=s=>s.replace(/<[^>]+>/g,'').replaceAll('&amp;','&').replaceAll('&quot;','"').replaceAll('&lt;','<').replaceAll('&gt;','>');
+for(const c of chapters)c.minutes=Math.max(1,Math.round(stripTags(c.html).split(/\s+/).filter(Boolean).length/200));
 for(const c of chapters)c.sections=[...c.html.matchAll(/<h2 id="([^"]+)"[^>]*>([\s\S]*?)<\/h2>/g)].map(m=>({id:m[1],text:stripTags(m[2])}));
 
 const pdf=importFile('Reference/Manual - Bomberos I.pdf');
 const pdfURL=encode(pdf.path);
 const pdfSize=(pdf.bytes/1024/1024).toFixed(1).replace('.',',');
 const num=n=>String(n).padStart(2,'0');
+const arrowIcon=d=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${d}"/></svg>`;
 
 // Right-hand index: every chapter, with the current one expanded to its sections.
 const renderToc=current=>`<ol class="manual-toc-chapters">${chapters.map(c=>`<li${c===current?' class="is-current"':''}><a href="${c.page}"${c===current?' aria-current="page"':''}><span class="manual-toc-num">${num(c.n)}</span><span>${escape(c.title)}</span></a>${c===current&&c.sections.length?`<ol class="manual-toc-sections">${c.sections.map(s=>`<li><a href="#${escape(s.id)}">${escape(s.text)}</a></li>`).join('')}</ol>`:''}</li>`).join('')}</ol>`;
@@ -146,7 +148,7 @@ ${body}
   </main>
   <div id="footer"></div>
   <dialog id="manual-image-dialog" class="manual-lightbox" aria-labelledby="manual-image-title">
-    <div class="manual-lightbox-head"><h2 id="manual-image-title">Imagen del manual</h2><button id="manual-image-close" type="button" aria-label="Cerrar imagen">×</button></div>
+    <div class="manual-lightbox-head"><h2 id="manual-image-title">Imagen del manual</h2><span id="manual-image-count" class="manual-lightbox-count" aria-live="polite"></span><button id="manual-image-prev" class="manual-lightbox-nav" type="button" aria-label="Lámina anterior">${arrowIcon('M15 6l-6 6 6 6')}</button><button id="manual-image-next" class="manual-lightbox-nav" type="button" aria-label="Lámina siguiente">${arrowIcon('M9 6l6 6-6 6')}</button><button id="manual-image-close" type="button" aria-label="Cerrar imagen">×</button></div>
     <div class="manual-lightbox-body"><img id="manual-image-full" alt=""></div>
     <a id="manual-image-original" target="_blank" rel="noopener">Abrir imagen original</a>
   </dialog>
@@ -167,8 +169,9 @@ const overview=`    <header class="manual-hero">
       <a class="manual-download" href="${pdfURL}" download="Manual - Bomberos I.pdf">Descargar PDF original <small>${pdfSize} MiB · Documento escaneado</small></a>
     </header>
     <section id="manual-content" class="manual-chapters" aria-labelledby="capitulos">
+      <a class="manual-continue" href="index.html" hidden><span><small>Continuar donde quedaste</small><strong class="manual-continue-chapter"></strong><span class="manual-continue-section"></span></span>${arrowIcon('M5 12h14M13 6l6 6-6 6')}</a>
       <h2 id="capitulos">Capítulos</h2>
-      <ol>${chapters.map(c=>`<li><a href="${c.page}"><span class="manual-chapter-num">${num(c.n)}</span><span class="manual-chapter-body"><strong>${escape(c.title)}</strong><small>${c.sections.length} secciones · ${escape(c.sections.slice(0,3).map(s=>s.text).join(', '))}${c.sections.length>3?'…':''}</small></span></a></li>`).join('')}</ol>
+      <ol>${chapters.map(c=>`<li><a href="${c.page}" data-chapter="${c.page}" data-total="${c.sections.length}"><span class="manual-chapter-num">${num(c.n)}</span><span class="manual-chapter-body"><strong>${escape(c.title)}</strong><small>${c.sections.length} secciones · ≈ ${c.minutes} min de lectura</small><span class="manual-chapter-progress" hidden><span class="manual-chapter-bar"><span></span></span><span class="manual-chapter-progress-text"></span></span></span></a></li>`).join('')}</ol>
     </section>`;
 // Links written before the split pointed at #anchors of the single page; send them to their chapter.
 const legacy=Object.fromEntries(headings.filter(h=>pageOf.get(h.manualId)!=='index.html').map(h=>[h.manualId,pageOf.get(h.manualId)]));
@@ -183,10 +186,10 @@ for(const c of chapters){
       <span class="reflective-stripe" aria-hidden="true"></span>
       <p class="manual-chapter-count">Capítulo ${c.n} de ${chapters.length}</p>
       <h1 id="${c.id}">${escape(c.title)}</h1>
-      <p class="manual-meta">${c.sections.length} secciones · <a href="${pdfURL}" download="Manual - Bomberos I.pdf">PDF original (${pdfSize} MiB)</a></p>
+      <p class="manual-meta">${c.sections.length} secciones · ≈ ${c.minutes} min de lectura · <a href="${pdfURL}" download="Manual - Bomberos I.pdf">PDF original (${pdfSize} MiB)</a></p>
     </header>
     <div class="manual-layout">
-      <article id="manual-content" class="manual-content" aria-labelledby="${c.id}"><div class="manual-context" aria-hidden="true"><span class="manual-context-num"></span><span class="manual-context-section"></span><span class="manual-context-topic"></span></div>${c.html}${pager}</article>
+      <article id="manual-content" class="manual-content" aria-labelledby="${c.id}" data-chapter="${c.page}" data-chapter-n="${c.n}" data-chapter-title="${escape(c.title)}"><div class="manual-context" aria-hidden="true"><span class="manual-context-num"></span><span class="manual-context-section"></span><span class="manual-context-topic"></span></div>${c.html}${pager}</article>
       <aside class="manual-sidebar" aria-label="Índice del manual">
         <details id="manual-toc"><summary><span class="manual-toc-title">Índice</span></summary><nav aria-label="Capítulos y secciones">${renderToc(c)}</nav></details>
       </aside>
