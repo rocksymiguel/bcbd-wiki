@@ -114,6 +114,29 @@
     button.setAttribute('aria-expanded',String(show));
     button.textContent=show?'Ocultar':'Mostrar';
   }));
+  // Diagrams: touching a piece shows its explanation; the tetrahedron switch adds the chain reaction.
+  document.querySelectorAll('.fire-diagram').forEach(fig=>{
+    const nodes=[...fig.querySelectorAll('[data-show]')],details=[...fig.querySelectorAll('[data-detail]')],hint=fig.querySelector('.fire-diagram-hint');
+    const select=id=>{
+      nodes.forEach(n=>n.setAttribute('aria-pressed',String(n.dataset.show===id)));
+      details.forEach(d=>{d.hidden=d.dataset.detail!==id;});
+      if(hint)hint.hidden=!!id;
+    };
+    nodes.forEach(n=>{n.setAttribute('aria-pressed','false');n.addEventListener('click',()=>select(n.getAttribute('aria-pressed')==='true'?null:n.dataset.show));});
+    const modes=[...fig.querySelectorAll('[data-tetra-mode]')];
+    modes.forEach(b=>b.addEventListener('click',()=>{
+      fig.dataset.mode=b.dataset.tetraMode;
+      modes.forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+      const core=fig.querySelector('.fire-tetra-only');
+      if(b.dataset.tetraMode==='tetra')select(core?.dataset.show||null);
+      else if(core?.getAttribute('aria-pressed')==='true')select(null);
+    }));
+    // The heat's way back is traced once, the first time the cycle comes into view.
+    if(fig.classList.contains('fire-cycle')&&'IntersectionObserver' in window){
+      const io=new IntersectionObserver(entries=>{if(entries[0].isIntersecting){fig.classList.add('is-drawn');io.disconnect();}},{threshold:.4});
+      io.observe(fig);
+    }
+  });
   const dialog=document.getElementById('manual-image-dialog');
   if(!dialog)return;
   const full=document.getElementById('manual-image-full');

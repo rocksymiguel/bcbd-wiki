@@ -272,3 +272,63 @@
 .manual-lightbox-head .manual-lightbox-nav { display:inline-flex; align-items:center; justify-content:center; padding:0; font-size:0; }
 .manual-lightbox-nav svg { width:22px; height:22px; }
 .manual-lightbox-nav:disabled { opacity:.35; cursor:default; }
+
+/* Diagramas de Teoría del fuego: piezas que se tocan para ver su explicación. */
+.fire-diagram { margin:32px 0; padding:20px 20px 16px; border:1px solid var(--theme-border); border-radius:18px; background:var(--theme-surface); }
+.fire-diagram-head { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; margin:0 0 8px; }
+.manual-content .fire-diagram-head h4 { margin:0; font-stretch:75%; font-weight:800; font-size:1.45em; color:var(--theme-heading); }
+.fire-diagram-switch { display:inline-grid; grid-template-columns:1fr 1fr; gap:4px; padding:4px; border-radius:11px; background:var(--theme-hover); }
+.fire-diagram-switch button { min-height:36px; padding:0 14px; border:0; border-radius:8px; background:transparent; color:var(--theme-muted); font:inherit; font-size:14px; cursor:pointer; }
+.fire-diagram-switch button[aria-pressed="true"] { background:var(--theme-surface); color:var(--theme-text); font-weight:700; box-shadow:0 1px 3px var(--theme-shadow); }
+.fire-diagram-stage { position:relative; width:100%; max-width:560px; margin:0 auto; }
+.fire-tetra-stage { aspect-ratio:600 / 440; }
+.fire-cycle-stage { aspect-ratio:560 / 480; }
+.fire-diagram-art { position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
+.fire-node { position:absolute; left:var(--x); top:var(--y); transform:translate(-50%,-50%); box-sizing:border-box; display:flex; flex-direction:column; align-items:center; gap:6px; width:29%; max-width:160px; padding:10px 8px; border:1px solid var(--theme-border); border-radius:14px; background:var(--theme-surface-muted); color:var(--theme-text); font:inherit; font-size:clamp(12px, .8em, 16px); font-weight:700; line-height:1.2; text-align:center; cursor:pointer; transition:border-color .15s ease, box-shadow .15s ease, opacity .25s ease, transform .25s ease; }
+.fire-node:hover { border-color:var(--icon); }
+.fire-node[aria-pressed="true"] { border-color:var(--accent); box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 28%, transparent); }
+.fire-node svg { flex:none; width:28px; height:28px; fill:none; stroke:var(--icon); stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
+.fire-node small { display:block; font-size:.85em; color:var(--icon); font-variant-numeric:tabular-nums; }
+.fire-node-core { border-radius:999px; background:color-mix(in srgb, var(--accent) 14%, var(--theme-surface)); border-color:color-mix(in srgb, var(--accent) 55%, transparent); }
+.fire-node-core svg { stroke:var(--accent-text); }
+.fire-diagram-detail { margin:16px 0 0; padding:14px 16px; border-radius:12px; background:var(--theme-hover); min-height:3.2em; }
+.manual-content .fire-diagram-detail h5 { margin:0 0 4px; font-size:1em; color:var(--theme-heading); }
+.manual-content .fire-diagram-detail p { margin:0; font-size:.95em; }
+.manual-content .fire-diagram-hint { color:var(--theme-muted); }
+.fire-diagram figcaption { margin:12px 0 0; font-size:.88em; line-height:1.5; color:var(--theme-muted); }
+
+/* Triángulo → tetraedro: la reacción en cadena aparece en el centro. */
+.fire-tetra-face { fill:color-mix(in srgb, var(--icon) 8%, transparent); stroke:var(--icon); stroke-opacity:.6; stroke-width:2; stroke-linejoin:round; }
+.fire-tetra-spokes { fill:none; stroke:var(--accent); stroke-width:2; stroke-dasharray:6 6; opacity:0; transition:opacity .3s ease; }
+.fire-tetra[data-mode="tetra"] .fire-tetra-spokes { opacity:.75; }
+.fire-tetra .fire-tetra-only { visibility:hidden; opacity:0; transform:translate(-50%,-50%) scale(.85); }
+.fire-tetra[data-mode="tetra"] .fire-tetra-only { visibility:visible; opacity:1; transform:translate(-50%,-50%); }
+
+/* Ciclo: el regreso del calor en rojo, trazado una vez al aparecer. */
+.fire-cycle-arc { fill:none; stroke:var(--theme-muted); stroke-width:2.5; stroke-linecap:round; }
+.fire-cycle-head { fill:var(--theme-muted); }
+.fire-cycle-hot { stroke:var(--accent); stroke-width:4; }
+.fire-cycle-head-hot { fill:var(--accent); }
+.fire-cycle-ring { fill:none; stroke:var(--accent); stroke-opacity:.35; stroke-width:1.5; stroke-dasharray:4 6; }
+.fire-cycle-label { fill:var(--theme-muted); font-family:var(--site-font); font-size:15px; }
+.fire-cycle-label-hot { fill:var(--accent-text); font-weight:700; }
+.fire-cycle-link { display:none; }
+.fire-cycle .fire-node-core { width:26%; }
+.fire-cycle.is-drawn .fire-cycle-hot { animation:fire-draw 1.2s ease-out both; }
+@keyframes fire-draw { from { stroke-dasharray:100; stroke-dashoffset:100; } to { stroke-dasharray:100; stroke-dashoffset:0; } }
+@media (prefers-reduced-motion:reduce) { .fire-cycle.is-drawn .fire-cycle-hot { animation:none; } .fire-node, .fire-tetra-spokes { transition:none; } }
+
+/* Celular: el ciclo se lee de arriba abajo, con el regreso del calor al final. */
+@media (max-width:560px) {
+  .fire-diagram { padding:16px 14px 14px; }
+  .fire-tetra .fire-node { width:31%; padding:8px 4px; font-size:12px; }
+  .fire-tetra .fire-node svg { width:22px; height:22px; }
+  .fire-cycle-stage { aspect-ratio:auto; display:flex; flex-direction:column; align-items:stretch; gap:4px; }
+  .fire-cycle-stage .fire-diagram-art { display:none; }
+  .fire-cycle-stage .fire-node, .fire-cycle .fire-node-core { position:static; transform:none; width:auto; max-width:none; flex-direction:row; justify-content:flex-start; gap:12px; padding:12px 14px; text-align:left; font-size:15px; }
+  .fire-cycle .fire-node-core { order:10; margin-top:10px; border-radius:14px; }
+  .fire-cycle-link { display:block; padding:2px 0 2px 48px; font-size:13px; color:var(--theme-muted); }
+  .fire-cycle-link::before { content:"↓ "; }
+  .fire-cycle-link-hot { color:var(--accent-text); font-weight:700; }
+  .fire-cycle-link-hot::before { content:"↺ "; }
+}
