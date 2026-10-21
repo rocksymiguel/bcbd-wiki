@@ -114,13 +114,7 @@ const theoryHtml=theoryTemplate.replace(/\{\{(SOURCE|ID):([^}]+)\}\}/g,(_,kind,n
   return kind==='ID'?sourceSections.get(name).id:sourceSections.get(name).html;
 });
 assert(!/\{\{(SOURCE|ID):/.test(theoryHtml),'Unexpanded theory placeholder');
-// On wide screens a lámina sits beside the paragraph or list that introduces it.
-// Only illustrations up to 700px pair; wider diagrams keep the full column.
-const pairFigures=html=>html.replace(/(<(p|ul|ol)>(?:(?!<\/?\2>)[\s\S])*?<\/\2>)(\s*)(<p><a class="manual-image"[^>]*--image-width:(\d+)px[^>]*>[\s\S]*?<\/a><\/p>)/g,(all,text,tag,space,figure,width)=>{
-  if(text.includes('manual-image')||Number(width)>700)return all;
-  return `<div class="manual-pair"><div class="manual-pair-text">${text}</div><div class="manual-pair-media">${figure}</div></div>`;
-});
-for(const c of chapters)c.html=pairFigures(c===theory?theoryHtml:marked.parser(tokens.slice(c.start+1,c.end)));
+for(const c of chapters)c.html=c===theory?theoryHtml:marked.parser(tokens.slice(c.start+1,c.end));
 depthShift=0;
 
 const stripTags=s=>s.replace(/<[^>]+>/g,'').replaceAll('&amp;','&').replaceAll('&quot;','"').replaceAll('&lt;','<').replaceAll('&gt;','>');
@@ -191,7 +185,7 @@ for(const c of chapters){
       <p class="manual-meta">${c.sections.length} secciones · <a href="${pdfURL}" download="Manual - Bomberos I.pdf">PDF original (${pdfSize} MiB)</a></p>
     </header>
     <div class="manual-layout">
-      <article id="manual-content" class="manual-content" aria-labelledby="${c.id}">${c.html}${pager}</article>
+      <article id="manual-content" class="manual-content" aria-labelledby="${c.id}"><div class="manual-context" aria-hidden="true"><span class="manual-context-num"></span><span class="manual-context-section"></span><span class="manual-context-topic"></span></div>${c.html}${pager}</article>
       <aside class="manual-sidebar" aria-label="Índice del manual">
         <details id="manual-toc"><summary><span class="manual-toc-title">Índice</span></summary><nav aria-label="Capítulos y secciones">${renderToc(c)}</nav></details>
       </aside>

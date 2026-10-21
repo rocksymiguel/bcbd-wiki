@@ -39,16 +39,6 @@
 .manual-toc-sections a.is-active::before { content:""; position:absolute; left:-16px; top:5px; bottom:5px; width:6px; border-radius:3px; background:linear-gradient(90deg, var(--accent) 0 33%, var(--silver) 33% 67%, var(--accent) 67%); }
 /* The type grows with the screen, so the same ~75-character line fills more of a wide display. */
 .manual-content { min-width:0; width:100%; padding:0 0 40px; font-size:clamp(17px, calc(0.55vw + 9.5px), 20px); line-height:1.75; overflow-wrap:anywhere; }
-/* Lámina beside its paragraph on wide screens; stacked below otherwise. */
-.manual-pair-media .manual-image { margin:0; }
-@media (min-width:1400px) {
-  .manual-pair { display:grid; grid-template-columns:minmax(0,60ch) minmax(280px,1fr); gap:28px 36px; align-items:start; margin:22px 0; }
-  .manual-pair-text > :first-child { margin-top:0; }
-  .manual-pair-text > :last-child { margin-bottom:0; }
-  .manual-pair-media { position:sticky; top:24px; }
-  .manual-pair-media p { margin:0; }
-  .manual-pair-media .manual-image { width:100%; max-width:var(--image-width,700px); }
-}
 .manual-content :is(p, li, h2, h3, h4, h5, h6, blockquote):not(:has(> .manual-image)) { max-width:75ch; }
 .manual-content .fire-concept-grid p, .manual-content .fire-phenomena p { max-width:none; }
 
@@ -84,28 +74,45 @@
 .manual-chapter-body strong { display:block; font-size:18px; }
 .manual-chapter-body small { display:block; margin-top:4px; font-size:14px; color:var(--theme-muted); }
 
-/* Secciones: el folleto como base y la ampliación separada visualmente. */
-.manual-section { margin:0 0 64px; }
-.manual-section-head { display:flex; align-items:baseline; gap:14px; margin:0 0 18px; padding-top:28px; border-top:2px solid var(--theme-border); }
-.manual-section-number { flex:none; font-stretch:75%; font-weight:800; font-size:30px; color:var(--icon); font-variant-numeric:tabular-nums; }
-.manual-content .manual-section-head h2 { margin:0; padding:0; border:0; }
-.manual-source-label, .manual-expansion-label { margin:0 0 6px; font-size:14px; font-weight:700; color:var(--theme-muted); }
-.manual-source > h3:first-of-type, .manual-source > p:first-of-type + h3 { margin-top:10px; }
-.manual-expansion { margin:28px 0 0; padding:22px 24px; border-radius:16px; background:var(--theme-surface-muted); border:1px solid var(--theme-border); }
-.manual-expansion-label { color:var(--accent-text); }
-.manual-expansion > :last-child { margin-bottom:0; }
+/* Secciones: un solo tema continuo, con tres niveles de título bien distintos. */
+.manual-section { margin:0 0 72px; }
+.manual-section-head { display:flex; align-items:baseline; gap:16px; margin:0 0 24px; padding-top:32px; border-top:2px solid var(--theme-border); }
+.manual-section-number { flex:none; font-stretch:75%; font-weight:800; font-size:clamp(34px,3vw,46px); line-height:1; color:var(--icon); font-variant-numeric:tabular-nums; }
+.manual-content .manual-section-head h2 { margin:0; padding:0; border:0; font-size:clamp(32px,3vw,46px); line-height:1.02; }
+.manual-content .manual-section-main h3 { margin:44px 0 12px; font-size:1.4em; line-height:1.25; font-weight:750; }
+.manual-content .manual-section-main h4 { margin:28px 0 8px; font-size:1.08em; font-weight:700; color:var(--icon); }
+.manual-content .manual-section-main h5, .manual-content .manual-section-main h6 { margin:22px 0 6px; font-size:1em; font-weight:700; color:var(--theme-muted); }
+/* The other chapters are plain transcriptions: same three levels on their direct headings. */
+.manual-content > h2 { margin:72px 0 24px; padding-top:32px; border-top:2px solid var(--theme-border); font-size:clamp(32px,3vw,46px); line-height:1.02; }
+.manual-content > h3 { margin:44px 0 12px; font-size:1.4em; line-height:1.25; font-weight:750; }
+.manual-content > h4 { margin:28px 0 8px; font-size:1.08em; font-weight:700; color:var(--icon); }
+.manual-content > h5, .manual-content > h6 { margin:22px 0 6px; font-size:1em; font-weight:700; color:var(--theme-muted); }
+.manual-topic > :first-child { margin-top:0; }
+.manual-topic-more { margin-top:28px; }
+.manual-topic-more > :last-child { margin-bottom:0; }
 /* Margen de estudio: la pregunta y las referencias de cada sección, solo donde existen. */
-.manual-margin { display:flex; flex-direction:column; gap:16px; margin-top:20px; }
+.manual-margin { display:flex; flex-direction:column; gap:16px; margin-top:28px; }
 .manual-margin-label { margin:0 0 8px; font-size:14px; font-weight:700; color:var(--theme-muted); }
-.manual-margin .fire-question, .manual-margin .fire-question-list .fire-question { margin:0 0 12px; }
+.manual-margin .fire-question { margin:0 0 12px; }
 .manual-refs ul { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px; }
 .manual-refs li { margin:0; font-size:15px; line-height:1.45; }
 .manual-refs a { color:var(--accent-text); }
 @media (min-width:1400px) {
-  .manual-study { display:grid; grid-template-columns:minmax(0, calc(60ch + 50px)) minmax(260px, 420px); gap:0 36px; align-items:start; margin-top:28px; }
-  .manual-study > .manual-expansion { margin:0; }
-  .manual-margin { margin:0; position:sticky; top:24px; font-size:16px; }
+  .manual-section-body { display:grid; grid-template-columns:minmax(0, 75ch) minmax(260px, 400px); gap:0 48px; align-items:start; }
+  .manual-margin { margin:0; position:sticky; top:84px; font-size:16px; }
 }
+
+/* "Dónde estoy": sección y subtema actuales, fijos arriba mientras se lee. */
+.manual-context { position:sticky; top:12px; z-index:40; display:flex; align-items:baseline; gap:10px; width:max-content; max-width:100%; box-sizing:border-box; margin:0 0 8px; padding:10px 16px; border-radius:14px; background:var(--glass); -webkit-backdrop-filter:blur(20px) saturate(160%); backdrop-filter:blur(20px) saturate(160%); border:1px solid var(--glass-border); box-shadow:inset 0 1px 0 var(--glass-highlight), 0 10px 26px var(--theme-shadow); font-size:15px; line-height:1.3; white-space:nowrap; overflow:hidden; opacity:0; transform:translateY(-6px); pointer-events:none; transition:opacity .18s ease, transform .18s ease; }
+.manual-context.is-visible { opacity:1; transform:none; }
+.manual-context-num { font-stretch:75%; font-weight:800; font-size:18px; color:var(--icon); }
+.manual-context-section { font-weight:700; color:var(--theme-heading); overflow:hidden; text-overflow:ellipsis; }
+.manual-context-topic { color:var(--theme-muted); overflow:hidden; text-overflow:ellipsis; }
+.manual-context-topic:not(:empty)::before { content:"›"; margin-right:10px; color:var(--theme-muted); }
+@media (prefers-reduced-motion:reduce) { .manual-context { transition:none; } }
+/* On phones it sits below the top bar, and moves up when that bar hides while scrolling down. */
+@media (max-width:999.98px) { .manual-context { top:calc(var(--manual-header-offset,92px) - 14px); font-size:14px; padding:8px 12px; transition:opacity .18s ease, transform .18s ease, top .2s ease; } body:has(#header.site-header-hidden) .manual-context { top:8px; } .manual-context-num { font-size:16px; } }
+
 .manual-content h2, .manual-content h3, .manual-content h4, .manual-content h5, .manual-content h6, .manual-hero h1 { scroll-margin-top:var(--manual-header-offset,130px); }
 .manual-content h2 { font-size:clamp(25px,2.1vw,35px); line-height:1.3; margin:60px 0 22px; border-top:2px solid var(--theme-border); padding-top:26px; color:var(--theme-heading); }
 .manual-content > h2:first-child { margin-top:0; }

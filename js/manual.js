@@ -23,6 +23,8 @@
     // Mark the section being read: the last heading that has passed the top quarter of the screen.
     const links=[...toc.querySelectorAll('.manual-toc-sections a')];
     const targets=links.map(link=>document.getElementById(decodeURIComponent(link.hash.slice(1)))).filter(Boolean);
+    const context=document.querySelector('.manual-context');
+    const subtopics=[...document.querySelectorAll('#manual-content h3')].filter(h=>!h.closest('.manual-margin, .fire-concept-grid, .fire-phenomena, .fire-explainer'));
     if(targets.length){
       let ticking=false;
       const update=()=>{
@@ -31,6 +33,16 @@
         let active=0;
         targets.forEach((el,i)=>{if(el.getBoundingClientRect().top<=line)active=i;});
         links.forEach((link,i)=>{link.classList.toggle('is-active',i===active);if(i===active)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current');});
+        // "Where am I": the section and the subtopic (h3) being read, once reading has started.
+        if(context){
+          const section=targets[active];
+          let topic='';
+          for(const h of subtopics){if(h.getBoundingClientRect().top>line)break;if(section.compareDocumentPosition(h)&Node.DOCUMENT_POSITION_FOLLOWING)topic=h.textContent.trim();}
+          context.querySelector('.manual-context-num').textContent=String(active+1).padStart(2,'0');
+          context.querySelector('.manual-context-section').textContent=links[active].textContent.trim();
+          context.querySelector('.manual-context-topic').textContent=topic;
+          context.classList.toggle('is-visible',targets[0].getBoundingClientRect().top<=line);
+        }
       };
       addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(update);}},{passive:true});
       update();
