@@ -31,7 +31,8 @@ body.map-page main.map-content.gis { width:auto; padding:0; margin:16px 16px 16p
 .gis .gis-search { padding:8px; border-radius:16px; }
 .gis-search-row { display:flex; align-items:center; gap:8px; padding:0 4px 0 12px; border:1px solid var(--theme-border); border-radius:12px; background:var(--theme-surface); color:var(--theme-muted); }
 .gis-search-row:focus-within { border-color:var(--accent); }
-.gis .gis-search-row input { flex:1; min-width:0; height:42px; padding:0; border:0; background:none; color:var(--theme-text); font:inherit; font-size:15px; outline:none; }
+.gis .gis-search-row input { flex:1; min-width:0; height:42px; padding:0; border:0; background:none; color:var(--theme-text); font:inherit; font-size:15px; outline:none; -webkit-appearance:none; appearance:none; }
+.gis .gis-search-row input::-webkit-search-decoration { -webkit-appearance:none; } /* Safari añade su propia lupa */
 .gis .gis-search-row button { padding:6px 12px; font-size:13px; border-radius:9px; }
 .gis-search-tools { display:flex; gap:8px; margin-top:8px; }
 .gis .gis-search-tools select { flex:1; min-width:0; padding:8px; font:inherit; font-size:13px; color:var(--theme-text); background:var(--theme-surface); border:1px solid var(--theme-border); border-radius:9px; }
@@ -183,9 +184,10 @@ body.map-page main.map-content.gis { width:auto; padding:0; margin:16px 16px 16p
 .map-river-label { background:var(--theme-surface); color:#0284c7; border:0; box-shadow:none; font-size:12px; font-style:italic; padding:2px 5px; }
 :root[data-theme="dark"] .map-river-label { color:#38bdf8; }
 .leaflet-tooltip.map-river-label::before { display:none; }
-.gis .map-heading { position:absolute; z-index:2; top:72px; left:50%; transform:translateX(-50%); margin:0; }
+/* Aviso de la vista pública: ocupa el lugar del botón de observación, que ahí no existe. */
+.gis .map-heading { position:absolute; z-index:2; bottom:30px; left:50%; transform:translateX(-50%); width:max-content; max-width:min(420px, calc(100% - 24px)); margin:0; }
 .gis .map-heading:empty { display:none; }
-.gis .map-heading p { margin:0; padding:6px 12px; border-radius:999px; }
+.gis .map-heading p { margin:0; padding:7px 14px; border-radius:12px; font-size:12px; line-height:1.4; text-align:center; color:var(--theme-text); background:var(--theme-surface); -webkit-backdrop-filter:none; backdrop-filter:none; }
 .gis .map-elevation-panel { flex:none; padding:8px 12px; border-radius:12px; font-size:13px; }
 .gis .map-elevation-panel[hidden] { display:none; }
 .map-elevation-panel p { margin:0; line-height:1.5; }
@@ -247,7 +249,10 @@ body.map-page main.map-content.gis { width:auto; padding:0; margin:16px 16px 16p
   .gis .leaflet-control-zoom { display:none; }
   .gis .leaflet-bottom.leaflet-left { display:none; }
   .gis .leaflet-control-attribution { max-width:calc(100vw - 40px); overflow:hidden; white-space:nowrap; text-overflow:ellipsis; font-size:10px; }
-  .gis .map-heading { top:auto; bottom:130px; }
+  .gis .map-heading { bottom:22px; }
+  /* Safari móvil deja manchas con el desenfoque sobre el mapa: tarjetas opacas. */
+  body.map-page main.map-content.gis { --gis-card:var(--theme-surface); }
+  .gis .gis-search, .gis .gis-status, .gis #map-report-hint, .gis .map-elevation-panel { -webkit-backdrop-filter:none; backdrop-filter:none; }
   .map-elevation-legend { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:2px 10px; max-width:215px; padding:6px 8px; font-size:10px; }
   .map-elevation-legend strong, .map-elevation-legend small { grid-column:1/-1; }
   .map-elevation-legend i { width:12px; flex:none; }

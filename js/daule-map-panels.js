@@ -56,14 +56,18 @@
   }
   function renderStrip() {
     const items = [];
+    let readings = 0;
     variables.forEach(([key, label]) => {
       const metric = document.querySelector(`#env-station-values [data-variable="${key}"]`);
       if (!metric) return;
+      readings++;
       const value = metric.querySelector('strong').textContent.replace(/ \/ última hora| · datum no documentado/, '');
-      const state = value === 'Sin dato' ? 'missing' : metric.dataset.source === 'open-meteo' ? 'backup' : metric.classList.contains('env-old') ? 'old' : '';
+      if (value === 'Sin dato') return; // A row of empty chips says nothing; one summary chip below does.
+      const state = metric.dataset.source === 'open-meteo' ? 'backup' : metric.classList.contains('env-old') ? 'old' : '';
       const source = metric.dataset.source === 'open-meteo' ? 'Respaldo Open-Meteo (modelo)' : 'HM002 · INAMHI';
-      items.push(chip(label, value === 'Sin dato' ? '—' : value, label + ': ' + value + ' · ' + source, state));
+      items.push(chip(label, value, label + ': ' + value + ' · ' + source, state));
     });
+    if (readings && !items.length) items.push(chip('Estación HM002', 'Sin datos', 'La estación no tiene lecturas con fecha válida', 'missing'));
     const tide = /Próxima (pleamar|bajamar): (.+?), ([\d.,]+ m)/.exec(el('env-tide-status').textContent);
     if (tide) items.push(chip(tide[1] === 'pleamar' ? 'Próx. pleamar' : 'Próx. bajamar', (tide[1] === 'pleamar' ? '↑ ' : '↓ ') + tide[2].split(', ').pop(),
       'Predicción INOCAR Guayaquil–Río Guayas · ' + tide[3] + ' MLWS'));
