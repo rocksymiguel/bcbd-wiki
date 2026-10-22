@@ -30,8 +30,9 @@ for(const heading of headings){
   targets.set(full,heading.manualId);
   if(!targets.has(heading.text))targets.set(heading.text,heading.manualId);
 }
-// Each chapter becomes its own page; its headings link there.
-const pageFile=id=>id+'.html';
+// Each chapter becomes its own page; its headings link there. Chapters with a long title get a short address.
+const shortPages={'equipo-de-proteccion-personal-y-equipo-de-respiracion-autonoma':'epp-y-era'};
+const pageFile=id=>(shortPages[id]||id)+'.html';
 const pageOf=new Map();
 {let current='index.html',seenIndex=false;
   for(const h of headings){
