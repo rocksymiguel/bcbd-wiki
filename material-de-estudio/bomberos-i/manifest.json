@@ -64,7 +64,7 @@
       "sections": 11
     }
   ],
-  "headings": 300,
+  "headings": 299,
   "imageCount": 189,
   "assets": [
     {
@@ -474,13 +474,6 @@
       "height": 830
     },
     {
-      "path": "Attachment/p124-alarmas-pass.png",
-      "bytes": 405568,
-      "sha256": "2c6b60d7508556e7cce8874f81716248705b4b759287d6a51e7444cfca9f54c0",
-      "width": 1379,
-      "height": 444
-    },
-    {
       "path": "Attachment/p126-mascara-resistencia-termica-v2.png",
       "bytes": 1236530,
       "sha256": "e304e57a7adc49157ebb590e29d6edbd2a327bf228fdf208d28e98f985a522fc",
@@ -495,6 +488,13 @@
       "height": 535
     },
     {
+      "path": "Attachment/p129-mascara-comunicacion-mecanica-v2.png",
+      "bytes": 435008,
+      "sha256": "680d149c929356b4df1f4c550cb6aeaa96ff1597d8b9be2b773d5acb3aa51304",
+      "width": 550,
+      "height": 570
+    },
+    {
       "path": "Attachment/p128-sistema-respiracion-emergencia-v2.png",
       "bytes": 494043,
       "sha256": "cf9b0653de5f13ea700d062d3d45cc7d6bee057368c7765973e806029d9d448b",
@@ -502,11 +502,11 @@
       "height": 450
     },
     {
-      "path": "Attachment/p129-mascara-comunicacion-mecanica-v2.png",
-      "bytes": 435008,
-      "sha256": "680d149c929356b4df1f4c550cb6aeaa96ff1597d8b9be2b773d5acb3aa51304",
-      "width": 550,
-      "height": 570
+      "path": "Attachment/p124-alarmas-pass.png",
+      "bytes": 405568,
+      "sha256": "2c6b60d7508556e7cce8874f81716248705b4b759287d6a51e7444cfca9f54c0",
+      "width": 1379,
+      "height": 444
     },
     {
       "path": "Attachment/p135-pieza-facial-y-desinfeccion-v2.png",
