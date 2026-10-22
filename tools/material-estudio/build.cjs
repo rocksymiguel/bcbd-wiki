@@ -97,7 +97,7 @@ assert.deepEqual(chapters.map(c=>c.title),headings.filter(h=>h.depth===2&&h.text
 // Chapters with a template (<chapter-id>.html here) follow the brochure's sections (###) as their backbone,
 // each one placed once and in order; the template adds the expansion around them. `omit` lists brochure
 // sections a template replaces with its own material. The rest stay as a direct transcription.
-const templates={'teoria-del-fuego':{omit:['Guía didáctica complementaria']},'herramientas-y-equipos':{},'abastecimiento-de-agua':{},'escaleras-portatiles':{},'equipo-de-respiracion-autonoma':{}};
+const templates={'teoria-del-fuego':{omit:['Guía didáctica complementaria']},'herramientas-y-equipos':{},'equipo-de-proteccion-personal-y-equipo-de-respiracion-autonoma':{},'abastecimiento-de-agua':{},'escaleras-portatiles':{}};
 const templated=[];
 depthShift=1;
 for(const c of chapters){
@@ -181,8 +181,30 @@ const overview=`    <header class="manual-hero">
     </section>`;
 // Links written before the split pointed at #anchors of the single page; send them to their chapter.
 const legacy=Object.fromEntries(headings.filter(h=>pageOf.get(h.manualId)!=='index.html').map(h=>[h.manualId,pageOf.get(h.manualId)]));
+// Renamed chapters (old id → new id) keep a page at their old address that forwards there, anchors included.
+const renamed={'equipo-de-respiracion-autonoma':'equipo-de-proteccion-personal-y-equipo-de-respiracion-autonoma'};
+for(const [from,to] of Object.entries(renamed)){
+  assert(chapters.some(c=>c.id===to),'Renamed chapter not found: '+to);
+  for(const h of headings)if(h.manualId===to||h.manualId.startsWith(to+'--'))legacy[from+h.manualId.slice(to.length)]=pageFile(from);
+}
 const legacyScript=`\n  <script>(function(){var m=${JSON.stringify(legacy)};var id=decodeURIComponent(location.hash.slice(1));if(m[id])location.replace(m[id]+location.hash);})();</script>`;
 written.set('index.html',page({docTitle:title,crumbs:crumbRoot+`<span>${escape(title)}</span>`,body:overview,script:legacyScript}));
+for(const [from,to] of Object.entries(renamed)){
+  const target=pageFile(to);
+  written.set(pageFile(from),`<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex">
+  <title>Página movida · ${escape(title)}</title>
+  <link rel="canonical" href="${target}">
+  <script>(function(){var h=decodeURIComponent(location.hash.slice(1));if(h.indexOf(${JSON.stringify(from)})===0)h=${JSON.stringify(to)}+h.slice(${from.length});location.replace(${JSON.stringify(target)}+(h?'#'+h:''));})();</script>
+  <meta http-equiv="refresh" content="0; url=${target}">
+</head>
+<body><p>Este capítulo cambió de dirección: <a href="${target}">${escape(chapters.find(c=>c.id===to).title)}</a>.</p></body>
+</html>
+`);
+}
 
 for(const c of chapters){
   const prev=chapters[c.n-2],next=chapters[c.n];
