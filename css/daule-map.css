@@ -197,9 +197,12 @@ body.map-page main.map-content.gis { width:auto; padding:0; margin:16px 16px 16p
 .gis .gis-add #map-add[aria-pressed="true"]::before { content:""; }
 .gis .gis-add #map-add[hidden] { display:none; }
 .gis #map-report-hint { margin:0; padding:6px 12px; border-radius:999px; color:var(--theme-text); }
-.gis-status { position:absolute; z-index:2; left:12px; bottom:12px; max-width:min(400px, calc(50% - 125px)); padding:5px 10px; border-radius:10px; font-size:12px; color:var(--theme-muted); }
-.map-status-row { display:flex; flex-wrap:wrap; gap:4px 12px; justify-content:space-between; align-items:center; }
-.map-status-row p { margin:0; }
+.gis-status { position:absolute; z-index:2; left:12px; bottom:12px; max-width:min(400px, calc(50% - 150px)); padding:5px 10px; border-radius:10px; font-size:12px; color:var(--theme-muted); box-sizing:border-box; }
+/* Sin error, el estado cabe en una línea junto al botón central; con error se lee completo. */
+.gis-status:has(#map-retry:not([hidden]), #map-tile-status:not([hidden])) { max-width:min(400px, calc(100% - 24px)); bottom:84px; }
+.map-status-row { display:flex; flex-wrap:nowrap; gap:4px 12px; justify-content:space-between; align-items:center; min-width:0; }
+.map-status-row p { margin:0; min-width:0; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+.gis-status:has(#map-retry:not([hidden]), #map-tile-status:not([hidden])) .map-status-row p { white-space:normal; }
 .map-status-row span { font-variant-numeric:tabular-nums; }
 .gis-status #map-tile-status { margin:4px 0 0; }
 .gis .gis-status #map-retry { margin-top:6px; font-size:12px; }
@@ -235,7 +238,7 @@ body.map-page main.map-content.gis { width:auto; padding:0; margin:16px 16px 16p
   .gis-env-strip { top:auto; left:8px; right:8px; bottom:80px; max-width:none; }
   .gis .gis-add { bottom:26px; }
   .gis-status { display:none; }
-  .gis-status:has(#map-retry:not([hidden])), .gis-status:has(#map-tile-status:not([hidden])) { display:block; top:120px; bottom:auto; left:8px; right:8px; max-width:none; }
+  .gis-status:has(#map-retry:not([hidden])), .gis-status:has(#map-tile-status:not([hidden])) { display:block; top:auto; bottom:136px; left:8px; right:8px; max-width:none; }
   .map-content button, .map-import { min-height:44px; }
   .gis .gis-style-toggle { min-height:34px; top:4px; }
   .map-layers small { display:none; }
