@@ -117,12 +117,17 @@
   // Diagrams: touching a piece shows its explanation; the tetrahedron switch adds the chain reaction.
   document.querySelectorAll('.fire-diagram').forEach(fig=>{
     const nodes=[...fig.querySelectorAll('[data-show]')],details=[...fig.querySelectorAll('[data-detail]')],hint=fig.querySelector('.fire-diagram-hint');
+    const parts=[...fig.querySelectorAll('[data-part]')];
     const select=id=>{
       nodes.forEach(n=>n.setAttribute('aria-pressed',String(n.dataset.show===id)));
       details.forEach(d=>{d.hidden=d.dataset.detail!==id;});
+      parts.forEach(p=>p.classList.toggle('is-on',p.dataset.part===id));
+      fig.toggleAttribute('data-active',!!id&&parts.length>0);
       if(hint)hint.hidden=!!id;
     };
     nodes.forEach(n=>{n.setAttribute('aria-pressed','false');n.addEventListener('click',()=>select(n.getAttribute('aria-pressed')==='true'?null:n.dataset.show));});
+    // A piece of the drawing works like its label (the labels stay the keyboard way in).
+    parts.forEach(p=>p.addEventListener('click',()=>nodes.find(n=>n.dataset.show===p.dataset.part)?.click()));
     const modes=[...fig.querySelectorAll('[data-tetra-mode]')];
     modes.forEach(b=>b.addEventListener('click',()=>{
       fig.dataset.mode=b.dataset.tetraMode;
